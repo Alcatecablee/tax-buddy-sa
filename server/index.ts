@@ -1,6 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { SupabaseStorage } from "./storage";
+import { MemStorage, SupabaseStorage } from "./storage";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
@@ -37,7 +37,9 @@ app.use((req, res, next) => {
   next();
 });
 
-const storage = new SupabaseStorage();
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const storage = (supabaseUrl && supabaseKey) ? new SupabaseStorage() : new MemStorage();
 
 (async () => {
   registerRoutes(app, storage);
