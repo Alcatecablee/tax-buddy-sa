@@ -1,8 +1,8 @@
 import type { TaxCalculation, InsertTaxCalculation } from "@shared/schema";
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL || "";
-const supabaseKey = process.env.VITE_SUPABASE_PUBLISHABLE_KEY || "";
+const supabaseUrl = process.env.SUPABASE_URL || "";
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 
 export interface IStorage {
   getTaxCalculations(userId?: string): Promise<TaxCalculation[]>;
@@ -63,6 +63,9 @@ export class SupabaseStorage implements IStorage {
   private supabase;
 
   constructor() {
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Supabase credentials not found. Please set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables.');
+    }
     this.supabase = createClient(supabaseUrl, supabaseKey);
   }
 
