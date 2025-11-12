@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight, Save, Calculator as CalcIcon } from "lucide-react";
+import { ArrowLeft, ArrowRight, Save, Calculator as CalcIcon, LogIn } from "lucide-react";
 import { useLocation } from "wouter";
+import { useAuth } from "@/contexts/AuthContext";
 import { PersonalInfoStep } from "@/components/calculator/PersonalInfoStep";
 import { IncomeStep } from "@/components/calculator/IncomeStep";
 import { DeductionsStep } from "@/components/calculator/DeductionsStep";
@@ -21,6 +22,7 @@ import { useToast } from "@/hooks/use-toast";
 const Calculator = () => {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const { user } = useAuth();
   const [currentStep, setCurrentStep] = useState(0);
   const [ageCategory, setAgeCategory] = useState<AgeCategory>('under_65');
   const [income, setIncome] = useState<IncomeInputs>({
@@ -83,11 +85,18 @@ const Calculator = () => {
   const handleSave = async () => {
     if (!result) return;
 
+    if (!user) {
+      toast({
+        title: "Sign In Required",
+        description: "Please sign in to save your calculations.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
       const { error } = await supabase.from('tax_calculations').insert({
-        user_id: user?.id || null,
+        user_id: user.id,
         tax_year: '2024/2025',
         age_category: ageCategory,
         salary_income: income.salary,
@@ -208,14 +217,27 @@ const Calculator = () => {
 
             <div className="flex gap-3">
               {currentStep === steps.length - 1 && (
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={handleSave}
-                >
-                  <Save className="w-4 h-4 mr-2" />
-                  Save Calculation
-                </Button>
+                user ? (
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={handleSave}
+                    data-testid="button-save"
+                  >
+                    <Save className="w-4 h-4 mr-2" />
+                    Save Calculation
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={() => setLocation('/login')}
+                    data-testid="button-login-to-save"
+                  >
+                    <LogIn className="w-4 h-4 mr-2" />
+                    Sign In to Save
+                  </Button>
+                )
               )}
               
               {currentStep < steps.length - 1 && (

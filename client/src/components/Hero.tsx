@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { FileCheck, Clock, Shield, TrendingUp } from "lucide-react";
+import { FileCheck, Clock, Shield, TrendingUp, LogIn, UserPlus } from "lucide-react";
 import { useLocation } from "wouter";
+import { useAuth } from "@/contexts/AuthContext";
 import heroImage from "@/assets/hero-banner.jpg";
 
 export const Hero = () => {
   const [, setLocation] = useLocation();
+  const { user } = useAuth();
   
   return (
     <section className="relative min-h-[90vh] flex items-center bg-gradient-hero overflow-hidden">
@@ -36,9 +38,40 @@ export const Hero = () => {
             <Button size="lg" variant="accent" className="text-lg" onClick={() => setLocation('/calculator')} data-testid="button-calculate-refund">
               Calculate My Refund
             </Button>
-            <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">
-              See How It Works
-            </Button>
+            {user ? (
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20"
+                onClick={() => setLocation('/dashboard')}
+                data-testid="button-dashboard"
+              >
+                View Dashboard
+              </Button>
+            ) : (
+              <>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20"
+                  onClick={() => setLocation('/login')}
+                  data-testid="button-login"
+                >
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Sign In
+                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20"
+                  onClick={() => setLocation('/signup')}
+                  data-testid="button-signup"
+                >
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  Sign Up
+                </Button>
+              </>
+            )}
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
