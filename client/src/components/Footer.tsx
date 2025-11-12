@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
-import whiteLogo from "@assets/white_1762968074506.png";
-import darkLogo from "@assets/dark_1762968088751.png";
+import whiteLogo from "@assets/taxify-logo-white.png";
+import darkLogo from "@assets/taxify-logo-dark.png";
 
 export const Footer = () => {
   const [, setLocation] = useLocation();

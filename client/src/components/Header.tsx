@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { LogIn, UserPlus, LayoutDashboard } from "lucide-react";
 import { useLocation } from "wouter";
 import { useAuth } from "@/contexts/AuthContext";
-import whiteLogo from "@assets/white_1762968074506.png";
-import darkLogo from "@assets/dark_1762968088751.png";
+import whiteLogo from "@assets/taxify-logo-white.png";
+import darkLogo from "@assets/taxify-logo-dark.png";
 
 export const Header = () => {
   const [, setLocation] = useLocation();
