@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import type { Express } from "express";
+import express, { type Express } from "express";
 import type { ViteDevServer } from "vite";
 
 const __filename = fileURLToPath(import.meta.url);
