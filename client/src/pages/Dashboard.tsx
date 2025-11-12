@@ -38,6 +38,7 @@ import { exportCalculationToPDF, exportCalculationToCSV, exportAllCalculationsTo
 
 interface SavedCalculation {
   id: string;
+  user_id: string | null;
   tax_year: string;
   age_category: string;
   total_income: number | null;
@@ -88,10 +89,16 @@ export default function Dashboard() {
 
   const handleDelete = async (id: string) => {
     try {
+      const calculation = calculations.find(calc => calc.id === id);
+      if (!calculation || calculation.user_id !== user?.id) {
+        throw new Error('You do not have permission to delete this calculation');
+      }
+
       const { error } = await supabase
         .from('tax_calculations')
         .delete()
-        .eq('id', id);
+        .eq('id', id)
+        .eq('user_id', user?.id);
 
       if (error) throw error;
 
@@ -100,11 +107,11 @@ export default function Dashboard() {
         title: 'Deleted',
         description: 'Calculation deleted successfully',
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error deleting calculation:', error);
       toast({
         title: 'Error',
-        description: 'Failed to delete calculation',
+        description: error.message || 'Failed to delete calculation',
         variant: 'destructive',
       });
     } finally {
@@ -120,7 +127,22 @@ export default function Dashboard() {
   const handleExportPDF = async (calc: SavedCalculation) => {
     try {
       setExportingId(calc.id);
-      exportCalculationToPDF(calc);
+      
+      if (calc.user_id !== user?.id) {
+        throw new Error('You do not have permission to export this calculation');
+      }
+
+      const { data, error } = await supabase
+        .from('tax_calculations')
+        .select('*')
+        .eq('id', calc.id)
+        .eq('user_id', user?.id)
+        .maybeSingle();
+
+      if (error) throw error;
+      if (!data) throw new Error('Calculation not found or you do not have permission to export it');
+
+      exportCalculationToPDF(data);
       toast({
         title: 'PDF Downloaded',
         description: 'Your tax calculation has been exported to PDF.',
@@ -139,7 +161,22 @@ export default function Dashboard() {
   const handleExportCSV = async (calc: SavedCalculation) => {
     try {
       setExportingId(calc.id);
-      exportCalculationToCSV(calc);
+      
+      if (calc.user_id !== user?.id) {
+        throw new Error('You do not have permission to export this calculation');
+      }
+
+      const { data, error } = await supabase
+        .from('tax_calculations')
+        .select('*')
+        .eq('id', calc.id)
+        .eq('user_id', user?.id)
+        .maybeSingle();
+
+      if (error) throw error;
+      if (!data) throw new Error('Calculation not found or you do not have permission to export it');
+
+      exportCalculationToCSV(data);
       toast({
         title: 'CSV Downloaded',
         description: 'Your tax calculation has been exported to CSV.',
