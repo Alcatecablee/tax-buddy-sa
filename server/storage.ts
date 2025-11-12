@@ -1,4 +1,8 @@
 import type { TaxCalculation, InsertTaxCalculation } from "@shared/schema";
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = process.env.VITE_SUPABASE_URL || "";
+const supabaseKey = process.env.VITE_SUPABASE_PUBLISHABLE_KEY || "";
 
 export interface IStorage {
   getTaxCalculations(userId?: string): Promise<TaxCalculation[]>;
@@ -52,5 +56,139 @@ export class MemStorage implements IStorage {
 
   async deleteTaxCalculation(id: string): Promise<void> {
     this.calculations.delete(id);
+  }
+}
+
+export class SupabaseStorage implements IStorage {
+  private supabase;
+
+  constructor() {
+    this.supabase = createClient(supabaseUrl, supabaseKey);
+  }
+
+  async getTaxCalculations(userId?: string): Promise<TaxCalculation[]> {
+    let query = this.supabase.from('tax_calculations').select('*');
+    
+    if (userId) {
+      query = query.eq('user_id', userId);
+    }
+    
+    const { data, error } = await query;
+    
+    if (error) {
+      throw new Error(`Failed to fetch calculations: ${error.message}`);
+    }
+    
+    return (data || []).map(this.mapFromDb);
+  }
+
+  async getTaxCalculation(id: string): Promise<TaxCalculation | null> {
+    const { data, error } = await this.supabase
+      .from('tax_calculations')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return null;
+      }
+      throw new Error(`Failed to fetch calculation: ${error.message}`);
+    }
+    
+    return data ? this.mapFromDb(data) : null;
+  }
+
+  async createTaxCalculation(data: InsertTaxCalculation): Promise<TaxCalculation> {
+    const dbData = this.mapToDb(data);
+    
+    const { data: result, error } = await this.supabase
+      .from('tax_calculations')
+      .insert(dbData)
+      .select()
+      .single();
+    
+    if (error) {
+      throw new Error(`Failed to create calculation: ${error.message}`);
+    }
+    
+    return this.mapFromDb(result);
+  }
+
+  async updateTaxCalculation(id: string, data: Partial<InsertTaxCalculation>): Promise<TaxCalculation> {
+    const dbData = this.mapToDb(data as InsertTaxCalculation);
+    
+    const { data: result, error } = await this.supabase
+      .from('tax_calculations')
+      .update(dbData)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) {
+      throw new Error(`Failed to update calculation: ${error.message}`);
+    }
+    
+    return this.mapFromDb(result);
+  }
+
+  async deleteTaxCalculation(id: string): Promise<void> {
+    const { error } = await this.supabase
+      .from('tax_calculations')
+      .delete()
+      .eq('id', id);
+    
+    if (error) {
+      throw new Error(`Failed to delete calculation: ${error.message}`);
+    }
+  }
+
+  private mapFromDb(dbRow: any): TaxCalculation {
+    return {
+      id: dbRow.id,
+      userId: dbRow.user_id,
+      taxYear: dbRow.tax_year,
+      ageCategory: dbRow.age_category,
+      salaryIncome: dbRow.salary_income || 0,
+      freelanceIncome: dbRow.freelance_income || 0,
+      rentalIncome: dbRow.rental_income || 0,
+      investmentIncome: dbRow.investment_income || 0,
+      retirementContributions: dbRow.retirement_contributions || 0,
+      medicalAidContributions: dbRow.medical_aid_contributions || 0,
+      medicalExpenses: dbRow.medical_expenses || 0,
+      charitableDonations: dbRow.charitable_donations || 0,
+      payePaid: dbRow.paye_paid || 0,
+      provisionalTaxPaid: dbRow.provisional_tax_paid || 0,
+      totalIncome: dbRow.total_income,
+      taxableIncome: dbRow.taxable_income,
+      totalTaxOwed: dbRow.total_tax_owed,
+      totalTaxPaid: dbRow.total_tax_paid,
+      refundAmount: dbRow.refund_amount,
+      createdAt: dbRow.created_at,
+      updatedAt: dbRow.updated_at,
+    };
+  }
+
+  private mapToDb(data: InsertTaxCalculation): any {
+    return {
+      user_id: data.userId,
+      tax_year: data.taxYear,
+      age_category: data.ageCategory,
+      salary_income: data.salaryIncome,
+      freelance_income: data.freelanceIncome,
+      rental_income: data.rentalIncome,
+      investment_income: data.investmentIncome,
+      retirement_contributions: data.retirementContributions,
+      medical_aid_contributions: data.medicalAidContributions,
+      medical_expenses: data.medicalExpenses,
+      charitable_donations: data.charitableDonations,
+      paye_paid: data.payePaid,
+      provisional_tax_paid: data.provisionalTaxPaid,
+      total_income: data.totalIncome,
+      taxable_income: data.taxableIncome,
+      total_tax_owed: data.totalTaxOwed,
+      total_tax_paid: data.totalTaxPaid,
+      refund_amount: data.refundAmount,
+    };
   }
 }

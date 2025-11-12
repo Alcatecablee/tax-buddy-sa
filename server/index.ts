@@ -1,6 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { MemStorage } from "./storage";
+import { SupabaseStorage } from "./storage";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const storage = new MemStorage();
+const storage = new SupabaseStorage();
 
 (async () => {
   registerRoutes(app, storage);
