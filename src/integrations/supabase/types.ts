@@ -14,7 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      tax_calculations: {
+        Row: {
+          age_category: string
+          charitable_donations: number | null
+          created_at: string | null
+          freelance_income: number | null
+          id: string
+          investment_income: number | null
+          medical_aid_contributions: number | null
+          medical_expenses: number | null
+          paye_paid: number | null
+          provisional_tax_paid: number | null
+          refund_amount: number | null
+          rental_income: number | null
+          retirement_contributions: number | null
+          salary_income: number | null
+          tax_year: string
+          taxable_income: number | null
+          total_income: number | null
+          total_tax_owed: number | null
+          total_tax_paid: number | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          age_category: string
+          charitable_donations?: number | null
+          created_at?: string | null
+          freelance_income?: number | null
+          id?: string
+          investment_income?: number | null
+          medical_aid_contributions?: number | null
+          medical_expenses?: number | null
+          paye_paid?: number | null
+          provisional_tax_paid?: number | null
+          refund_amount?: number | null
+          rental_income?: number | null
+          retirement_contributions?: number | null
+          salary_income?: number | null
+          tax_year: string
+          taxable_income?: number | null
+          total_income?: number | null
+          total_tax_owed?: number | null
+          total_tax_paid?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          age_category?: string
+          charitable_donations?: number | null
+          created_at?: string | null
+          freelance_income?: number | null
+          id?: string
+          investment_income?: number | null
+          medical_aid_contributions?: number | null
+          medical_expenses?: number | null
+          paye_paid?: number | null
+          provisional_tax_paid?: number | null
+          refund_amount?: number | null
+          rental_income?: number | null
+          retirement_contributions?: number | null
+          salary_income?: number | null
+          tax_year?: string
+          taxable_income?: number | null
+          total_income?: number | null
+          total_tax_owed?: number | null
+          total_tax_paid?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

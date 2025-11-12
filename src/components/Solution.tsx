@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Sparkles, Brain, Calculator, Wifi, Building2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import dashboardImage from "@/assets/dashboard-preview.jpg";
 
 export const Solution = () => {
+  const navigate = useNavigate();
   const features = [
     {
       icon: Brain,
@@ -96,8 +98,8 @@ export const Solution = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Button size="lg" variant="accent">
-              Get Started for Free
+            <Button size="lg" variant="accent" onClick={() => navigate('/calculator')}>
+              Try the Calculator Now
             </Button>
           </div>
         </div>

@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { FileCheck, Clock, Shield, TrendingUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-banner.jpg";
 
 export const Hero = () => {
+  const navigate = useNavigate();
+  
   return (
     <section className="relative min-h-[90vh] flex items-center bg-gradient-hero overflow-hidden">
       <div className="absolute inset-0 opacity-10">
@@ -29,8 +32,8 @@ export const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Button size="lg" variant="accent" className="text-lg">
-              Start Filing Now
+            <Button size="lg" variant="accent" className="text-lg" onClick={() => navigate('/calculator')}>
+              Calculate My Refund
             </Button>
             <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">
               See How It Works
