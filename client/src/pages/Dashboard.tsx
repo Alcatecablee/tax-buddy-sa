@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import { formatCurrency } from '@/lib/taxCalculator';
 import { useToast } from '@/hooks/use-toast';
+import whiteLogo from "@assets/white_1762968074506.png";
+import darkLogo from "@assets/dark_1762968088751.png";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -243,10 +245,26 @@ export default function Dashboard() {
       <header className="bg-background border-b border-border sticky top-0 z-10 shadow-soft">
         <div className="container px-6 py-4">
           <div className="flex items-center justify-between flex-wrap gap-4">
-            <div className="flex items-center gap-2">
-              <Calculator className="w-6 h-6 text-primary" />
-              <h1 className="text-xl font-bold text-foreground">Tax Dashboard</h1>
-            </div>
+            <button 
+              onClick={() => setLocation('/')}
+              className="flex items-center gap-3 hover-elevate active-elevate-2 rounded-md px-2 py-1 -ml-2"
+              data-testid="link-home"
+            >
+              <img 
+                src={darkLogo} 
+                alt="Taxify" 
+                className="w-8 h-8 dark:hidden"
+              />
+              <img 
+                src={whiteLogo} 
+                alt="Taxify" 
+                className="w-8 h-8 hidden dark:block"
+              />
+              <div className="flex flex-col">
+                <span className="text-xl font-bold text-foreground">Taxify</span>
+                <span className="text-xs text-muted-foreground">Dashboard</span>
+              </div>
+            </button>
             <div className="flex items-center gap-3 flex-wrap">
               <span className="text-sm text-muted-foreground">
                 {user?.email}
