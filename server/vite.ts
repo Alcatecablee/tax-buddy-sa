@@ -21,18 +21,21 @@ export function log(message: string) {
 export async function setupVite(app: Express) {
   const isProduction = process.env.NODE_ENV === "production";
   const clientPath = path.resolve(__dirname, "../client");
+  const configFile = path.resolve(__dirname, "../vite.config.ts");
+
+  let vite: any = null;
 
   if (isProduction) {
     app.use(express.static(path.join(clientPath, "dist"), { index: false }));
   } else {
     const { createServer } = await import("vite");
-    const vite = await createServer({
+    vite = await createServer({
+      configFile,
       server: {
         middlewareMode: true,
         hmr: true,
       },
       appType: "custom",
-      root: clientPath,
     });
 
     app.use(vite.middlewares);
@@ -45,13 +48,6 @@ export async function setupVite(app: Express) {
       let template: string;
 
       if (!isProduction) {
-        const { createServer } = await import("vite");
-        const vite = await createServer({
-          server: { middlewareMode: true },
-          appType: "custom",
-          root: clientPath,
-        });
-
         template = fs.readFileSync(
           path.join(clientPath, "index.html"),
           "utf-8",

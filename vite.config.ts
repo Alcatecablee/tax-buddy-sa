@@ -7,22 +7,23 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default defineConfig({
-  root: "./client",
+  root: "client",
   server: {
     host: "0.0.0.0",
     port: 5000,
     strictPort: true,
+    allowedHosts: true,
   },
   build: {
-    outDir: "./dist",
+    outDir: "dist",
     emptyOutDir: true,
   },
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./client/src"),
-      "@shared": path.resolve(__dirname, "./shared"),
-      "@assets": path.resolve(__dirname, "./client/src/assets"),
+      "@": path.join(__dirname, "client/src"),
+      "@shared": path.join(__dirname, "shared"),
+      "@assets": path.join(__dirname, "client/src/assets"),
     },
   },
 });

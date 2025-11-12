@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 
 export const CTA = () => {
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
   
   return (
     <section className="py-20 bg-gradient-hero">
@@ -18,7 +18,7 @@ export const CTA = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button size="lg" variant="accent" className="text-lg" onClick={() => navigate('/calculator')}>
+            <Button size="lg" variant="accent" className="text-lg" onClick={() => setLocation('/calculator')} data-testid="button-calculate-now">
               Calculate Your Refund Now
             </Button>
             <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">

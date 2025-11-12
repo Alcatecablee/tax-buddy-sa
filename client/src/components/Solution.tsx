@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Sparkles, Brain, Calculator, Wifi, Building2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import dashboardImage from "@/assets/dashboard-preview.jpg";
 
 export const Solution = () => {
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
   const features = [
     {
       icon: Brain,
@@ -98,7 +98,7 @@ export const Solution = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Button size="lg" variant="accent" onClick={() => navigate('/calculator')}>
+            <Button size="lg" variant="accent" onClick={() => setLocation('/calculator')} data-testid="button-try-calculator">
               Try the Calculator Now
             </Button>
           </div>

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { FileCheck, Clock, Shield, TrendingUp } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import heroImage from "@/assets/hero-banner.jpg";
 
 export const Hero = () => {
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
   
   return (
     <section className="relative min-h-[90vh] flex items-center bg-gradient-hero overflow-hidden">
@@ -32,7 +32,7 @@ export const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Button size="lg" variant="accent" className="text-lg" onClick={() => navigate('/calculator')}>
+            <Button size="lg" variant="accent" className="text-lg" onClick={() => setLocation('/calculator')} data-testid="button-calculate-refund">
               Calculate My Refund
             </Button>
             <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">
