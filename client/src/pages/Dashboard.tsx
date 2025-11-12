@@ -12,7 +12,9 @@ import {
   TrendingDown, 
   Calendar,
   Trash2,
-  Edit
+  Edit,
+  User,
+  FileDown
 } from 'lucide-react';
 import { formatCurrency } from '@/lib/taxCalculator';
 import { useToast } from '@/hooks/use-toast';
@@ -26,6 +28,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { exportCalculationToPDF, exportCalculationToCSV, exportAllCalculationsToCSV } from '@/lib/exportUtils';
 
 interface SavedCalculation {
   id: string;
@@ -46,6 +55,7 @@ export default function Dashboard() {
   const [calculations, setCalculations] = useState<SavedCalculation[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [exportingId, setExportingId] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -107,6 +117,69 @@ export default function Dashboard() {
     setLocation('/');
   };
 
+  const handleExportPDF = async (calc: SavedCalculation) => {
+    try {
+      setExportingId(calc.id);
+      exportCalculationToPDF(calc);
+      toast({
+        title: 'PDF Downloaded',
+        description: 'Your tax calculation has been exported to PDF.',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Export Failed',
+        description: error.message || 'Failed to export PDF. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setExportingId(null);
+    }
+  };
+
+  const handleExportCSV = async (calc: SavedCalculation) => {
+    try {
+      setExportingId(calc.id);
+      exportCalculationToCSV(calc);
+      toast({
+        title: 'CSV Downloaded',
+        description: 'Your tax calculation has been exported to CSV.',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Export Failed',
+        description: error.message || 'Failed to export CSV. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setExportingId(null);
+    }
+  };
+
+  const handleExportAll = async () => {
+    if (calculations.length === 0) {
+      toast({
+        title: 'No Calculations',
+        description: 'There are no calculations to export.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    try {
+      exportAllCalculationsToCSV(calculations);
+      toast({
+        title: 'Export Complete',
+        description: `Exported ${calculations.length} calculation${calculations.length > 1 ? 's' : ''} to CSV.`,
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Export Failed',
+        description: error.message || 'Failed to export calculations. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-ZA', {
       year: 'numeric',
@@ -148,6 +221,24 @@ export default function Dashboard() {
               >
                 <Plus className="w-4 h-4 mr-2" />
                 New Calculation
+              </Button>
+              {calculations.length > 0 && (
+                <Button
+                  variant="outline"
+                  onClick={handleExportAll}
+                  data-testid="button-export-all"
+                >
+                  <FileDown className="w-4 h-4 mr-2" />
+                  Export All
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                onClick={() => setLocation('/profile')}
+                data-testid="button-profile"
+              >
+                <User className="w-4 h-4 mr-2" />
+                Profile
               </Button>
               <Button
                 variant="ghost"
@@ -219,16 +310,39 @@ export default function Dashboard() {
                           <Button
                             size="icon"
                             variant="ghost"
-                            onClick={() => {
-                              toast({
-                                title: 'Coming Soon',
-                                description: 'Edit functionality will be available soon',
-                              });
-                            }}
+                            onClick={() => setLocation(`/calculator?edit=${calc.id}`)}
                             data-testid={`button-edit-${calc.id}`}
                           >
                             <Edit className="w-4 h-4" />
                           </Button>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                disabled={exportingId === calc.id}
+                                data-testid={`button-export-${calc.id}`}
+                              >
+                                <FileDown className="w-4 h-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem
+                                onClick={() => handleExportPDF(calc)}
+                                disabled={exportingId === calc.id}
+                                data-testid={`button-export-pdf-${calc.id}`}
+                              >
+                                {exportingId === calc.id ? 'Exporting...' : 'Download PDF'}
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleExportCSV(calc)}
+                                disabled={exportingId === calc.id}
+                                data-testid={`button-export-csv-${calc.id}`}
+                              >
+                                {exportingId === calc.id ? 'Exporting...' : 'Download CSV'}
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                           <Button
                             size="icon"
                             variant="ghost"

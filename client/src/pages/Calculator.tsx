@@ -42,6 +42,9 @@ const Calculator = () => {
     provisionalTax: 0
   });
   const [result, setResult] = useState<TaxCalculationResult | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [calculationId, setCalculationId] = useState<string | null>(null);
+  const [isLoadingEdit, setIsLoadingEdit] = useState(false);
 
   const steps = [
     { title: 'Personal Info' },
@@ -51,6 +54,88 @@ const Calculator = () => {
   ];
 
   const progress = ((currentStep + 1) / steps.length) * 100;
+
+  useEffect(() => {
+    // Check if we're in edit mode
+    const params = new URLSearchParams(window.location.search);
+    const editId = params.get('edit');
+    
+    if (editId) {
+      setIsEditing(true);
+      setCalculationId(editId);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Load calculation data when editing
+    if (!isEditing || !calculationId || !user) return;
+    
+    let cancelled = false;
+    
+    const loadCalculation = async () => {
+      setIsLoadingEdit(true);
+      
+      try {
+        const { data, error } = await supabase
+          .from('tax_calculations')
+          .select('*')
+          .eq('id', calculationId)
+          .eq('user_id', user.id)
+          .maybeSingle();
+        
+        if (error) throw error;
+        
+        if (!data) {
+          throw new Error('Calculation not found or you do not have permission to edit it');
+        }
+        
+        if (cancelled) return;
+        
+        // Pre-fill form with loaded data
+        setAgeCategory(data.age_category as AgeCategory);
+        setIncome({
+          salary: data.salary_income ?? 0,
+          freelance: data.freelance_income ?? 0,
+          rental: data.rental_income ?? 0,
+          investment: data.investment_income ?? 0
+        });
+        setDeductions({
+          retirementContributions: data.retirement_contributions ?? 0,
+          medicalAidContributions: data.medical_aid_contributions ?? 0,
+          medicalExpenses: data.medical_expenses ?? 0,
+          charitableDonations: data.charitable_donations ?? 0
+        });
+        setTaxPaid({
+          paye: data.paye_paid ?? 0,
+          provisionalTax: data.provisional_tax_paid ?? 0
+        });
+        
+        toast({
+          title: "Calculation Loaded",
+          description: "Your saved calculation has been loaded for editing.",
+        });
+      } catch (error: any) {
+        if (!cancelled) {
+          toast({
+            title: "Error Loading Calculation",
+            description: error.message || "Failed to load calculation. Please try again.",
+            variant: "destructive",
+          });
+          setLocation('/dashboard');
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoadingEdit(false);
+        }
+      }
+    };
+    
+    loadCalculation();
+    
+    return () => {
+      cancelled = true;
+    };
+  }, [isEditing, calculationId, user, toast, setLocation]);
 
   useEffect(() => {
     // Recalculate whenever inputs change
@@ -83,7 +168,7 @@ const Calculator = () => {
   };
 
   const handleSave = async () => {
-    if (!result) return;
+    if (!result || isLoadingEdit) return;
 
     if (!user) {
       toast({
@@ -95,7 +180,7 @@ const Calculator = () => {
     }
 
     try {
-      const { error } = await supabase.from('tax_calculations').insert({
+      const calculationData = {
         user_id: user.id,
         tax_year: '2024/2025',
         age_category: ageCategory,
@@ -114,14 +199,41 @@ const Calculator = () => {
         total_tax_owed: result.taxAfterRebates,
         total_tax_paid: result.totalTaxPaid,
         refund_amount: result.refundAmount
-      });
+      };
 
+      let error;
+      
+      if (isEditing && calculationId) {
+        const result = await supabase
+          .from('tax_calculations')
+          .update(calculationData)
+          .eq('id', calculationId)
+          .eq('user_id', user.id);
+        
+        error = result.error;
+        
+        if (!error) {
+          toast({
+            title: "Calculation Updated",
+            description: "Your tax calculation has been updated successfully.",
+          });
+        }
+      } else {
+        const result = await supabase
+          .from('tax_calculations')
+          .insert(calculationData);
+        
+        error = result.error;
+        
+        if (!error) {
+          toast({
+            title: "Calculation Saved",
+            description: "Your tax calculation has been saved successfully.",
+          });
+        }
+      }
+      
       if (error) throw error;
-
-      toast({
-        title: "Calculation Saved",
-        description: "Your tax calculation has been saved successfully.",
-      });
     } catch (error) {
       console.error('Error saving calculation:', error);
       toast({
