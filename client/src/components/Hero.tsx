@@ -8,13 +8,14 @@ export const Hero = () => {
   
   return (
     <section className="relative min-h-[90vh] flex items-center bg-gradient-hero overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-30">
         <img 
           src={heroImage} 
           alt="" 
           className="w-full h-full object-cover"
         />
       </div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[hsl(185,57%,30%)] via-[hsl(185,57%,35%)] to-[hsl(185,57%,40%)] opacity-90"></div>
       
       <div className="container relative z-10 px-6 py-20">
         <div className="max-w-3xl">
