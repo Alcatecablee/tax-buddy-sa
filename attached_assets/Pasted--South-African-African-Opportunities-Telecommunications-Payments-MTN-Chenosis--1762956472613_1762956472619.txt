@@ -1,0 +1,75 @@
+## South African & African Opportunities
+
+### Telecommunications & Payments
+
+**MTN Chenosis** - MTN's API marketplace offers over 208 products across 15 African countries including South Africa. You can access APIs for:[[1]](https://techcentral.co.za/mtn-chenosis-api-marketplace-developers/249493/)[[2]](https://www.mtn.com/api-marketplace/)[[3]](https://developers.mtn.com/products)
+
+- Mobile Money (MoMo) payments
+- SMS, USSD, and Voice services
+- Mobile identity and fraud prevention
+- Advertising APIs
+
+**Africa's Talking** - Communication APIs specifically designed for Africa, offering:[[4]](https://africastalking.ug/)
+
+- SMS, USSD, Voice APIs
+- Airtime distribution
+- Mobile payments
+- Available across multiple African countries
+
+**Nedbank API Marketplace** - South Africa's first open banking APIs with:[[5]](https://apim.nedbank.africa/home.html)
+
+- Banking integration capabilities
+- Payment processing
+- Financial data access
+
+**Stitch Money** - South African payment gateway with APIs for:[[6]](https://www.stitch.money/)
+
+- Online payments
+- Recurring collections
+- Financial operations and reconciliation
+
+**Lemu Business** - African fintech APIs for:[[7]](https://lemu.africa/developers/)
+
+- Payment acceptance
+- Payroll management
+- Banking services
+
+### Government & Public Data
+
+**Eskom Data Portal** - Beyond just load-shedding, Eskom provides data on:[[8]](https://www.eskom.co.za/dataportal/)
+
+- Electricity demand forecasts
+- Supply-side generation data
+- Renewable energy statistics
+
+## International Examples for Inspiration
+
+While not directly usable in SA, these show what types of utility APIs exist globally:
+
+**Energy/Utility Companies:**
+
+- European electricity grid operators (Elia, TenneT, Fingrid) offer open APIs for power generation, load data, and market prices[[9]](https://www.elia.be/en/grid-data/open-data)[[10]](https://developer.tennet.eu/specs)
+- Australian and New Zealand energy markets have open electricity data APIs[[11]](https://docs.openelectricity.org.au/api-reference/overview)
+
+**Government API Marketplaces:**
+
+- Singapore's APEX platform (3000+ government APIs)[[12]](https://www.apex.gov.sg/)
+- India's API Setu (thousands of APIs for KYC, admissions, employment)[[13]](https://apisetu.gov.in/)
+- UAE API Marketplace for government services[[14]](https://u.ae/en/about-the-uae/digital-uae/digital-transformation/platforms-and-apps/uae-api-marketplace)
+
+## Monetization Ideas
+
+Based on these APIs, here are app concepts you could build:
+
+1. **Payment/Financial Apps** - Use MTN MoMo, Stitch, or Nedbank APIs to build payment solutions, expense trackers, or financial management tools
+2. **Communication Services** - Africa's Talking APIs for bulk SMS services, notification systems, or customer engagement platforms
+3. **Data Aggregation** - Combine multiple utility data sources (like your Eskom idea) to provide insights and alerts
+4. **Business Tools** - Build invoicing, payroll, or business management tools using fintech APIs
+
+The key is finding APIs where:
+
+- Data is valuable but not easily accessible
+- You can add value through aggregation, analysis, or alerts
+- There's a clear customer willing to pay for the convenience
+
+Your Eskom load-shedding alert app fits this perfectly - it takes public data and makes it actionable for users who need timely notifications.
