@@ -18,7 +18,7 @@ export function log(message: string) {
   console.log(`${formattedTime} ${message}`);
 }
 
-export async function setupVite(app: Express, server: any) {
+export async function setupVite(app: Express) {
   const isProduction = process.env.NODE_ENV === "production";
   const clientPath = path.resolve(__dirname, "../client");
 
@@ -29,7 +29,7 @@ export async function setupVite(app: Express, server: any) {
     const vite = await createServer({
       server: {
         middlewareMode: true,
-        hmr: { server },
+        hmr: true,
       },
       appType: "custom",
       root: clientPath,
@@ -43,14 +43,14 @@ export async function setupVite(app: Express, server: any) {
 
     try {
       let template: string;
-      let render: any;
 
       if (!isProduction) {
-        const viteModule = await import("vite");
-        const vite = res.locals.vite as ViteDevServer | undefined;
-        if (!vite) {
-          return next();
-        }
+        const { createServer } = await import("vite");
+        const vite = await createServer({
+          server: { middlewareMode: true },
+          appType: "custom",
+          root: clientPath,
+        });
 
         template = fs.readFileSync(
           path.join(clientPath, "index.html"),
@@ -66,17 +66,9 @@ export async function setupVite(app: Express, server: any) {
 
       res.status(200).set({ "Content-Type": "text/html" }).end(template);
     } catch (e: any) {
-      if (!isProduction) {
-        const vite = res.locals.vite as ViteDevServer | undefined;
-        if (vite) {
-          vite.ssrFixStacktrace(e);
-        }
-      }
       next(e);
     }
   });
-
-  return server;
 }
 
 export function serveStatic(app: Express) {

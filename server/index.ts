@@ -41,7 +41,7 @@ const storage = new MemStorage();
 
 (async () => {
   registerRoutes(app, storage);
-  const server = await setupVite(app, false);
+  await setupVite(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
@@ -51,7 +51,7 @@ const storage = new MemStorage();
   });
 
   const PORT = 5000;
-  server.listen(PORT, "0.0.0.0", () => {
+  app.listen(PORT, "0.0.0.0", () => {
     log(`Server running on port ${PORT}`);
   });
 })();

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, ArrowRight, Save, Calculator as CalcIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import { PersonalInfoStep } from "@/components/calculator/PersonalInfoStep";
 import { IncomeStep } from "@/components/calculator/IncomeStep";
 import { DeductionsStep } from "@/components/calculator/DeductionsStep";
@@ -19,7 +19,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const Calculator = () => {
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
   const [ageCategory, setAgeCategory] = useState<AgeCategory>('under_65');
@@ -130,8 +130,9 @@ const Calculator = () => {
         <div className="container px-6 py-4">
           <div className="flex items-center justify-between">
             <button
-              onClick={() => navigate('/')}
+              onClick={() => setLocation('/')}
               className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-smooth"
+              data-testid="button-back-home"
             >
               <ArrowLeft className="w-5 h-5" />
               <span>Back to Home</span>
