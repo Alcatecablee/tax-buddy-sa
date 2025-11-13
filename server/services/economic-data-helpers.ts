@@ -36,6 +36,10 @@ export async function extractFromCPDRates(
   });
   
   if (!matchingEntry) {
+    logger.warn('No matching entry found in CPD Rates', {
+      keywords,
+      availableEntries: cpdRates.map(e => e.Name),
+    });
     return null;
   }
   
@@ -43,8 +47,20 @@ export async function extractFromCPDRates(
   const date = matchingEntry.Date;
   
   if (isNaN(current)) {
+    logger.warn('Matched CPD entry but value is not a number', {
+      entryName: matchingEntry.Name,
+      rawValue: matchingEntry.Value,
+    });
     return null;
   }
+  
+  // Log successful extraction for monitoring label changes
+  logger.info('Extracted rate from CPD Rates', {
+    entryName: matchingEntry.Name,
+    keywords,
+    value: current,
+    date,
+  });
   
   // Try to enrich with historical data for accurate previous value
   try {
