@@ -8,6 +8,7 @@ import { Router, type Request, type Response } from 'express';
 import { economicDataService } from '../services/economic-data';
 import { sarbApi, SARB_SERIES } from '../services/sarb-api';
 import { cached, cachedWithMetadata } from '../services/cache';
+import { cacheConfig } from '../config';
 
 const router = Router();
 
@@ -29,7 +30,7 @@ router.get('/indicators', async (req: Request, res: Response) => {
     const { data: indicators, metadata } = await cachedWithMetadata(
       'economic:indicators',
       () => economicDataService.getEconomicIndicators(),
-      3600 // 1 hour cache
+      cacheConfig.indicatorsTtl
     );
     
     // Determine if service is degraded
@@ -75,7 +76,7 @@ router.get('/tips', async (req: Request, res: Response) => {
     const tips = await cached(
       'economic:tips',
       () => economicDataService.getTaxPlanningTips(),
-      21600 // 6 hours cache
+      cacheConfig.tipsTtl
     );
     
     res.json({
@@ -124,7 +125,7 @@ router.get('/historical/:series', async (req: Request, res: Response) => {
     const data = await cached(
       `economic:historical:${series}:${months}`,
       () => economicDataService.getHistoricalData(series as any, months),
-      7200 // 2 hours cache for historical data
+      cacheConfig.historicalTtl
     );
     
     res.json({
@@ -156,7 +157,7 @@ router.get('/series/:code', async (req: Request, res: Response) => {
     const data = await cached(
       `economic:series:${code}`,
       () => sarbApi.getTimeSeries(code),
-      3600 // 1 hour cache
+      cacheConfig.seriesTtl
     );
     
     res.json({

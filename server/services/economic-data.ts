@@ -43,13 +43,20 @@ export class EconomicDataService {
     };
     
     try {
-      // Fetch real data from SARB API
-      const cpdRates = await sarbApi.getCPDRates();
+      // Fetch all SARB data in parallel for performance
+      const [cpdRates, cpiSeries, usdSeries, eurSeries, gbpSeries] = await Promise.allSettled([
+        sarbApi.getCPDRates(),
+        sarbApi.getTimeSeries(SARB_SERIES.CPI_HEADLINE),
+        sarbApi.getTimeSeries(SARB_SERIES.USD_ZAR),
+        sarbApi.getTimeSeries(SARB_SERIES.EUR_ZAR),
+        sarbApi.getTimeSeries(SARB_SERIES.GBP_ZAR),
+      ]);
       
       // Parse CPD rates to extract repo rate (current and previous)
-      // "Interest charged" is the repo rate from SARB
-      // Now fetches historical data from time series API for accurate previous values
-      const repoRateData = await extractFromCPDRates(cpdRates, 'charged');
+      let repoRateData = null;
+      if (cpdRates.status === 'fulfilled') {
+        repoRateData = await extractFromCPDRates(cpdRates.value, 'charged');
+      }
       
       if (!repoRateData) {
         // SARB API returned but no repo rate data found
@@ -59,14 +66,39 @@ export class EconomicDataService {
         };
       }
       
-      // Successfully got real data - merge with fallback for fields not yet integrated
+      // Process CPI data for inflation
+      const inflationData = cpiSeries.status === 'fulfilled' 
+        ? this.calculateInflation(cpiSeries.value)
+        : fallbackData.inflation;
+      
+      // Process FX data for exchange rates
+      const exchangeRateData = this.extractExchangeRates(
+        usdSeries.status === 'fulfilled' ? usdSeries.value : undefined,
+        eurSeries.status === 'fulfilled' ? eurSeries.value : undefined,
+        gbpSeries.status === 'fulfilled' ? gbpSeries.value : undefined
+      );
+      
+      // Track warnings for partial data availability
       const warnings: string[] = [];
       if (!repoRateData.previous || repoRateData.previous === repoRateData.current) {
         warnings.push('Repo rate historical data unavailable - trend may be inaccurate');
       }
+      if (cpiSeries.status === 'rejected') {
+        warnings.push('CPI data unavailable - using fallback inflation rate');
+      }
+      
+      const fxFailures = [
+        usdSeries.status === 'rejected',
+        eurSeries.status === 'rejected',
+        gbpSeries.status === 'rejected',
+      ].filter(Boolean).length;
+      
+      if (fxFailures > 0) {
+        warnings.push(`${fxFailures} exchange rate(s) unavailable - using fallback values`);
+      }
       
       return {
-        inflation: fallbackData.inflation, // TODO: Integrate from Stats SA
+        inflation: inflationData,
         repoRate: {
           current: repoRateData.current,
           previous: repoRateData.previous,
@@ -76,7 +108,7 @@ export class EconomicDataService {
           current: repoRateData.current + 3.5, // Prime = Repo + 3.5%
           lastUpdated: repoRateData.lastChanged, // Use repo rate timestamp
         },
-        exchangeRates: fallbackData.exchangeRates, // TODO: Integrate from SARB
+        exchangeRates: exchangeRateData,
         isFallback: false,
         warnings: warnings.length > 0 ? warnings : undefined,
       };
@@ -204,6 +236,52 @@ export class EconomicDataService {
     return {
       current: latest.value ?? 11.25,
       lastUpdated: latest.date,
+    };
+  }
+  
+  /**
+   * Extract exchange rates from multiple SARB FX series
+   * Returns latest exchange rates with last updated timestamp
+   */
+  private extractExchangeRates(
+    usdSeries?: SarbTimeSeries,
+    eurSeries?: SarbTimeSeries,
+    gbpSeries?: SarbTimeSeries
+  ) {
+    // Helper to get latest value from a series
+    const getLatest = (series?: SarbTimeSeries, fallback: number = 18.0) => {
+      if (!series || series.data.length === 0) return fallback;
+      const validData = series.data.filter(d => d.value !== null);
+      if (validData.length === 0) return fallback;
+      return validData[validData.length - 1].value ?? fallback;
+    };
+    
+    // Helper to get latest date from any series
+    const getLatestDate = (series?: SarbTimeSeries) => {
+      if (!series || series.data.length === 0) return null;
+      const validData = series.data.filter(d => d.value !== null);
+      if (validData.length === 0) return null;
+      return validData[validData.length - 1].date;
+    };
+    
+    // Get the most recent date from all series
+    const dates = [
+      getLatestDate(usdSeries),
+      getLatestDate(eurSeries),
+      getLatestDate(gbpSeries),
+    ].filter(d => d !== null);
+    
+    const lastUpdated = dates.length > 0 
+      ? dates.reduce((latest, current) => {
+          return new Date(current!) > new Date(latest!) ? current : latest;
+        })!
+      : new Date().toISOString();
+    
+    return {
+      usdZar: getLatest(usdSeries, 18.65),
+      eurZar: getLatest(eurSeries, 19.85),
+      gbpZar: getLatest(gbpSeries, 23.45),
+      lastUpdated,
     };
   }
   

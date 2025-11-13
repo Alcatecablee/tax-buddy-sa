@@ -211,27 +211,54 @@ export function cachedWithMetadata<T>(
     
     if (cached !== null) {
       console.log(`[Cache] HIT with metadata: ${cacheKey}`);
-      return cached;
+      
+      // Update metadata to reflect cache source
+      const updatedMetadata: CacheMetadata = {
+        ...cached.metadata,
+        source: 'stale-cache', // Indicate data is from cache, not fresh from API
+      };
+      
+      return { data: cached.data, metadata: updatedMetadata };
     }
     
     console.log(`[Cache] MISS: ${cacheKey}`);
     
     // Execute function and cache result
-    const result = await fn();
-    
-    // Add metadata for new live fetch
-    const now = new Date().toISOString();
-    const nextRefresh = new Date(Date.now() + ttlSeconds * 1000).toISOString();
-    
-    const metadata: CacheMetadata = {
-      lastLiveFetch: now,
-      source: 'live',
-      nextRefreshEta: nextRefresh,
-    };
-    
-    cache.set(cacheKey, result, ttlSeconds, metadata);
-    
-    return { data: result, metadata };
+    try {
+      const result = await fn();
+      
+      // Add metadata for new live fetch
+      const now = new Date().toISOString();
+      const nextRefresh = new Date(Date.now() + ttlSeconds * 1000).toISOString();
+      
+      const metadata: CacheMetadata = {
+        lastLiveFetch: now,
+        source: 'live',
+        nextRefreshEta: nextRefresh,
+      };
+      
+      cache.set(cacheKey, result, ttlSeconds, metadata);
+      
+      return { data: result, metadata };
+      
+    } catch (error) {
+      // If fetch fails but we have stale cache, use it with fallback marker
+      const staleCache = cache.getWithMetadata<T>(cacheKey);
+      if (staleCache !== null) {
+        console.warn(`[Cache] Fetch failed, using stale cache: ${cacheKey}`);
+        
+        const fallbackMetadata: CacheMetadata = {
+          ...staleCache.metadata,
+          source: 'fallback',
+          lastFallbackAt: new Date().toISOString(),
+        };
+        
+        return { data: staleCache.data, metadata: fallbackMetadata };
+      }
+      
+      // No cache available, rethrow error
+      throw error;
+    }
   }();
 }
 
