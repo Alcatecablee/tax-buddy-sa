@@ -43,17 +43,22 @@ export const SarbCPDRatesResponseSchema = z.array(SarbCPDRateSchema);
 /**
  * SARB HomePage Rate entry schema
  * Validates individual entries from HomePageRates endpoint
+ * 
+ * PRODUCTION-READY: Schema is flexible to handle SARB API changes
+ * - Value can be string or number (handles "5.5" or 5.5)
+ * - Formatting fields are optional (SARB may add/remove them)
+ * - Allows null values for graceful degradation
  */
 export const SarbHomePageRateSchema = z.object({
   Name: z.string(),
-  SectionId: z.string(),
-  SectionName: z.string(),
-  TimeseriesCode: z.string(),
+  SectionId: z.string().optional(), // Optional: SARB may restructure sections
+  SectionName: z.string().optional(), // Optional: SARB may restructure sections
+  TimeseriesCode: z.string().optional(), // Optional: May not always be present
   Date: z.string(),
-  Value: z.number(),
-  UpDown: z.number(),
-  FormatNumber: z.string(),
-  FormatDate: z.string(),
+  Value: z.union([z.string(), z.number()]).nullable(), // Flexible: handles "5.5" or 5.5 or null
+  UpDown: z.number().optional(), // Optional: Not critical for our use case
+  FormatNumber: z.string().optional(), // Optional: Display formatting may change
+  FormatDate: z.string().optional(), // Optional: Display formatting may change
 });
 
 export type SarbHomePageRate = z.infer<typeof SarbHomePageRateSchema>;

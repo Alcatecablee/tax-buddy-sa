@@ -50,33 +50,37 @@ export class EconomicDataService {
         sarbApi.getHomePageRates(),
       ]);
       
+      // PRODUCTION-READY: Mixed Results Strategy
+      // Return live data from any successful endpoint + fallback for failed endpoints
+      // Only return full fallback if BOTH endpoints fail
+      
       // Parse CPD rates to extract repo rate (current and previous)
       let repoRateData = null;
       if (cpdRates.status === 'fulfilled') {
         repoRateData = await extractFromCPDRates(cpdRates.value, 'charged');
       }
       
-      if (!repoRateData) {
-        // SARB API returned but no repo rate data found
-        return {
-          ...fallbackData,
-          warnings: ['SARB API returned unexpected format - using fallback data'],
-        };
-      }
-      
       // Parse HomePage Rates for CPI and exchange rates
       const homePageData = homePageRates.status === 'fulfilled' ? homePageRates.value : null;
       
-      if (!homePageData || homePageData.length === 0) {
-        // HomePage Rates failed, use fallback data
+      // CRITICAL: If BOTH endpoints failed, return full fallback
+      if (!repoRateData && (!homePageData || homePageData.length === 0)) {
+        console.error('[EconomicDataService] Both CPD and HomePage Rates failed - using complete fallback');
         return {
           ...fallbackData,
-          warnings: ['SARB HomePage Rates unavailable - using fallback data'],
+          warnings: ['SARB API completely unavailable - using fallback data from September 2025'],
         };
       }
       
-      // Extract CPI for inflation calculation
-      const cpiData = extractFromHomePageRates(homePageData, 'CPI');
+      // MIXED RESULTS: Build response from available data sources
+      const warnings: string[] = [];
+      
+      // Extract CPI for inflation (from HomePage Rates or fallback)
+      let cpiData = null;
+      if (homePageData && homePageData.length > 0) {
+        cpiData = extractFromHomePageRates(homePageData, 'CPI');
+      }
+      
       const inflationData = cpiData 
         ? { 
             current: cpiData.value, 
@@ -86,10 +90,20 @@ export class EconomicDataService {
           }
         : fallbackData.inflation;
       
-      // Extract exchange rates from HomePage Rates
-      const usdData = extractFromHomePageRates(homePageData, 'Rand per US Dollar');
-      const eurData = extractFromHomePageRates(homePageData, 'Rand per Euro');
-      const gbpData = extractFromHomePageRates(homePageData, 'Rand per British Pound');
+      if (!cpiData) {
+        warnings.push('CPI data unavailable from HomePage Rates - using fallback inflation rate');
+      }
+      
+      // Extract exchange rates from HomePage Rates (or use fallback)
+      let usdData = null;
+      let eurData = null;
+      let gbpData = null;
+      
+      if (homePageData && homePageData.length > 0) {
+        usdData = extractFromHomePageRates(homePageData, 'Rand per US Dollar');
+        eurData = extractFromHomePageRates(homePageData, 'Rand per Euro');
+        gbpData = extractFromHomePageRates(homePageData, 'Rand per British Pound');
+      }
       
       const exchangeRateData = {
         usdZar: usdData?.value ?? fallbackData.exchangeRates.usdZar,
@@ -98,34 +112,43 @@ export class EconomicDataService {
         lastUpdated: usdData?.date ?? eurData?.date ?? gbpData?.date ?? new Date().toISOString(),
       };
       
-      // Track warnings for partial data availability
-      const warnings: string[] = [];
-      if (!repoRateData.previous || repoRateData.previous === repoRateData.current) {
-        warnings.push('Repo rate historical data unavailable - trend may be inaccurate');
-      }
-      if (!cpiData) {
-        warnings.push('CPI data unavailable from HomePage Rates - using fallback inflation rate');
-      }
-      
       const fxFailures = [!usdData, !eurData, !gbpData].filter(Boolean).length;
       
       if (fxFailures > 0) {
         warnings.push(`${fxFailures} exchange rate(s) unavailable from HomePage Rates - using fallback values`);
       }
       
+      // Build repo rate and prime rate (from CPD or fallback)
+      const repoRateResult = repoRateData 
+        ? {
+            current: repoRateData.current,
+            previous: repoRateData.previous,
+            lastChanged: repoRateData.lastChanged,
+          }
+        : fallbackData.repoRate;
+      
+      const primeRateResult = repoRateData
+        ? {
+            current: repoRateData.current + 3.5, // Prime = Repo + 3.5%
+            lastUpdated: repoRateData.lastChanged,
+          }
+        : fallbackData.primeRate;
+      
+      if (!repoRateData) {
+        warnings.push('Repo rate unavailable from CPD Rates - using fallback repo rate');
+      } else if (!repoRateData.previous || repoRateData.previous === repoRateData.current) {
+        warnings.push('Repo rate historical data unavailable - trend may be inaccurate');
+      }
+      
+      // Determine if we're using any fallback data
+      const isPartialFallback = warnings.length > 0;
+      
       return {
         inflation: inflationData,
-        repoRate: {
-          current: repoRateData.current,
-          previous: repoRateData.previous,
-          lastChanged: repoRateData.lastChanged,
-        },
-        primeRate: {
-          current: repoRateData.current + 3.5, // Prime = Repo + 3.5%
-          lastUpdated: repoRateData.lastChanged, // Use repo rate timestamp
-        },
+        repoRate: repoRateResult,
+        primeRate: primeRateResult,
         exchangeRates: exchangeRateData,
-        isFallback: false,
+        isFallback: isPartialFallback, // True if ANY data is from fallback
         warnings: warnings.length > 0 ? warnings : undefined,
       };
       
