@@ -15,7 +15,7 @@ export default defineConfig({
     allowedHosts: true,
   },
   build: {
-    outDir: "dist",
+    outDir: "../dist/client",
     emptyOutDir: true,
   },
   plugins: [react()],
