@@ -2,7 +2,7 @@
  * Helper functions for processing SARB API responses
  */
 
-import { sarbApi, SARB_SERIES, type SarbTimeSeries } from './sarb-api';
+import { sarbApi, SARB_SERIES, type SarbTimeSeries, type SarbHomePageRate } from './sarb-api';
 import { cache } from './cache';
 
 /**
@@ -185,4 +185,31 @@ async function fetchHistoricalRepoRate(
       previous: currentValue,
     };
   }
+}
+
+/**
+ * Extract a specific indicator from HomePage Rates response
+ * Searches for an exact name match and returns the value
+ */
+export function extractFromHomePageRates(
+  homePageRates: SarbHomePageRate[],
+  indicatorName: string
+): { value: number; date: string } | null {
+  if (!homePageRates || !Array.isArray(homePageRates) || homePageRates.length === 0) {
+    return null;
+  }
+  
+  // Find exact match (case-insensitive)
+  const matchingEntry = homePageRates.find(
+    entry => entry.Name.toLowerCase() === indicatorName.toLowerCase()
+  );
+  
+  if (!matchingEntry) {
+    return null;
+  }
+  
+  return {
+    value: matchingEntry.Value,
+    date: matchingEntry.Date,
+  };
 }

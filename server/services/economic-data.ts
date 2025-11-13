@@ -6,7 +6,7 @@
  */
 
 import { sarbApi, SARB_SERIES, type EconomicIndicators, type SarbTimeSeries } from './sarb-api';
-import { extractFromCPDRates } from './economic-data-helpers';
+import { extractFromCPDRates, extractFromHomePageRates } from './economic-data-helpers';
 
 export class EconomicDataService {
   /**
@@ -44,12 +44,10 @@ export class EconomicDataService {
     
     try {
       // Fetch all SARB data in parallel for performance
-      const [cpdRates, cpiSeries, usdSeries, eurSeries, gbpSeries] = await Promise.allSettled([
+      // Use HomePage Rates for CPI and exchange rates (verified working endpoint)
+      const [cpdRates, homePageRates] = await Promise.allSettled([
         sarbApi.getCPDRates(),
-        sarbApi.getTimeSeries(SARB_SERIES.CPI_HEADLINE),
-        sarbApi.getTimeSeries(SARB_SERIES.USD_ZAR),
-        sarbApi.getTimeSeries(SARB_SERIES.EUR_ZAR),
-        sarbApi.getTimeSeries(SARB_SERIES.GBP_ZAR),
+        sarbApi.getHomePageRates(),
       ]);
       
       // Parse CPD rates to extract repo rate (current and previous)
@@ -66,35 +64,53 @@ export class EconomicDataService {
         };
       }
       
-      // Process CPI data for inflation
-      const inflationData = cpiSeries.status === 'fulfilled' 
-        ? this.calculateInflation(cpiSeries.value)
+      // Parse HomePage Rates for CPI and exchange rates
+      const homePageData = homePageRates.status === 'fulfilled' ? homePageRates.value : null;
+      
+      if (!homePageData || homePageData.length === 0) {
+        // HomePage Rates failed, use fallback data
+        return {
+          ...fallbackData,
+          warnings: ['SARB HomePage Rates unavailable - using fallback data'],
+        };
+      }
+      
+      // Extract CPI for inflation calculation
+      const cpiData = extractFromHomePageRates(homePageData, 'CPI');
+      const inflationData = cpiData 
+        ? { 
+            current: cpiData.value, 
+            previous: cpiData.value, // HomePage Rates doesn't provide previous value
+            trend: 'stable' as const, 
+            lastUpdated: cpiData.date 
+          }
         : fallbackData.inflation;
       
-      // Process FX data for exchange rates
-      const exchangeRateData = this.extractExchangeRates(
-        usdSeries.status === 'fulfilled' ? usdSeries.value : undefined,
-        eurSeries.status === 'fulfilled' ? eurSeries.value : undefined,
-        gbpSeries.status === 'fulfilled' ? gbpSeries.value : undefined
-      );
+      // Extract exchange rates from HomePage Rates
+      const usdData = extractFromHomePageRates(homePageData, 'Rand per US Dollar');
+      const eurData = extractFromHomePageRates(homePageData, 'Rand per Euro');
+      const gbpData = extractFromHomePageRates(homePageData, 'Rand per British Pound');
+      
+      const exchangeRateData = {
+        usdZar: usdData?.value ?? fallbackData.exchangeRates.usdZar,
+        eurZar: eurData?.value ?? fallbackData.exchangeRates.eurZar,
+        gbpZar: gbpData?.value ?? fallbackData.exchangeRates.gbpZar,
+        lastUpdated: usdData?.date ?? eurData?.date ?? gbpData?.date ?? new Date().toISOString(),
+      };
       
       // Track warnings for partial data availability
       const warnings: string[] = [];
       if (!repoRateData.previous || repoRateData.previous === repoRateData.current) {
         warnings.push('Repo rate historical data unavailable - trend may be inaccurate');
       }
-      if (cpiSeries.status === 'rejected') {
-        warnings.push('CPI data unavailable - using fallback inflation rate');
+      if (!cpiData) {
+        warnings.push('CPI data unavailable from HomePage Rates - using fallback inflation rate');
       }
       
-      const fxFailures = [
-        usdSeries.status === 'rejected',
-        eurSeries.status === 'rejected',
-        gbpSeries.status === 'rejected',
-      ].filter(Boolean).length;
+      const fxFailures = [!usdData, !eurData, !gbpData].filter(Boolean).length;
       
       if (fxFailures > 0) {
-        warnings.push(`${fxFailures} exchange rate(s) unavailable - using fallback values`);
+        warnings.push(`${fxFailures} exchange rate(s) unavailable from HomePage Rates - using fallback values`);
       }
       
       return {
