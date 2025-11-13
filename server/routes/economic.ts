@@ -26,9 +26,12 @@ router.get('/indicators', async (req: Request, res: Response) => {
       3600 // 1 hour cache
     );
     
+    // Surface warnings at response level for client visibility
     res.json({
       success: true,
       data: indicators,
+      ...(indicators.warnings && { warnings: indicators.warnings }),
+      ...(indicators.isFallback && { isFallback: true }),
     });
     
   } catch (error) {

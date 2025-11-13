@@ -18,108 +18,76 @@ export class EconomicDataService {
    * This is the main method used by the frontend for dashboard display
    */
   async getEconomicIndicators(): Promise<EconomicIndicators> {
-    // Conservative fallback data (used when SARB API is unavailable)
+    // Conservative fallback data with static timestamps (used when SARB API is unavailable)
+    // These timestamps represent the last known good data point, not current time
     const fallbackData: EconomicIndicators = {
       inflation: {
         current: 4.5,
         previous: 4.7,
         trend: 'down' as const,
-        lastUpdated: new Date().toISOString(),
+        lastUpdated: '2025-09-15T00:00:00.000Z', // Static timestamp for fallback
       },
       repoRate: {
         current: 7.75,
         previous: 8.25,
-        lastChanged: new Date(2025, 8, 18).toISOString(),
+        lastChanged: '2025-09-18T00:00:00.000Z', // Last known repo rate change
       },
       primeRate: {
         current: 11.25,
-        lastUpdated: new Date().toISOString(),
+        lastUpdated: '2025-09-18T00:00:00.000Z', // Matches repo rate change
       },
       exchangeRates: {
         usdZar: 18.65,
         eurZar: 19.85,
         gbpZar: 23.45,
-        lastUpdated: new Date().toISOString(),
+        lastUpdated: '2025-09-15T00:00:00.000Z', // Static timestamp for fallback
       },
+      isFallback: true,
+      warnings: ['SARB API unavailable - using fallback data from September 2025'],
     };
     
     try {
       // Fetch real data from SARB API
       const cpdRates = await sarbApi.getCPDRates();
       
-      // Parse CPD rates to extract repo rate
+      // Parse CPD rates to extract repo rate (current and previous)
       // "Interest charged" is the repo rate from SARB
       const repoRateData = this.extractFromCPDRates(cpdRates, 'charged');
       
-      // Merge real data with fallback for fields not yet integrated
+      if (!repoRateData) {
+        // SARB API returned but no repo rate data found
+        return {
+          ...fallbackData,
+          warnings: ['SARB API returned unexpected format - using fallback data'],
+        };
+      }
+      
+      // Successfully got real data - merge with fallback for fields not yet integrated
+      const warnings: string[] = [];
+      if (!repoRateData.previous || repoRateData.previous === repoRateData.current) {
+        warnings.push('Repo rate historical data unavailable - trend may be inaccurate');
+      }
+      
       return {
         inflation: fallbackData.inflation, // TODO: Integrate from Stats SA
         repoRate: {
-          current: repoRateData?.current ?? fallbackData.repoRate.current,
-          previous: repoRateData?.previous ?? fallbackData.repoRate.previous,
-          lastChanged: repoRateData?.lastChanged ?? fallbackData.repoRate.lastChanged,
+          current: repoRateData.current,
+          previous: repoRateData.previous,
+          lastChanged: repoRateData.lastChanged,
         },
         primeRate: {
-          current: repoRateData?.current 
-            ? repoRateData.current + 3.5 
-            : fallbackData.primeRate.current,
-          lastUpdated: new Date().toISOString(),
+          current: repoRateData.current + 3.5, // Prime = Repo + 3.5%
+          lastUpdated: repoRateData.lastChanged, // Use repo rate timestamp
         },
         exchangeRates: fallbackData.exchangeRates, // TODO: Integrate from SARB
+        isFallback: false,
+        warnings: warnings.length > 0 ? warnings : undefined,
       };
       
     } catch (error) {
       // Graceful degradation: return fallback data when SARB API is unavailable
       console.error('[EconomicDataService] SARB API unavailable, using fallback data:', error);
       return fallbackData;
-    }
-      
-      // TODO: Integrate actual SARB API once correct endpoints are identified
-      // Fetch all required series in parallel for performance
-      /* const seriesMap = await sarbApi.getMultipleSeries([
-        SARB_SERIES.CPI_HEADLINE,
-        SARB_SERIES.REPO_RATE,
-        SARB_SERIES.PRIME_RATE,
-        SARB_SERIES.USD_ZAR,
-        SARB_SERIES.EUR_ZAR,
-        SARB_SERIES.GBP_ZAR,
-      ]);
-      
-      // Process inflation data
-      const cpiSeries = seriesMap.get(SARB_SERIES.CPI_HEADLINE);
-      const inflation = this.calculateInflation(cpiSeries);
-      
-      // Process repo rate
-      const repoSeries = seriesMap.get(SARB_SERIES.REPO_RATE);
-      const repoRate = this.extractRateData(repoSeries, 'Repo Rate');
-      
-      // Process prime rate
-      const primeSeries = seriesMap.get(SARB_SERIES.PRIME_RATE);
-      const primeRate = this.extractSimpleRate(primeSeries, 'Prime Rate');
-      
-      // Process exchange rates
-      const usdSeries = seriesMap.get(SARB_SERIES.USD_ZAR);
-      const eurSeries = seriesMap.get(SARB_SERIES.EUR_ZAR);
-      const gbpSeries = seriesMap.get(SARB_SERIES.GBP_ZAR);
-      
-      const exchangeRates = {
-        usdZar: this.getLatestNonNull(usdSeries) ?? 18.5, // Fallback values
-        eurZar: this.getLatestNonNull(eurSeries) ?? 20.0,
-        gbpZar: this.getLatestNonNull(gbpSeries) ?? 23.5,
-        lastUpdated: this.getLatestDate(usdSeries) ?? new Date().toISOString(),
-      };
-      
-      return {
-        inflation,
-        repoRate,
-        primeRate,
-        exchangeRates,
-      };
-      */
-      
-    } catch (error) {
-      console.error('Error fetching economic indicators:', error);
-      throw error;
     }
   }
   

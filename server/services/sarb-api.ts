@@ -60,7 +60,10 @@ export const EconomicIndicatorsSchema = z.object({
   }),
 });
 
-export type EconomicIndicators = z.infer<typeof EconomicIndicatorsSchema>;
+export type EconomicIndicators = z.infer<typeof EconomicIndicatorsSchema> & {
+  isFallback?: boolean; // Indicates degraded service using fallback data
+  warnings?: string[]; // Optional warnings about data quality
+};
 
 // ===== SARB SERIES CODES =====
 
