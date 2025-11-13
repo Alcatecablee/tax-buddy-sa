@@ -100,21 +100,30 @@ export function useCalculations(userId?: string) {
           const result = await syncOfflineCalculations(userId);
           if (result.synced > 0) {
             toast({
-              title: 'Synced',
-              description: `${result.synced} calculation(s) synced successfully`,
+              title: 'Synced Successfully',
+              description: `${result.synced} calculation(s) synced to the cloud`,
             });
             refetch();
             updatePendingCount();
           }
           if (result.failed > 0) {
+            const errorDetails = result.errors.length > 0 
+              ? result.errors[0] 
+              : `${result.failed} calculation(s) failed to sync`;
             toast({
-              title: 'Sync Warning',
-              description: `${result.failed} calculation(s) failed to sync`,
+              title: 'Sync Failed',
+              description: errorDetails,
               variant: 'destructive',
             });
+            updatePendingCount();
           }
         } catch (error) {
           console.error('Auto-sync failed:', error);
+          toast({
+            title: 'Sync Error',
+            description: error instanceof Error ? error.message : 'Failed to sync calculations',
+            variant: 'destructive',
+          });
         }
       }
     });
@@ -138,17 +147,42 @@ export function useCalculations(userId?: string) {
   });
 
   const manualSync = async () => {
-    if (!userId) return { synced: 0, failed: 0 };
+    if (!userId) return { synced: 0, failed: 0, errors: [] };
     
     try {
       const result = await syncOfflineCalculations(userId);
       if (result.synced > 0) {
+        toast({
+          title: 'Sync Complete',
+          description: `${result.synced} calculation(s) synced successfully`,
+        });
         refetch();
+      }
+      if (result.failed > 0) {
+        const errorDetails = result.errors.length > 0 
+          ? result.errors.slice(0, 2).join('. ') 
+          : `${result.failed} calculation(s) failed`;
+        toast({
+          title: 'Sync Issues',
+          description: errorDetails,
+          variant: 'destructive',
+        });
+      }
+      if (result.synced === 0 && result.failed === 0) {
+        toast({
+          title: 'Nothing to Sync',
+          description: 'All calculations are already synced',
+        });
       }
       return result;
     } catch (error) {
       console.error('Manual sync failed:', error);
-      return { synced: 0, failed: 0 };
+      toast({
+        title: 'Sync Failed',
+        description: error instanceof Error ? error.message : 'Unable to sync calculations',
+        variant: 'destructive',
+      });
+      return { synced: 0, failed: 0, errors: [error instanceof Error ? error.message : 'Unknown error'] };
     }
   };
 
