@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Allow search pages to be indexed
+Allow: /search
+Allow: /search?q=*
+
+# Important pages for tax season
+Allow: /blog
+Allow: /upload
+Allow: /manual-entry
+Allow: /how-to
+Allow: /pricing
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /profile/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://taxfy.co.za/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Allow important tax-related search queries
+Allow: /search?q=sars*
+Allow: /search?q=tax*
+Allow: /search?q=irp5*
+Allow: /search?q=refund*

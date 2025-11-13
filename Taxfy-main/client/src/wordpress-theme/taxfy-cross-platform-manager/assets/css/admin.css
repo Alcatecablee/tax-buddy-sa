@@ -1,0 +1,796 @@
+/**
+ * Taxfy Cross-Platform Manager - Admin Styles
+ * Enhanced admin interface matching React app design
+ */
+
+/* Import Inter font for admin */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+/* CSS Variables */
+:root {
+  --taxfy-primary: #3399ff;
+  --taxfy-secondary: #667eea;
+  --taxfy-success: #22c55e;
+  --taxfy-warning: #f59e0b;
+  --taxfy-error: #ef4444;
+  --taxfy-gray-50: #f9fafb;
+  --taxfy-gray-100: #f3f4f6;
+  --taxfy-gray-200: #e5e7eb;
+  --taxfy-gray-300: #d1d5db;
+  --taxfy-gray-400: #9ca3af;
+  --taxfy-gray-500: #6b7280;
+  --taxfy-gray-600: #4b5563;
+  --taxfy-gray-700: #374151;
+  --taxfy-gray-800: #1f2937;
+  --taxfy-gray-900: #111827;
+  --taxfy-font:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --taxfy-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --taxfy-shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --taxfy-shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --taxfy-shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --taxfy-radius-sm: 4px;
+  --taxfy-radius-md: 8px;
+  --taxfy-radius-lg: 12px;
+  --taxfy-radius-xl: 16px;
+  --taxfy-radius-full: 9999px;
+}
+
+/* Base admin styles */
+.taxfy-dashboard,
+.taxfy-page {
+  font-family: var(--taxfy-font);
+  background: var(--taxfy-gray-50);
+  min-height: 100vh;
+}
+
+/* Header styling */
+.taxfy-header {
+  background: linear-gradient(
+    135deg,
+    var(--taxfy-primary) 0%,
+    var(--taxfy-secondary) 100%
+  );
+  color: white;
+  padding: 2rem;
+  border-radius: var(--taxfy-radius-lg);
+  margin-bottom: 2rem;
+  box-shadow: var(--taxfy-shadow-lg);
+}
+
+.taxfy-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.taxfy-header .description {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* Status grid */
+.taxfy-status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.status-card {
+  background: white;
+  border: 1px solid var(--taxfy-gray-200);
+  border-radius: var(--taxfy-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--taxfy-shadow-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.status-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--taxfy-shadow-lg);
+}
+
+.status-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--taxfy-primary),
+    var(--taxfy-secondary)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.status-card:hover::before {
+  opacity: 1;
+}
+
+.status-card.online::before {
+  background: linear-gradient(90deg, var(--taxfy-success), #16a34a);
+  opacity: 1;
+}
+
+.status-card.offline::before {
+  background: linear-gradient(90deg, var(--taxfy-error), #dc2626);
+  opacity: 1;
+}
+
+.card-header {
+  padding: 1.5rem 1.5rem 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--taxfy-gray-900);
+  line-height: 1.5;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--taxfy-gray-600);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--taxfy-success);
+  flex-shrink: 0;
+}
+
+.status-card.offline .status-dot {
+  background: var(--taxfy-error);
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.metrics {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.metric {
+  flex: 1;
+  text-align: center;
+}
+
+.metric .value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--taxfy-primary);
+  margin-bottom: 0.25rem;
+  line-height: 1;
+}
+
+.metric .label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--taxfy-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.quick-actions .button {
+  flex: 1;
+  font-size: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  border-radius: var(--taxfy-radius-md);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.quick-actions .button:hover {
+  transform: translateY(-1px);
+}
+
+/* Quick actions section */
+.taxfy-quick-actions {
+  background: white;
+  border: 1px solid var(--taxfy-gray-200);
+  border-radius: var(--taxfy-radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--taxfy-shadow-sm);
+}
+
+.taxfy-quick-actions h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--taxfy-gray-900);
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.action-card {
+  position: relative;
+  background: white;
+  border: 1px solid var(--taxfy-gray-200);
+  border-radius: var(--taxfy-radius-lg);
+  padding: 2rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: var(--taxfy-shadow-sm);
+}
+
+.action-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--taxfy-primary),
+    var(--taxfy-secondary)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.action-card:hover::before {
+  opacity: 1;
+}
+
+.action-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--taxfy-shadow-xl);
+}
+
+.action-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.action-content h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--taxfy-gray-900);
+}
+
+.action-content p {
+  margin: 0;
+  color: var(--taxfy-gray-600);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.action-link,
+.action-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Section grid */
+.taxfy-section-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.taxfy-recent-activity,
+.taxfy-system-health {
+  background: white;
+  border: 1px solid var(--taxfy-gray-200);
+  border-radius: var(--taxfy-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--taxfy-shadow-sm);
+}
+
+.section-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--taxfy-gray-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--taxfy-gray-50);
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--taxfy-gray-900);
+}
+
+.health-score {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.score {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--taxfy-success);
+}
+
+.score-label {
+  font-size: 0.875rem;
+  color: var(--taxfy-gray-500);
+}
+
+.activity-list,
+.health-checks {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.activity-item,
+.health-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--taxfy-gray-100);
+  transition: background-color 0.2s ease;
+}
+
+.activity-item:hover,
+.health-item:hover {
+  background: var(--taxfy-gray-50);
+}
+
+.activity-item:last-child,
+.health-item:last-child {
+  border-bottom: none;
+}
+
+.activity-icon,
+.check-icon {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.75rem;
+  font-size: 1rem;
+  background: var(--taxfy-gray-100);
+  border-radius: var(--taxfy-radius-md);
+  flex-shrink: 0;
+}
+
+.activity-content,
+.check-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-action,
+.check-name {
+  display: block;
+  font-weight: 500;
+  color: var(--taxfy-gray-900);
+  margin-bottom: 0.125rem;
+  font-size: 0.875rem;
+  line-height: 1.25;
+}
+
+.activity-time,
+.check-message {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--taxfy-gray-500);
+  line-height: 1.25;
+}
+
+.activity-status,
+.check-result {
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+.check-result.success {
+  color: var(--taxfy-success);
+}
+
+.check-result.warning {
+  color: var(--taxfy-warning);
+}
+
+.check-result.error {
+  color: var(--taxfy-error);
+}
+
+/* Enhanced buttons */
+.button-hero {
+  font-size: 1rem !important;
+  padding: 1rem 2rem !important;
+  font-weight: 600 !important;
+  border-radius: var(--taxfy-radius-lg) !important;
+  transition: all 0.2s ease !important;
+}
+
+.button-hero:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: var(--taxfy-shadow-md) !important;
+}
+
+.button-primary.button-hero {
+  background: linear-gradient(
+    135deg,
+    var(--taxfy-primary) 0%,
+    var(--taxfy-secondary) 100%
+  ) !important;
+  border: none !important;
+  color: white !important;
+}
+
+/* Form styling */
+.form-table th {
+  font-weight: 600;
+  color: var(--taxfy-gray-900);
+  padding: 1rem 0.75rem;
+}
+
+.form-table td {
+  padding: 1rem 0.75rem;
+}
+
+.form-table input[type="text"],
+.form-table input[type="url"],
+.form-table input[type="email"],
+.form-table select,
+.form-table textarea {
+  border: 1px solid var(--taxfy-gray-300);
+  border-radius: var(--taxfy-radius-md);
+  padding: 0.75rem;
+  font-family: var(--taxfy-font);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form-table input:focus,
+.form-table select:focus,
+.form-table textarea:focus {
+  border-color: var(--taxfy-primary);
+  box-shadow: 0 0 0 3px rgba(51, 153, 255, 0.1);
+  outline: none;
+}
+
+/* Toggle switches */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 3rem;
+  height: 1.75rem;
+  margin-left: 0.5rem;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-switch label {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--taxfy-gray-300);
+  transition: 0.3s;
+  border-radius: var(--taxfy-radius-full);
+}
+
+.toggle-switch label:before {
+  position: absolute;
+  content: "";
+  height: 1.375rem;
+  width: 1.375rem;
+  left: 0.1875rem;
+  bottom: 0.1875rem;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+  box-shadow: var(--taxfy-shadow-sm);
+}
+
+.toggle-switch input:checked + label {
+  background-color: var(--taxfy-primary);
+}
+
+.toggle-switch input:checked + label:before {
+  transform: translateX(1.25rem);
+}
+
+/* Color inputs */
+input[type="color"] {
+  width: 3rem !important;
+  height: 2.25rem !important;
+  border: 1px solid var(--taxfy-gray-300) !important;
+  border-radius: var(--taxfy-radius-md) !important;
+  cursor: pointer !important;
+  padding: 0.25rem !important;
+}
+
+/* Preview frame */
+.preview-frame {
+  background: #0f0f0f;
+  color: #fafafa;
+  border-radius: var(--taxfy-radius-lg);
+  padding: 0;
+  margin-top: 1rem;
+  overflow: hidden;
+  font-family: var(--taxfy-font);
+  box-shadow: var(--taxfy-shadow-lg);
+}
+
+.preview-header {
+  background: rgba(15, 15, 15, 0.6);
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid rgba(38, 38, 38, 0.4);
+  padding: 1rem 1.5rem;
+}
+
+.preview-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-item {
+  padding: 0.5rem 1rem;
+  border-radius: var(--taxfy-radius-full);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #a6a6a6;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-item.active {
+  background-color: #3399ff;
+  color: #fafafa;
+}
+
+.preview-content {
+  padding: 2rem;
+  text-align: center;
+}
+
+.preview-content h2 {
+  margin: 0 0 1rem 0;
+  color: #fafafa;
+  font-size: 1.5rem;
+}
+
+.preview-content p {
+  color: #a6a6a6;
+  margin-bottom: 1.5rem;
+}
+
+.preview-button {
+  background: #3399ff;
+  color: #fafafa;
+  border: none;
+  border-radius: var(--taxfy-radius-lg);
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  font-family: var(--taxfy-font);
+}
+
+.preview-button:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .taxfy-section-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .taxfy-status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .quick-actions {
+    flex-direction: column;
+  }
+
+  .taxfy-header {
+    padding: 1.5rem;
+  }
+
+  .taxfy-header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Loading animations */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Success/error states */
+.success {
+  color: var(--taxfy-success) !important;
+}
+
+.warning {
+  color: var(--taxfy-warning) !important;
+}
+
+.error {
+  color: var(--taxfy-error) !important;
+}
+
+/* Custom scrollbar */
+.activity-list::-webkit-scrollbar,
+.health-checks::-webkit-scrollbar {
+  width: 6px;
+}
+
+.activity-list::-webkit-scrollbar-track,
+.health-checks::-webkit-scrollbar-track {
+  background: var(--taxfy-gray-100);
+  border-radius: var(--taxfy-radius-sm);
+}
+
+.activity-list::-webkit-scrollbar-thumb,
+.health-checks::-webkit-scrollbar-thumb {
+  background: var(--taxfy-gray-300);
+  border-radius: var(--taxfy-radius-sm);
+}
+
+.activity-list::-webkit-scrollbar-thumb:hover,
+.health-checks::-webkit-scrollbar-thumb:hover {
+  background: var(--taxfy-gray-400);
+}
+
+/* Utilities */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.text-primary {
+  color: var(--taxfy-primary);
+}
+
+.text-success {
+  color: var(--taxfy-success);
+}
+
+.text-warning {
+  color: var(--taxfy-warning);
+}
+
+.text-error {
+  color: var(--taxfy-error);
+}
+
+.bg-primary {
+  background-color: var(--taxfy-primary);
+}
+
+.bg-success {
+  background-color: var(--taxfy-success);
+}
+
+.bg-warning {
+  background-color: var(--taxfy-warning);
+}
+
+.bg-error {
+  background-color: var(--taxfy-error);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .status-card {
+    border-width: 2px;
+  }
+
+  .action-card {
+    border-width: 2px;
+  }
+
+  .button {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

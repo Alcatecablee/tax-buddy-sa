@@ -1,0 +1,522 @@
+[Intervention] Slow network is detected. See <URL> for more details. Fallback font will be used while loading: <URL>
+[Intervention] Slow network is detected. See <URL> for more details. Fallback font will be used while loading: <URL>
+[Intervention] Slow network is detected. See <URL> for more details. Fallback font will be used while loading: <URL>
+[Intervention] Slow network is detected. See <URL> for more details. Fallback font will be used while loading: <URL>
+[Intervention] Slow network is detected. See <URL> for more details. Fallback font will be used while loading: <URL>
+[Intervention] Slow network is detected. See <URL> for more details. Fallback font will be used while loading: <URL>
+[Intervention] Slow network is detected. See <URL> for more details. Fallback font will be used while loading: <URL>
+[Intervention] Slow network is detected. See <URL> for more details. Fallback font will be used while loading: <URL>
+[Intervention] Slow network is detected. See <URL> for more details. Fallback font will be used while loading: <URL>
+[Intervention] Slow network is detected. See <URL> for more details. Fallback font will be used while loading: <URL>
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+The Content-Security-Policy directive 'default-src' contains 'report-uri' as a source expression. Did you want to add it as a directive and forget a semicolon?
+The Content-Security-Policy directive 'default-src' contains 'report-uri' as a source expression. Did you want to add it as a directive and forget a semicolon?
+The Content-Security-Policy directive 'default-src' contains 'report-uri' as a source expression. Did you want to add it as a directive and forget a semicolon?
+The Content-Security-Policy directive 'default-src' contains 'report-uri' as a source expression. Did you want to add it as a directive and forget a semicolon?
+The Content-Security-Policy directive 'default-src' contains 'report-uri' as a source expression. Did you want to add it as a directive and forget a semicolon?
+The Content-Security-Policy directive 'default-src' contains 'report-uri' as a source expression. Did you want to add it as a directive and forget a semicolon?
+The Content-Security-Policy directive 'default-src' contains 'report-uri' as a source expression. Did you want to add it as a directive and forget a semicolon?
+The Content-Security-Policy directive 'default-src' contains 'report-uri' as a source expression. Did you want to add it as a directive and forget a semicolon?
+The Content-Security-Policy directive 'default-src' contains 'report-uri' as a source expression. Did you want to add it as a directive and forget a semicolon?
+The Content-Security-Policy directive 'default-src' contains 'report-uri' as a source expression. Did you want to add it as a directive and forget a semicolon?
+The Content-Security-Policy directive 'default-src' contains 'report-uri' as a source expression. Did you want to add it as a directive and forget a semicolon?
+The source list for Content Security Policy directive 'default-src' contains a source with an invalid path: '/api/4509669501698048/security/?sentry_key=7eb3d90eb4660416caf507087367e67e'. The query component, including the '?', will be ignored.
+The source list for Content Security Policy directive 'default-src' contains a source with an invalid path: '/api/4509669501698048/security/?sentry_key=7eb3d90eb4660416caf507087367e67e'. The query component, including the '?', will be ignored.
+The source list for Content Security Policy directive 'default-src' contains a source with an invalid path: '/api/4509669501698048/security/?sentry_key=7eb3d90eb4660416caf507087367e67e'. The query component, including the '?', will be ignored.
+The source list for Content Security Policy directive 'default-src' contains a source with an invalid path: '/api/4509669501698048/security/?sentry_key=7eb3d90eb4660416caf507087367e67e'. The query component, including the '?', will be ignored.
+The source list for Content Security Policy directive 'default-src' contains a source with an invalid path: '/api/4509669501698048/security/?sentry_key=7eb3d90eb4660416caf507087367e67e'. The query component, including the '?', will be ignored.
+The source list for Content Security Policy directive 'default-src' contains a source with an invalid path: '/api/4509669501698048/security/?sentry_key=7eb3d90eb4660416caf507087367e67e'. The query component, including the '?', will be ignored.
+The source list for Content Security Policy directive 'default-src' contains a source with an invalid path: '/api/4509669501698048/security/?sentry_key=7eb3d90eb4660416caf507087367e67e'. The query component, including the '?', will be ignored.
+The source list for Content Security Policy directive 'default-src' contains a source with an invalid path: '/api/4509669501698048/security/?sentry_key=7eb3d90eb4660416caf507087367e67e'. The query component, including the '?', will be ignored.
+The source list for Content Security Policy directive 'default-src' contains a source with an invalid path: '/api/4509669501698048/security/?sentry_key=7eb3d90eb4660416caf507087367e67e'. The query component, including the '?', will be ignored.
+The source list for Content Security Policy directive 'default-src' contains a source with an invalid path: '/api/4509669501698048/security/?sentry_key=7eb3d90eb4660416caf507087367e67e'. The query component, including the '?', will be ignored.
+The source list for Content Security Policy directive 'default-src' contains a source with an invalid path: '/api/4509669501698048/security/?sentry_key=7eb3d90eb4660416caf507087367e67e'. The query component, including the '?', will be ignored.
+Taxfy:1 The source list for the Content Security Policy directive 'default-src' contains an invalid source: ''unsafe-dynamic''. It will be ignored.
+Taxfy:1 The Content-Security-Policy directive 'default-src' contains 'report-uri' as a source expression. Did you want to add it as a directive and forget a semicolon?
+Taxfy:1 The source list for Content Security Policy directive 'default-src' contains a source with an invalid path: '/api/4509669501698048/security/?sentry_key=7eb3d90eb4660416caf507087367e67e'. The query component, including the '?', will be ignored.
+ 
+      /////////////////////
+   ///////////////////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////        Curious and driven?
+  ///////////////@@@@@@@///////        Work with us!
+  ///////////////@@@@@@@///////
+  ///////////////@@@@@@@///////        https://join.replit.com/hack.with.us
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@#//////////////
+   ///////////////////////////
+      /////////////////////
+      
+ [LaunchDarkly] LaunchDarkly client initialized
+ Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'ambient-light-sensor'.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'battery'.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'execution-while-not-rendered'.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'execution-while-out-of-viewport'.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'layout-animations'.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'legacy-image-formats'.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'navigation-override'.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'oversized-images'.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'publickey-credentials'.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'speaker-selection'.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'unoptimized-images'.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'unsized-media'.
+_ @ framework-feb8d59901280d4c.js:1
+ Unrecognized feature: 'pointer-lock'.
+_ @ framework-feb8d59901280d4c.js:1
+ Allow attribute will take precedence over 'allowfullscreen'.
+_ @ framework-feb8d59901280d4c.js:1
+ Allow attribute will take precedence over 'allowpaymentrequest'.
+_ @ framework-feb8d59901280d4c.js:1
+Taxfy:1 Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner.
+ stallwart: failed ping 1
+ WebSocket connection to 'wss://replit.com/graphql_subscriptions' failed: 
+(anonymous) @ _app-4f38a9c7d036feda.js:4
+ Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+_ @ framework-feb8d59901280d4c.js:1
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Unrecognized feature: 'ambient-light-sensor'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Unrecognized feature: 'battery'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Unrecognized feature: 'execution-while-not-rendered'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Unrecognized feature: 'execution-while-out-of-viewport'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Unrecognized feature: 'layout-animations'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Unrecognized feature: 'legacy-image-formats'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Unrecognized feature: 'navigation-override'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Unrecognized feature: 'oversized-images'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Unrecognized feature: 'publickey-credentials'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Unrecognized feature: 'speaker-selection'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Unrecognized feature: 'unoptimized-images'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Unrecognized feature: 'unsized-media'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Allow attribute will take precedence over 'allowfullscreen'.
+workspace_iframe.html?initialPath=%2F&id=%3Ar3l%3A:32 Allow attribute will take precedence over 'allowpaymentrequest'.
+ Supabase Environment Check:
+ URL: https://gegcqqedwmuncqdilbjx.supabase.co
+ Key present: true
+ Key length: 208
+ Supabase client decision: Object
+ ✅ Production Supabase authentication active
+ Auth state changed: INITIAL_SESSION undefined
+gegcqqedwmuncqdilbjx.supabase.co/auth/v1/token?grant_type=password:1  Failed to load resource: the server responded with a status of 401 ()
+ 🔧 Supabase configuration issue (using fallback): Invalid API key
+(anonymous) @ injected.js:27
+ 🔑 Supabase API key invalid or expired - using fallback authentication
+ 🔔 Adding custom toast: toast-1-1760210404347 Welcome back!
+ API Configuration: Object
+ 🍞 Creating persistent toast with ID: 1 Limited Connectivity duration: Infinity
+ 🍞 Adding toast: 1 Limited Connectivity
+ PDF.js worker configured at: https://unpkg.com/pdfjs-dist@5.3.31/build/pdf.worker.min.mjs
+ Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.
+(anonymous) @ injected.js:27
+ PWA Storage initialized successfully
+ Starting OCR-based PDF processing for file: report_app.pdf
+ ✅ Successfully created PDF bytes copy using ArrayBuffer.slice()
+ PDF file size: 11272 bytes
+ ✅ PDF header validation passed: %PDF-1.4
+ Starting PDF to canvas conversion...
+ PDF loaded successfully with 2 pages
+ Processing page 1/2...
+ Rendering page 1 to canvas: 1263 x 892
+ Page 1 successfully converted to canvas
+ Processing page 2/2...
+ Rendering page 2 to canvas: 1263 x 892
+ Page 2 successfully converted to canvas
+ Successfully converted 2 pages to canvas
+ PDF converted to canvases: Array(2)
+ Running OCR on page 1/2...
+ Page 1 OCR completed. Text length: 3967
+ Running OCR on page 2/2...
+ Page 2 OCR completed. Text length: 2136
+ OCR completed. Text length: 6137
+ OCR text preview: 
+--- PAGE 1 ---
+Transaction Year 2025                Year of Assessment 2025                  Period of Reconciliation 202502
+VSARS                            (cov                                  (corvmy                                 Employee Income Tax Certificate  IRPS/IT3A
+Certificate No. 719074162120250223012001000625                                                                                          Type of Certificate IRP5
+Employee Information
+SumamefTrading Name MAKAZHU           ...
+ Extracting IRP5 data from OCR text...
+ Full OCR text for debugging:
+ ================================================================================
+ 
+--- PAGE 1 ---
+Transaction Year 2025                Year of Assessment 2025                  Period of Reconciliation 202502
+VSARS                            (cov                                  (corvmy                                 Employee Income Tax Certificate  IRPS/IT3A
+Certificate No. 719074162120250223012001000625                                                                                          Type of Certificate IRP5
+Employee Information
+SumamefTrading Name MAKAZHU                                                 Employee Number          681                                        Home Tel No
+First Two Names                 (CLIVE CHENJERAI CHENJERAI
+Initials          cc                  Nature of Person M                    Date of Birth       19910927           1D No.       ZEP0103944HH              Bus Tel No.                   0315691357
+(CCYYMMDD)                                                   Fax No.
+Passport No. GN383935          Passport Country of Issue ZWE                        Income TaxRef No. 3877143168
+cellNo                      0663064242
+Contact Email                Cliveggaap.coza
+Employee Address Details - Residential                                                                                      Employer Reference Numbers
+Unt No                                 Complex                                                                                                                 Faye Ref No.                190741621
+Street No.                                   StteetiName of Farm 219 Jan Smuts Ave                                                                                    SOL Ref No.                   L1go7ate21
+SuburbiDistict Rosebank                                                                                                                                    UF Ref No,                  Uteo7at621
+City/Town         Johannesburg                                                                               Postal Code 2196
+Employee Address Details - Postal                                                                                                                          Bank Account Type
+Postal adress struc            Postal address is same as Residential Address                                                                        Focount Holger,    sont sara  LJ
+Relationship
+Postal address is Care OF           vOw
+Account Type
+Unit No.                                                   City/Town                      Johannesburg
+Complex                                                                                                                                                          ChequelCurtent Ace    Bond Acc.                      um)
+Steet Number                                                                                                                                                    Savings Ac.                   O crdtcarac               ul
+Street Name/Farm 219 Jan Smuts Ave                                                                                                                     Transmission Ac.             OO subscription shares Acc.
+DisticySuburb Rosebank                                                                               Postal Code: 2196
+Employee Remuneration Bank Account Details
+Mark wih Xf not paid                     0 AccowtNo 62810572368                      BranchNo. 250655
+electronically or i foreign bank
+Bank Name                First National Bank SA
+Branch Name               ROSEBANK
+Account Holder Name CLIVE C MAKAZHU
+Paye Ref No: 7190741621           SDL RefNo 1190741621           UF Ref No. U190741621
+Certiicate No: 719074162120250223012001000625
+Transaction Year: 2025
+Time Stamp: 2025-05-23
+Accsys PeopleWare ESS IRPS                                                                     Page 10f2                                                                                   2025/05/23 11:48 PM
+
+
+--- PAGE 2 ---
+WSARS                      (coy                           (cov                           Employee Income Tax Certificate  IRPS/IT3A
+Certificate No. 719074162120250223012001000625                                                   Type of Certificate IRP5
+Tax Certificate Information
+Trading or Other Name    GAAP POINT OF SALE (PTY) LTD
+Employee Address Details - Business                                                                                                         Tax Withheld
+Suburb/District  Riverhorse Business Esate                                                                                 14800.92                                 4102
+CiyTown        Durban                                                                               Postal Code 4017                000                                           1s
+122,664.00                            3601                                   194,155.00                            3699    Employee and Employer UIF Contribution
+1460.00                        3605                                                                       2621.04                                      4141
+53,100.00                            3606                                                                                Employer SDL Contribution
+203.00                            3801                                                                                 194152                                           4142
+16.728.00                      3810              .                                 Total Tax, SDL and UIF
+Deductions / Contributions                                         9563.48                                              sae
+31,369.00                           4005    OR Reason for Non-Deduction of Employees Tax
+Pay Periods
+Period Employed From (CCYYMMDD)       20240301
+Period Employed To (CCYYMMDD)        20250228
+Directive Numbers
+Accsys PeopleWare ESS IRPS                                                                          Page20f2                                                                                         2025/05/23 11:48 PM
+
+
+ ================================================================================
+ 
+Trying to extract grossRemuneration...
+   Pattern 1/14: /122,664\.00\s+3601/i
+   ❌ No match
+   Pattern 2/14: /122664\.00\s+3601/i
+   ❌ No match
+   Pattern 3/14: /122\s*664\.00\s+3601/i
+   ❌ No match
+   Pattern 4/14: /122,664\s+3601/i
+   ❌ No match
+   Pattern 5/14: /(\d{1,3}(?:,\d{3})*\.\d{2})\s+3601/i
+   ✅ Match found: "122,664.00                            3601" -> amount: "122,664.00" -> parsed: R122,664
+ ✅ Successfully extracted grossRemuneration: R122,664
+ 
+Trying to extract payeWithheld...
+   Pattern 1/16: /(\d{1,3}(?:,\d{3})*\.\d{2})[\s\n\r]*4102/i
+   ✅ Match found: "800.92                                 4102" -> amount: "800.92" -> parsed: R800.92
+ ✅ Successfully extracted payeWithheld: R800.92
+ 
+Trying to extract uifContrib...
+   Pattern 1/14: /1,?460\.00[\s\S]*?3605/i
+   ❌ No match
+   Pattern 2/14: /1460\.00[\s\S]*?3605/i
+   ❌ No match
+   Pattern 3/14: /1,460\.00\s+3605/i
+   ❌ No match
+   Pattern 4/14: /1460\.00\s+3605/i
+   ❌ No match
+   Pattern 5/14: /1\s*460\.00\s+3605/i
+   ❌ No match
+   Pattern 6/14: /1,460\s+3605/i
+   ❌ No match
+   Pattern 7/14: /(\d{1,3}(?:,\d{3})*\.\d{2})\s+3605/i
+   ✅ Match found: "460.00                        3605" -> amount: "460.00" -> parsed: R460
+ ✅ Successfully extracted uifContrib: R460
+ 
+Trying to extract retirementFund...
+   Pattern 1/18: /(\d{1,3}(?:,\d{3})*\.\d{2})\s+4005/i
+   ✅ Match found: "31,369.00                           4005" -> amount: "31,369.00" -> parsed: R31,369
+ ✅ Successfully extracted retirementFund: R31,369
+ 
+Trying to extract medicalScheme...
+   Pattern 1/19: /(\d{1,3}(?:,\d{3})*\.\d{2})\s+3810/i
+   ✅ Match found: "728.00                      3810" -> amount: "728.00" -> parsed: R728
+ ✅ Successfully extracted medicalScheme: R728
+ 
+Trying to extract travelAllowance...
+   Pattern 1/14: /(\d{1,3}(?:,\d{3})*\.\d{2})\s+3703/i
+   ❌ No match
+   Pattern 2/14: /(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)\s+3703/i
+   ❌ No match
+   Pattern 3/14: /(\d{1,3}(?:[ ,]\d{3})*\.\d{2})\s+3703/i
+   ❌ No match
+   Pattern 4/14: /(\d{1,3}(?:[ ,]\d{3})*(?:\.\d{2})?)\s+3703/i
+   ❌ No match
+   Pattern 5/14: /(?:code\s*)?3703[:\s]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 6/14: /3703[\s\n]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 7/14: /37\s*0\s*3[:\s]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 8/14: /travel\s*allowance[:\s]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 9/14: /motor\s*vehicle\s*allowance[:\s]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 10/14: /car\s*allowance[:\s]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 11/14: /transport\s*allowance[:\s]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 12/14: /vehicle\s*allowance[:\s]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 13/14: /([\d,\s]+\.?\d*)\s+3703/i
+   ❌ No match
+   Pattern 14/14: /3703[^\d]*(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)/i
+   ❌ No match
+ ℹ️ No travel allowance found (this is normal - many IRP5s don't include travel allowances)
+ 
+Trying to extract medicalCredits...
+   Pattern 1/15: /Medical\s+Aid\s+Tax\s+Credit[\s\S]*?(\d{1,3}(?:,\d{3})*\.\d{2})/i
+   ❌ No match
+   Pattern 2/15: /Medical\s+Aid\s+Tax\s+Credit[^0-9]*(\d{1,3}(?:,\d{3})*\.\d{2})/i
+   ❌ No match
+   Pattern 3/15: /Medical\s+Aid\s+Tax\s+Credit[\s\S]*?(\d{1,3}(?:,\d{3})*\.\d{2})[\s\S]*?(?:4102|4150)/i
+   ❌ No match
+   Pattern 4/15: /Medical\s+Aid\s+Tax\s+Credit[\s\S]*?(\d{1,3}(?:,\d{3})*\.\d{2})[\s\S]*?Employes/i
+   ❌ No match
+   Pattern 5/15: /Medical[\s\S]*?(\d{1,3}(?:,\d{3})*\.\d{2})[\s\S]*?Credit/i
+   ❌ No match
+   Pattern 6/15: /(\d{1,3}(?:,\d{3})*\.\d{2})\s+4150/i
+   ❌ No match
+   Pattern 7/15: /(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)\s*4150/i
+   ❌ No match
+   Pattern 8/15: /(?:code\s*)?4150[:\s]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 9/15: /medical\s*tax\s*credit[:\s]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 10/15: /medical\s*credit[:\s]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 11/15: /4150[\s\n]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 12/15: /([\d,\s]+\.?\d*)\s+4150/i
+   ❌ No match
+   Pattern 13/15: /(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)\s+4150/i
+   ❌ No match
+   Pattern 14/15: /medical[\s\S]*?credit[\s\S]*?(\d{1,3}(?:,\d{3})*\.\d{2})/i
+   ❌ No match
+   Pattern 15/15: /(\d{1,3}(?:,\d{3})*\.\d{2})[\s\S]*?medical[\s\S]*?credit/i
+   ❌ No match
+ ❌ Failed to extract medicalCredits
+ 
+Trying to extract totalTax...
+   Pattern 1/13: /(\d{1,3}(?:,\d{3})*\.\d{2})[\s\n\r]*4149/i
+   ❌ No match
+   Pattern 2/13: /19,?563\.48[\s\n\r]*4149/i
+   ❌ No match
+   Pattern 3/13: /19563\.48[\s\n\r]*4149/i
+   ❌ No match
+   Pattern 4/13: /Total\s+Tax[\s\S]*?(\d{1,3}(?:,\d{3})*\.\d{2})[\s\S]*?4149/i
+   ❌ No match
+   Pattern 5/13: /19,563\.48[\s\n\r]+4149/i
+   ❌ No match
+   Pattern 6/13: /19563\.48[\s\n\r]+4149/i
+   ❌ No match
+   Pattern 7/13: /19\s*563\.48[\s\n\r]*4149/i
+   ❌ No match
+   Pattern 8/13: /(\d{1,3}(?:,\d{3})*\.\d{2})[\s\S]*?4149/i
+   ❌ No match
+   Pattern 9/13: /(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)\s*4149/i
+   ❌ No match
+   Pattern 10/13: /(?:code\s*)?4149[:\s]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 11/13: /total\s*tax[:\s]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ✅ Match found: "Total Tax, " -> amount: ", " -> parsed: R0
+   ❌ Amount is 0 or invalid, continuing...
+   Pattern 12/13: /4149[\s\n]*[R]?\s*([\d,\s]+\.?\d*)/i
+   ❌ No match
+   Pattern 13/13: /([\d,\s]+\.?\d*)\s+4149/i
+   ❌ No match
+ ❌ Failed to extract totalTax
+ 
+Trying to extract tax year...
+ ✅ Found tax year: 2025
+ 
+📊 Extraction Summary:
+   Total fields attempted: 8
+   Successful matches: 5
+   Confidence: 63%
+   Extracted data: Object
+ 
+🔍 DEBUGGING: Searching for problematic amounts...
+ Found 800.92 in text 1 times
+   Context: "                                                14800.92                                 4102"
+ ❌ Correct PAYE amount 19,563.48 NOT found in OCR text
+ ✅ Found correct gross 122,664 in text 1 times
+   Context: "122,664.00                            3601               "
+ 
+🔍 DEBUGGING: Searching for SARS codes...
+ Found code 3601 in text 1 times
+   Context: "122,664.00                            3601                                   194,155.00     "
+ Found code 4102 in text 1 times
+   Context: "         14800.92                                 4102"
+ Found code 4005 in text 1 times
+   Context: "31,369.00                           4005    OR Reason for Non-Deduction of Employees Tax"
+ Found code 3810 in text 1 times
+   Context: "16.728.00                      3810              .                                 To"
+ ❌ Code 4150 NOT found in OCR text
+ Found code 3605 in text 1 times
+   Context: "1460.00                        3605                                                  "
+ 
+🔧 Post-processing validation...
+ 🔍 UIF post-processing: Current amount R460
+   Checking UIF pattern 1: /(\d{1,3}(?:,\d{3})*\.\d{2})\s+3605/gi
+     Found UIF amount: R460 from "460.00                        3605"
+injected.js:27   Checking UIF pattern 2: /3605[^\d]*(\d{1,3}(?:,\d{3})*\.\d{2})/gi
+injected.js:27   Checking UIF pattern 3: /(\d{1,3}(?:,\d{3})*\.\d{2})[\s\S]*?UIF/gi
+injected.js:27     Found UIF amount: R800.92 from "800.92                                 4102
+CiyTown        Durban                                                                               Postal Code 4017                000                                           1s
+122,664.00                            3601                                   194,155.00                            3699    Employee and Employer UIF"
+injected.js:27     Found UIF amount: R460 from "460.00                        3605                                                                       2621.04                                      4141
+53,100.00                            3606                                                                                Employer SDL Contribution
+203.00                            3801                                                                                 194152                                           4142
+16.728.00                      3810              .                                 Total Tax, SDL and UIF"
+injected.js:27   Checking UIF pattern 4: /UIF[\s\S]*?(\d{1,3}(?:,\d{3})*\.\d{2})/gi
+injected.js:27     Found UIF amount: R460 from "UIF Contribution
+1460.00"
+injected.js:27     Found UIF amount: R563.48 from "UIF
+Deductions / Contributions                                         9563.48"
+injected.js:27   Found 3 unique UIF amounts: R460, R800.92, R563.48
+injected.js:27   Employee UIF (smaller): R460
+injected.js:27   Employer UIF (larger): R800.92
+injected.js:27 
+📊 Final Extraction Summary:
+injected.js:27   Successful fields: 5/8
+injected.js:27   Final confidence: 63%
+injected.js:27   Final data: Object
+injected.js:27 OCR extraction complete. Confidence: 63% (5/8 fields found)
+injected.js:27 Successfully extracted IRP5 data: Object
+injected.js:27 🔔 Adding custom toast: toast-2-1760210436610 Success!
+injected.js:27 🧮 Starting tax calculation with extracted data: Object
+injected.js:27 📊 Sanitized calculation inputs: Object
+injected.js:27 🔄 Calling calculateTaxFromIRP5 function...
+injected.js:27 
+💰 REFUND CALCULATION DEBUG:
+injected.js:27 IRP5 Data: Object
+injected.js:27 
+🧮 TAX CALCULATION DEBUG (2025/26):
+injected.js:27 Input values: Object
+injected.js:27 Deductions: Object
+injected.js:27 
+📊 Tax bracket calculation:
+injected.js:27 Bracket 1: R90,835 @ 18.0% = R16,350.3
+injected.js:27 Income R90,835 is below bracket 2 (R237,100+)
+injected.js:27 Total income tax before rebates: R16,350.3
+injected.js:27 Total rebates: R17,235
+injected.js:27 Medical credits: R0
+injected.js:27 Final calculation: Object
+injected.js:27 Effective tax rate: 0.00%
+injected.js:27 🧮 TAX CALCULATION COMPLETE
+
+injected.js:27 
+💰 REFUND CALCULATION:
+injected.js:27 Tax calculation result: Object
+injected.js:27 💰 REFUND CALCULATION COMPLETE
+
+injected.js:27 ✅ Tax calculation completed: Object
+injected.js:27 💾 Updated stored PDF with tax results
+injected.js:27 🔔 Adding custom toast: toast-3-1760210439644 Calculation Complete! 🎉
+injected.js:27 🎯 Tax calculation process completed successfully
+SarsEfilingPreview.tsx:121 Uncaught TypeError: Cannot read properties of undefined (reading 'grossRemuneration')
+    at SarsEfilingPreview.tsx:121:41
+    at mountMemo (chunk-RAW7GGPT.js?v=0b184f7a:12194:27)
+    at Object.useMemo (chunk-RAW7GGPT.js?v=0b184f7a:12518:24)
+    at useMemo (chunk-UE3ANLLH.js?v=0b184f7a:1094:29)
+    at SarsEfilingPreview (SarsEfilingPreview.tsx:116:31)
+    at renderWithHooks (chunk-RAW7GGPT.js?v=0b184f7a:11548:26)
+    at mountIndeterminateComponent (chunk-RAW7GGPT.js?v=0b184f7a:14926:21)
+    at beginWork (chunk-RAW7GGPT.js?v=0b184f7a:15914:22)
+    at HTMLUnknownElement.callCallback2 (chunk-RAW7GGPT.js?v=0b184f7a:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RAW7GGPT.js?v=0b184f7a:3699:24)
+SarsEfilingPreview.tsx:121 Uncaught TypeError: Cannot read properties of undefined (reading 'grossRemuneration')
+    at SarsEfilingPreview.tsx:121:41
+    at mountMemo (chunk-RAW7GGPT.js?v=0b184f7a:12194:27)
+    at Object.useMemo (chunk-RAW7GGPT.js?v=0b184f7a:12518:24)
+    at useMemo (chunk-UE3ANLLH.js?v=0b184f7a:1094:29)
+    at SarsEfilingPreview (SarsEfilingPreview.tsx:116:31)
+    at renderWithHooks (chunk-RAW7GGPT.js?v=0b184f7a:11548:26)
+    at mountIndeterminateComponent (chunk-RAW7GGPT.js?v=0b184f7a:14926:21)
+    at beginWork (chunk-RAW7GGPT.js?v=0b184f7a:15914:22)
+    at HTMLUnknownElement.callCallback2 (chunk-RAW7GGPT.js?v=0b184f7a:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RAW7GGPT.js?v=0b184f7a:3699:24)
+injected.js:27 The above error occurred in the <SarsEfilingPreview> component:
+
+    at SarsEfilingPreview (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/src/components/SarsEfilingPreview.tsx:39:3)
+    at div
+    at div
+    at div
+    at Upload (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/src/pages/Upload.tsx:77:20)
+    at ProtectedRoute (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/src/components/auth/ProtectedRoute.tsx:23:3)
+    at RenderedRoute (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=0b184f7a:5455:26)
+    at Routes (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=0b184f7a:6188:3)
+    at Suspense
+    at main
+    at div
+    at Router (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=0b184f7a:6131:13)
+    at BrowserRouter (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=0b184f7a:9149:3)
+    at _a (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/node_modules/.vite/deps/react-helmet-async.js?v=0b184f7a:624:5)
+    at Provider (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/node_modules/.vite/deps/chunk-SWU72A7M.js?v=0b184f7a:22:15)
+    at TooltipProvider (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=0b184f7a:59:5)
+    at Provider (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/node_modules/.vite/deps/chunk-SWU72A7M.js?v=0b184f7a:22:15)
+    at Provider (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/node_modules/.vite/deps/chunk-SWU72A7M.js?v=0b184f7a:22:15)
+    at CollectionProvider (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/node_modules/.vite/deps/chunk-D53L3YIJ.js?v=0b184f7a:29:13)
+    at ToastProvider (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-toast.js?v=0b184f7a:55:5)
+    at SubscriptionProvider (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/src/contexts/SubscriptionContext.tsx:33:3)
+    at AuthLoadingWrapper (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/src/components/AuthLoadingWrapper.tsx:21:3)
+    at AuthProvider (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/src/contexts/AuthContext.tsx:45:32)
+    at ThemeProvider (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/src/components/theme-provider.tsx:25:3)
+    at ErrorBoundary (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/src/components/ErrorBoundary.tsx:16:5)
+    at QueryClientProvider (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=0b184f7a:2805:3)
+    at App (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/src/App.tsx?v=LCb3ItwYup7cLqu8qFjXT:225:3)
+    at ErrorBoundary (https://d844eae1-306d-4bce-a3c2-8f16c2eadcd7-00-1kzn9ok39dyic.kirk.replit.dev/src/components/ErrorBoundary.tsx?v=LCb3ItwYup7cLqu8qFjXT:16:5)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+(anonymous) @ injected.js:27
+injected.js:27 Error caught by boundary: TypeError: Cannot read properties of undefined (reading 'grossRemuneration')
+    at SarsEfilingPreview.tsx:121:41
+    at mountMemo (chunk-RAW7GGPT.js?v=0b184f7a:12194:27)
+    at Object.useMemo (chunk-RAW7GGPT.js?v=0b184f7a:12518:24)
+    at useMemo (chunk-UE3ANLLH.js?v=0b184f7a:1094:29)
+    at SarsEfilingPreview (SarsEfilingPreview.tsx:116:31)
+    at renderWithHooks (chunk-RAW7GGPT.js?v=0b184f7a:11548:26)
+    at mountIndeterminateComponent (chunk-RAW7GGPT.js?v=0b184f7a:14926:21)
+    at beginWork (chunk-RAW7GGPT.js?v=0b184f7a:15914:22)
+    at beginWork$1 (chunk-RAW7GGPT.js?v=0b184f7a:19753:22)
+    at performUnitOfWork (chunk-RAW7GGPT.js?v=0b184f7a:19198:20) Object
+(anonymous) @ injected.js:27

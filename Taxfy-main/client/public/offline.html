@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taxfy - You're Offline</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+          Cantarell, sans-serif;
+        background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+        color: #fafafa;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .container {
+        text-align: center;
+        max-width: 500px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 40px 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .icon {
+        font-size: 64px;
+        margin-bottom: 20px;
+        animation: bounce 2s infinite;
+      }
+
+      h1 {
+        color: #3b82f6;
+        font-size: 2.5rem;
+        margin-bottom: 16px;
+        font-weight: 700;
+      }
+
+      p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 30px;
+        color: #d1d5db;
+      }
+
+      .features {
+        margin: 30px 0;
+        padding: 20px;
+        background: rgba(59, 130, 246, 0.1);
+        border-radius: 12px;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+      }
+
+      .features h3 {
+        color: #60a5fa;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .features ul {
+        list-style: none;
+        text-align: left;
+      }
+
+      .features li {
+        padding: 5px 0;
+        color: #cbd5e1;
+        font-size: 0.95rem;
+      }
+
+      .features li:before {
+        content: "✓ ";
+        color: #10b981;
+        font-weight: bold;
+        margin-right: 8px;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      button {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        min-width: 140px;
+      }
+
+      button:hover {
+        background: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .secondary {
+        background: transparent;
+        border: 2px solid #3b82f6;
+        color: #3b82f6;
+      }
+
+      .secondary:hover {
+        background: #3b82f6;
+        color: white;
+      }
+
+      .status {
+        margin-top: 30px;
+        padding: 15px;
+        background: rgba(245, 158, 11, 0.1);
+        border-radius: 8px;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+      }
+
+      .status-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: #f59e0b;
+        border-radius: 50%;
+        margin-right: 8px;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 30px 20px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        button {
+          width: 100%;
+          max-width: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="icon">📱</div>
+      <h1>You're Offline</h1>
+      <p>
+        No worries! Taxfy works offline too. You can still access many features
+        and calculate your taxes without an internet connection.
+      </p>
+
+      <div class="features">
+        <h3>Available Offline:</h3>
+        <ul>
+          <li>Manual tax calculations</li>
+          <li>View previously uploaded documents</li>
+          <li>Access saved tax data</li>
+          <li>Generate basic reports</li>
+          <li>Browse tax information</li>
+        </ul>
+      </div>
+
+      <div class="buttons">
+        <button onclick="goHome()">📊 Tax Calculator</button>
+        <button onclick="tryAgain()" class="secondary">🔄 Try Again</button>
+      </div>
+
+      <div class="status">
+        <span class="status-dot"></span>
+        <small>Waiting for internet connection...</small>
+      </div>
+    </div>
+
+    <script>
+      function goHome() {
+        window.location.href = "/";
+      }
+
+      function tryAgain() {
+        window.location.reload();
+      }
+
+      // Check for internet connection
+      function checkConnection() {
+        if (navigator.onLine) {
+          // Connection restored, reload the page
+          window.location.reload();
+        }
+      }
+
+      // Listen for online events
+      window.addEventListener("online", checkConnection);
+
+      // Periodically check connection
+      setInterval(checkConnection, 5000);
+
+      // Update status based on connection
+      function updateStatus() {
+        const statusElement = document.querySelector(".status small");
+        if (navigator.onLine) {
+          statusElement.textContent = "Connection restored! Refreshing...";
+          setTimeout(() => window.location.reload(), 1000);
+        } else {
+          statusElement.textContent = "Waiting for internet connection...";
+        }
+      }
+
+      window.addEventListener("online", updateStatus);
+      window.addEventListener("offline", updateStatus);
+
+      // Initial status update
+      updateStatus();
+    </script>
+  </body>
+</html>

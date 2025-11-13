@@ -1,0 +1,735 @@
+doc_title,doc_category,doc_tags,doc_content,doc_excerpt,doc_status
+"Getting Started with Taxfy - Complete Guide","Getting Started","getting started,irp5,tax calculator,sars","# Getting Started with Taxfy - Complete Guide
+
+Welcome to Taxfy, South Africa's #1 tax calculator! This comprehensive guide will help you maximize your SARS refund in under 30 seconds.
+
+## What is Taxfy?
+
+Taxfy is a professional-grade tax calculation platform designed specifically for South African tax requirements. We help you:
+
+- **Calculate your exact SARS refund** using your IRP5 or manual entry
+- **Generate professional tax reports** in PDF, CSV, and Excel formats
+- **Export SARS eFiling-ready data** for seamless submission
+- **Validate your tax calculations** with AI-powered accuracy checking
+
+## Quick Start (30 Seconds)
+
+### Step 1: Upload Your IRP5
+1. Visit the [Taxfy calculator](https://taxfy.com/upload)
+2. Click **""Upload Your IRP5""** or drag & drop your PDF
+3. Wait for AI extraction (15-20 seconds)
+
+### Step 2: Review & Calculate
+1. Verify extracted data is correct
+2. Add any missing deductions (medical aid, retirement)
+3. Click **""Calculate My Tax""**
+
+### Step 3: Get Your Results
+1. View your instant tax calculation
+2. Download professional PDF report
+3. Export SARS eFiling data if needed
+
+## Supported Documents
+
+### Primary Documents
+- **IRP5 PDF** - Official SARS document (recommended)
+- **IRP5A PDF** - For directors and freelancers
+- **Manual Entry** - Type in your details directly
+
+### What We Extract
+- Gross remuneration
+- PAYE tax paid
+- UIF contributions
+- Retirement fund contributions
+- Medical aid contributions
+- Travel allowances
+- All other allowances and deductions
+
+## Key Features Overview
+
+### 🔬 AI-Powered Extraction
+- **OCR Technology**: Reads any IRP5 PDF format
+- **Data Validation**: Cross-checks extracted values
+- **Confidence Scoring**: Shows extraction accuracy
+- **Manual Override**: Edit any incorrect values
+
+### ⚡ Instant Calculations
+- **SARS-Compliant**: Uses 2025/26 tax year rates
+- **Real-Time**: Results in under 30 seconds
+- **Comprehensive**: Shows full tax breakdown
+- **Accurate**: Verified against SARS formulas
+
+### 📊 Professional Reports
+- **Tax Calculation Summary**: Complete breakdown
+- **SARS eFiling Export**: Ready-to-submit format
+- **Multi-Format**: PDF, CSV, Excel downloads
+- **Audit Trail**: Step-by-step calculations
+
+### 🔒 Bank-Grade Security
+- **No Data Storage**: Files deleted after processing
+- **SSL Encryption**: All data transmitted securely
+- **Privacy First**: We never store personal information
+- **POPI Compliant**: Meets South African privacy laws
+
+## Understanding Your Results
+
+### Tax Calculation Breakdown
+Your results show:
+
+1. **Taxable Income**: Gross income minus deductions
+2. **Income Tax**: Based on SARS tax brackets
+3. **Tax Rebates**: Primary, secondary, tertiary rebates
+4. **Medical Credits**: Tax credits for medical aid
+5. **Total Tax**: Final tax liability
+6. **Refund/Owing**: Amount due to/from SARS
+
+### Key Metrics Explained
+
+#### Effective Tax Rate
+Your actual tax rate after rebates and credits:
+
+Effective Rate = Total Tax ÷ Gross Income × 100
+```
+
+#### Marginal Tax Rate
+The tax rate on your last rand earned (your tax bracket).
+
+#### Taxable Income Calculation
+```
+Taxable Income = Gross Income - Retirement Contributions - UIF
+```
+
+*Note: Medical aid contributions provide credits, not deductions*
+
+## Tax Year Information
+
+### Current Tax Year: 2025/26
+- **Period**: 1 March 2025 - 28 February 2026
+- **Filing Deadline**: 31 October 2026 (individuals)
+- **Provisional Tax**: 31 August 2025 & 28 February 2026
+
+### Tax Brackets 2025/26
+| Income Range | Tax Rate |
+|-------------|----------|
+| R0 - R237,100 | 18% |
+| R237,101 - R370,500 | 26% |
+| R370,501 - R512,800 | 31% |
+| R512,801 - R673,000 | 36% |
+| R673,001 - R857,900 | 39% |
+| R857,901 - R1,817,000 | 41% |
+| R1,817,001+ | 45% |
+
+### Tax Rebates 2025/26
+- **Primary Rebate**: R17,235 (all taxpayers)
+- **Secondary Rebate**: R9,444 (65+ years)
+- **Tertiary Rebate**: R3,145 (75+ years)
+
+Ready to maximize your refund? [Start your calculation now →](https://taxfy.com/upload)","Learn how to use Taxfy's AI-powered tax calculator to maximize your SARS refund in under 30 seconds. Complete step-by-step guide for South African taxpayers.","publish"
+"Freelancer Tax Guide - South Africa 2025/26","Freelancer Tax","freelancer,self-employed,tax obligations,provisional tax,business deductions","# Freelancer Tax Guide - South Africa 2025/26
+
+Master your freelancer tax obligations with Taxfy's comprehensive guide for independent contractors, consultants, and self-employed professionals in South Africa.
+
+## Who This Guide Is For
+
+- **Independent Contractors** working for multiple clients
+- **Freelancers** in creative, tech, and professional services
+- **Consultants** providing specialist expertise
+- **Gig Workers** earning from multiple platforms
+- **Part-Time Freelancers** with employment + freelance income
+
+## Understanding Freelancer Tax Obligations
+
+### Tax Registration Requirements
+
+#### When You Must Register
+- **Annual Income > R1,000,000**: Mandatory VAT registration
+- **Voluntary VAT**: Register if income > R50,000 annually
+- **Income Tax**: All freelancers must register for income tax
+- **Provisional Tax**: Required if owing > R1,000 in previous year
+
+#### Required Tax Numbers
+- **Tax Reference Number**: Personal income tax
+- **VAT Number**: If registered for VAT
+- **PAYE Number**: If employing staff
+- **UIF Number**: For employee contributions
+
+### Types of Tax Documents for Freelancers
+
+#### IRP5 vs Other Documents
+- **IRP5**: If you have employment income
+- **IRP5A**: For directors and high-earning freelancers
+- **IT3(a)**: For investment income
+- **Invoices & Receipts**: For freelance income tracking
+
+## Freelancer Income Types
+
+### 1. Employment + Freelance Income
+
+**Scenario**: You have a day job AND freelance work
+
+#### Tax Treatment
+- **Employment Income**: Taxed via PAYE (IRP5)
+- **Freelance Income**: Declared as additional income
+- **Combined Assessment**: Total income determines tax bracket
+
+#### Using Taxfy for Mixed Income
+1. Upload your IRP5 for employment income
+2. Use manual entry to add freelance income
+3. Include all business deductions
+4. Get combined tax calculation
+
+### 2. Pure Freelance Income
+
+**Scenario**: All income from freelance work
+
+#### Tax Treatment
+- **Provisional Tax**: Pay twice yearly estimates
+- **Annual Return**: Final reconciliation
+- **Business Deductions**: Claim all qualifying expenses
+
+#### Calculation Method
+```
+Total Freelance Income
+- Business Expenses (deductible)
+- Retirement Contributions (up to 27.5%)
+= Taxable Income
+```
+
+## Essential Business Deductions for Freelancers
+
+### Home Office Expenses
+
+#### Qualifying Expenses
+- **Rent/Bond Portion**: Based on office space percentage
+- **Utilities**: Electricity, water, internet (proportional)
+- **Insurance**: Home insurance portion for office
+- **Maintenance**: Repairs and upkeep (proportional)
+
+#### Calculation Method
+```
+Office Size ÷ Total Home Size × Total Expense = Deductible Amount
+```
+
+**Example**: 20m² office in 100m² home = 20% of qualifying expenses
+
+### Equipment & Technology
+
+#### Fully Deductible
+- **Computers & laptops** (business use only)
+- **Software subscriptions** (Adobe, Microsoft, etc.)
+- **Professional tools** specific to your trade
+- **Smartphones** (if primarily for business)
+
+### Travel & Transportation
+
+#### Vehicle Expenses
+- **Business Kilometers**: R3.98 per km (2025/26 rate)
+- **Actual Costs**: Fuel, maintenance, insurance (business %)
+- **Parking & Tolls**: For business travel
+- **Vehicle Finance**: Interest portion (business use)
+
+## Provisional Tax for Freelancers
+
+### Who Pays Provisional Tax
+- Freelancers owing > R1,000 in the previous year
+- Income not subject to PAYE deductions
+- Business owners and consultants
+
+### Payment Dates 2025/26
+- **First Payment**: 31 August 2025
+- **Second Payment**: 28 February 2026
+- **Late Payment Penalty**: 20% interest per annum
+
+## Using Taxfy for Freelancer Taxes
+
+### Step-by-Step Process
+
+#### 1. Gather Your Documents
+- IRP5 (if you have employment income)
+- All freelance income records
+- Business expense receipts
+- Previous year's tax assessment
+
+#### 2. Calculate Your Income
+- Upload IRP5 using Taxfy's AI extraction
+- Manually add freelance income amounts
+- Include all income sources
+- Convert foreign income to ZAR
+
+Ready to optimize your freelancer tax position? [Calculate your taxes now →](https://taxfy.com/upload)","Complete tax guide for South African freelancers, contractors and self-employed professionals. Learn about deductions, provisional tax, VAT registration and compliance requirements.","publish"
+"Business Tax Guide - South Africa 2025/26","Business Tax","business tax,corporate tax,vat,paye,company tax,compliance","# Business Tax Guide - South Africa 2025/26
+
+Complete tax compliance guide for South African businesses, from SMEs to large corporations. Master corporate tax, VAT, PAYE, and advanced compliance with Taxfy's enterprise-grade platform.
+
+## Business Entity Types & Tax Implications
+
+### 1. Private Companies (Pty Ltd)
+
+#### Tax Obligations
+- **Corporate Income Tax**: 27% on taxable income
+- **Dividends Tax**: 20% on distributions to shareholders
+- **VAT Registration**: Mandatory if turnover > R1 million
+- **PAYE**: For employee remuneration
+- **UIF**: Employee and employer contributions
+
+#### Key Benefits
+- **Limited Liability**: Personal asset protection
+- **Tax Planning**: Flexible distribution strategies
+- **Credibility**: Enhanced business reputation
+- **Perpetual Existence**: Continuous operation
+
+### 2. Close Corporations (CC)
+
+#### Tax Treatment
+- **Member's Drawings**: Taxed as deemed remuneration
+- **Profits**: Distributed as deemed dividends
+- **Corporate Tax**: 27% on retained profits
+- **Personal Tax**: On member's share of profits
+
+### 3. Sole Proprietorships
+
+#### Tax Structure
+- **Personal Income Tax**: Individual rates apply
+- **Business Income**: Included in personal assessment
+- **VAT**: Registration if turnover > R1 million
+- **Provisional Tax**: If owing > R1,000
+
+## Corporate Income Tax Deep Dive
+
+### Tax Calculation Formula
+
+```
+Gross Income
+- Exempt Income
+- Deductions
+- Assessed Losses (if any)
+= Taxable Income × 27% = Primary Tax
+
+Primary Tax
+- Rebates & Credits
+- Foreign Tax Credits
+= Normal Tax Payable
+```
+
+### Key Business Deductions
+
+#### Operating Expenses
+- **Salaries & Wages**: Employee remuneration
+- **Rent**: Business premises costs
+- **Utilities**: Electricity, water, telecoms
+- **Insurance**: Business-related policies
+- **Professional Fees**: Legal, accounting, consulting
+
+#### Capital Allowances
+- **Wear & Tear**: Equipment depreciation
+- **Building Allowances**: Commercial property
+- **Motor Vehicle Allowances**: Company vehicles
+- **Computer Equipment**: Accelerated depreciation
+
+### Special Business Incentives
+
+#### Small Business Corporation (SBC)
+**Qualification Criteria**:
+- Gross Income < R20 million
+- Active Business Income < R20 million
+- Shareholders: Natural persons/other SBCs
+- Maximum 20% investment income
+
+**Tax Rates for SBCs**:
+- R0 - R91,250: 0%
+- R91,251 - R365,000: 7%
+- R365,001 - R550,000: 21%
+- R550,001+: 27%
+
+## VAT for Business
+
+### Registration Requirements
+
+#### Mandatory Registration
+- **Turnover > R1,000,000**: 12-month period
+- **Expected Turnover**: Next 12 months projection
+- **Registration Timeline**: Within 21 days of threshold
+
+#### Voluntary Registration
+- **Turnover > R50,000**: Can register voluntarily
+- **Benefits**: Claim input VAT on expenses
+- **Export Benefits**: Zero-rate exports
+
+### VAT Return Periods
+
+#### Standard Returns
+- **Monthly**: Turnover > R30 million
+- **Bi-Monthly**: R1.5 million - R30 million
+- **Quarterly**: < R1.5 million (on application)
+
+### Using Taxfy for Business Tax
+
+#### Enterprise Tax Platform
+
+#### Multi-Entity Management
+- **Consolidated Reporting**: Group-level views
+- **Inter-Company Transactions**: Automated tracking
+- **Transfer Pricing**: Documentation management
+- **Global Compliance**: Multi-jurisdiction support
+
+Ready to transform your business tax function? [Start your enterprise trial →](https://taxfy.com/business-dashboard)","Comprehensive business tax guide for South African companies. Master corporate tax (27%), VAT registration, PAYE compliance and advanced tax strategies with expert guidance.","publish"
+"VAT & PAYE Complete Guide - South Africa 2025/26","VAT & PAYE","vat,paye,value added tax,payroll tax,employer obligations,compliance","# VAT & PAYE Complete Guide - South Africa 2025/26
+
+Master VAT and PAYE compliance with Taxfy's comprehensive guide for businesses, tax practitioners, and payroll professionals. Stay compliant while optimizing cash flow and minimizing penalties.
+
+## VAT (Value-Added Tax) Comprehensive Guide
+
+### Understanding VAT in South Africa
+
+#### What is VAT?
+VAT is a consumption tax charged on most goods and services at each stage of production and distribution. The standard rate is **15%** as of 2025/26.
+
+#### VAT System Overview
+- **Input VAT**: VAT paid on business purchases
+- **Output VAT**: VAT charged on business sales
+- **Net VAT**: Output VAT minus Input VAT
+- **Refund/Payment**: Depends on net position
+
+### VAT Registration Requirements
+
+#### Mandatory Registration Thresholds
+- **R1,000,000**: Taxable supplies in 12-month period
+- **Expected Turnover**: Next 12 months projection exceeds R1,000,000
+- **Registration Deadline**: 21 days from threshold breach
+- **Effective Date**: First day of month following registration
+
+#### Voluntary Registration
+- **Minimum Threshold**: R50,000 annual taxable supplies
+- **Benefits**: 
+  - Claim input VAT on business expenses
+  - Zero-rate exports for VAT purposes
+  - Enhanced business credibility
+
+### VAT Return Periods & Deadlines
+
+#### Return Frequencies
+
+**Monthly Returns**
+- **Requirement**: Annual turnover > R30 million
+- **Submission**: 25th of month following VAT period
+- **Payment**: Same date as submission deadline
+
+**Bi-Monthly Returns**
+- **Requirement**: Annual turnover R1.5 million - R30 million
+- **Periods**: Jan/Feb, Mar/Apr, May/Jun, Jul/Aug, Sep/Oct, Nov/Dec
+- **Submission**: 25th of month following period
+
+### VAT Calculation & Rates
+
+#### Standard Rate: 15%
+Applied to most goods and services unless specifically zero-rated or exempt.
+
+#### Zero-Rated Supplies (0% VAT)
+**Exports**:
+- Physical goods exported from SA
+- Services performed outside SA
+- International transport services
+
+**Basic Food Items**:
+- Brown bread, maize meal, samp
+- Milk, eggs, vegetables, fruit
+- Rice, lentils, pilchards
+
+#### Exempt Supplies (No VAT)
+**Financial Services**:
+- Banking services
+- Insurance premiums
+- Share transactions
+
+**Healthcare**:
+- Medical services by qualified practitioners
+- Hospital services
+- Prescription medicines
+
+## PAYE (Pay As You Earn) Comprehensive Guide
+
+### PAYE System Overview
+
+#### What is PAYE?
+PAYE is the system for deducting employees' income tax from their salaries and wages, remitting it to SARS on their behalf.
+
+#### Employer Obligations
+- **Registration**: Before first salary payment
+- **Deduction**: Calculate and deduct employee tax
+- **Payment**: Remit to SARS by 7th of following month
+- **Reporting**: Submit monthly EMP201 returns
+- **Certificates**: Issue IRP5 certificates annually
+
+### PAYE Calculation
+
+#### Gross Remuneration Components
+**Regular Payments**:
+- Basic salary
+- Overtime payments
+- Commissions and bonuses
+- Allowances (travel, cell phone, etc.)
+
+**Fringe Benefits**:
+- Company cars
+- Medical aid contributions (employer portion)
+- Low-interest loans
+- Free or discounted goods/services
+
+### 2025/26 PAYE Tax Tables
+
+#### Individual Tax Rates
+| Annual Taxable Income | Tax Rate |
+|----------------------|----------|
+| R0 - R237,100 | 18% |
+| R237,101 - R370,500 | 26% |
+| R370,501 - R512,800 | 31% |
+| R512,801 - R673,000 | 36% |
+| R673,001 - R857,900 | 39% |
+| R857,901 - R1,817,000 | 41% |
+| R1,817,001 and above | 45% |
+
+#### Tax Rebates (Annual)
+- **Primary Rebate**: R17,235 (all taxpayers)
+- **Secondary Rebate**: R9,444 (65+ years)
+- **Tertiary Rebate**: R3,145 (75+ years)
+
+#### Medical Aid Tax Credits (Monthly)
+- **Main Member**: R364
+- **First Dependent**: R364  
+- **Additional Dependents**: R246 each
+
+### UIF (Unemployment Insurance Fund)
+
+#### Contribution Rates
+- **Employee**: 1% of gross remuneration
+- **Employer**: 1% of gross remuneration
+- **Total**: 2% of gross remuneration
+
+#### Contribution Limits (2025/26)
+- **Monthly Maximum**: R177.12 per person
+- **Annual Maximum**: R2,125.44 per person
+- **Income Threshold**: Contributions capped at R17,712 monthly earnings
+
+### Monthly PAYE Compliance
+
+#### EMP201 Return Submission
+**Deadline**: 7th of month following pay period
+**Content**:
+- Total PAYE deducted
+- UIF contributions (employee and employer)
+- SDL liability (if applicable)
+- Employee numbers and details
+
+#### Payment Methods
+- **eFiling**: Electronic payment preferred
+- **Bank Transfer**: Direct to SARS account
+- **Cash**: At SARS branches (not recommended)
+- **Debit Order**: Automated monthly payments
+
+### Using Taxfy for VAT & PAYE Management
+
+#### Automated Processing
+- **Invoice Recognition**: AI extracts VAT amounts
+- **Compliance Checking**: Validates requirements
+- **Return Preparation**: Automated completion
+- **Reconciliation**: Bank account matching
+
+Ready to master VAT & PAYE compliance? [Start your professional trial →](https://taxfy.com/business-dashboard)","Master VAT (15%) and PAYE compliance in South Africa. Complete guide covering registration, calculations, deadlines, UIF contributions and automated compliance management.","publish"
+"SARS eFiling Complete Guide - South Africa 2025/26","SARS eFiling","sars efiling,online tax filing,itr12,vat201,emp201,electronic filing","# SARS eFiling Complete Guide - South Africa 2025/26
+
+Master SARS eFiling with Taxfy's comprehensive guide. From registration to submission, learn how to efficiently file your taxes online and integrate seamlessly with Taxfy's export features.
+
+## Introduction to SARS eFiling
+
+### What is SARS eFiling?
+SARS eFiling is the South African Revenue Service's online platform for tax administration. It allows taxpayers to:
+- Submit tax returns electronically
+- Make payments online
+- View tax accounts and statements
+- Correspond with SARS digitally
+- Access tax certificates and documents
+
+### Benefits of eFiling
+- **24/7 Availability**: File anytime, anywhere
+- **Faster Processing**: Quicker assessments and refunds
+- **Immediate Confirmation**: Electronic acknowledgments
+- **Secure Platform**: Bank-grade security
+- **Environmental Friendly**: Paperless process
+- **Cost Effective**: No printing or postage costs
+
+## eFiling Registration Process
+
+### Individual Registration
+
+#### Requirements
+- **South African ID Number** or **Foreign Passport**
+- **Valid Email Address** (primary communication method)
+- **Cell Phone Number** (for SMS notifications)
+- **Banking Details** (for refund payments)
+
+#### Step-by-Step Registration
+1. **Visit SARS eFiling Portal**: www.sarsefiling.co.za
+2. **Click ""Register""**: Select individual registration
+3. **Enter Personal Details**: ID number, names, contact details
+4. **Verify Information**: Confirm accuracy of all details
+5. **Create Password**: Strong password requirements
+6. **Email Verification**: Check email for verification link
+7. **Complete Registration**: Log in with new credentials
+
+### Business Registration
+
+#### Entity Types
+- **Companies**: Private companies (Pty Ltd)
+- **Close Corporations**: CC registration
+- **Trusts**: Various trust types
+- **Partnerships**: Business partnerships
+- **Sole Proprietors**: Individual business registration
+
+#### Required Information
+- **Entity Registration Number**: Company/CC/Trust number
+- **Tax Reference Numbers**: Income tax, VAT, PAYE numbers
+- **Authorized Representatives**: Directors, members, trustees
+- **Business Address**: Physical and postal addresses
+- **Banking Details**: Business bank account information
+
+## Filing Individual Tax Returns (ITR12)
+
+### When to File ITR12
+
+#### Mandatory Filing
+- **Gross Income > R500,000** per annum
+- **Taxable Capital Gains** during the year
+- **Foreign Income**: Any amount
+- **Provisional Tax**: Required to pay
+- **Director or Partner**: Business involvement
+
+#### Voluntary Filing
+- **PAYE Employment**: To claim additional deductions
+- **Refund Due**: Expecting tax refund
+- **Medical Credits**: Claim additional credits
+- **Travel Allowances**: Claim business travel
+
+### ITR12 Sections Explained
+
+#### Section 1: Personal Information
+- Taxpayer details (pre-populated)
+- Contact information updates
+- Residential status (resident/non-resident)
+- Tax year period covered
+
+#### Section 2: Income from Employment
+- **IRP5 Data**: Salary, wages, allowances
+- **Director Remuneration**: Company payments
+- **Lump Sum Benefits**: Retirement payouts
+- **Foreign Employment**: Offshore income
+
+#### Section 3: Investment Income
+- **Interest**: Local and foreign
+- **Dividends**: Local and foreign
+- **Rental Income**: Property income
+- **Capital Gains**: Asset disposals
+
+#### Section 4: Business Income
+- **Sole Proprietor**: Business profits
+- **Partnership**: Share of partnership income
+- **Professional Practice**: Professional fees
+- **Farming**: Agricultural income
+
+#### Section 5: Deductions
+- **Retirement Contributions**: Pension, provident, RA
+- **Medical Expenses**: Qualifying medical costs
+- **Travel Expenses**: Business travel claims
+- **Professional Expenses**: Work-related costs
+
+### Using Taxfy Data for ITR12
+
+#### Export Process
+1. **Complete Taxfy Calculation**: Use full calculator
+2. **Download Export File**: SARS eFiling format
+3. **Import to eFiling**: Upload Taxfy export
+4. **Verify Data**: Check all imported values
+5. **Complete Return**: Add any additional information
+6. **Submit Return**: Electronic submission
+
+#### Data Verification Checklist
+- [ ] Gross remuneration matches IRP5
+- [ ] PAYE tax deductions correct
+- [ ] Retirement contributions accurate
+- [ ] Medical aid contributions verified
+- [ ] All allowances included
+- [ ] Deductions within limits
+
+## Filing Business Tax Returns
+
+### Company Income Tax Return (ITR14)
+
+#### When to Submit
+- **Deadline**: 12 months after financial year-end
+- **Extension**: Can apply for extension
+- **Provisional Companies**: Different deadlines apply
+
+### VAT Returns (VAT201)
+
+#### Submission Frequencies
+- **Monthly**: > R30 million turnover
+- **Bi-Monthly**: R1.5m - R30m turnover
+- **Quarterly**: < R1.5m (special permission)
+
+#### Using Taxfy for VAT Returns
+1. **Connect Bank Accounts**: Import transactions
+2. **Categorize Expenses**: Automatic classification
+3. **VAT Extraction**: AI identifies VAT amounts
+4. **Generate VAT201**: Export eFiling format
+5. **Submit Return**: Upload to SARS eFiling
+
+### PAYE Returns (EMP201)
+
+#### Monthly Obligations
+- **Deadline**: 7th of following month
+- **Late Penalty**: R250 per month
+- **Interest**: 20% per annum on outstanding amounts
+
+## Payment Methods on eFiling
+
+### Electronic Payment Options
+
+#### EFT (Electronic Funds Transfer)
+- **Most Popular**: Widely used method
+- **Processing Time**: Same day if before 2 PM
+- **Bank Requirements**: Internet banking access
+- **Reference Numbers**: SARS-generated references
+
+#### Credit Card Payments
+- **Convenience**: Immediate processing
+- **Cards Accepted**: Visa, MasterCard
+- **Fees**: Bank charges may apply
+- **Limits**: Check with card issuer
+
+## Taxfy Integration with SARS eFiling
+
+### Seamless Data Export
+
+#### Supported Export Formats
+- **ITR12 XML**: Individual tax return format
+- **ITR14 XML**: Company tax return format
+- **VAT201 XML**: VAT return format
+- **CSV Files**: Spreadsheet format for analysis
+
+#### Export Process
+1. **Complete Taxfy Calculation**: Full tax computation
+2. **Select Export Format**: Choose appropriate format
+3. **Download File**: Save to local device
+4. **Import to eFiling**: Upload to SARS platform
+5. **Verify and Submit**: Check accuracy and submit
+
+## Best Practices for eFiling
+
+### Preparation Checklist
+- [ ] Gather all source documents
+- [ ] Verify all income amounts
+- [ ] Calculate deductions accurately
+- [ ] Check tax certificates (IRP5, IT3a)
+- [ ] Review previous year assessment
+- [ ] Backup all electronic records
+
+Ready to streamline your SARS eFiling process? [Connect Taxfy to eFiling →](https://taxfy.com/upload)","Complete SARS eFiling guide for South African taxpayers. Learn registration, ITR12/ITR14/VAT201 filing, payment methods and seamless integration with Taxfy's export features.","publish"

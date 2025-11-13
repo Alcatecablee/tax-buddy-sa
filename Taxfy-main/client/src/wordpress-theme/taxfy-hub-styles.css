@@ -1,0 +1,626 @@
+/**
+ * Taxfy Hub WordPress Theme Customization
+ * Matches the React app design system at taxfy.co.za
+ * 
+ * Apply this CSS to your Docy WordPress theme to match the main app
+ */
+
+/* ==========================================================================
+   CSS CUSTOM PROPERTIES (Design Tokens)
+   ========================================================================== */
+
+:root {
+  /* Colors from React App */
+  --background: 15 15 15; /* rgb(15, 15, 15) */
+  --foreground: 250 250 250; /* rgb(250, 250, 250) */
+  --primary: 51 153 255; /* rgb(51, 153, 255) */
+  --primary-foreground: 250 250 250;
+  --secondary: 38 38 38;
+  --secondary-foreground: 250 250 250;
+  --muted: 38 38 38;
+  --muted-foreground: 166 166 166; /* rgb(166, 166, 166) */
+  --accent: 38 38 38;
+  --accent-foreground: 250 250 250;
+  --border: 38 38 38;
+  --input: 38 38 38;
+  --ring: 51 153 255;
+  --destructive: 239 68 68;
+  --destructive-foreground: 250 250 250;
+  --card: 38 38 38;
+  --card-foreground: 250 250 250;
+  --popover: 15 15 15;
+  --popover-foreground: 250 250 250;
+
+  /* Typography */
+  --font-family:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --font-size-base: 16px;
+  --line-height-base: 24px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  --shadow-md:
+    rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  --shadow-lg:
+    rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
+  /* Backdrop */
+  --backdrop-blur: blur(4px);
+  --backdrop-opacity: 0.6;
+}
+
+/* ==========================================================================
+   GOOGLE FONTS IMPORT
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+/* ==========================================================================
+   GLOBAL RESET AND BASE STYLES
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+}
+
+body {
+  background-color: rgb(var(--background)) !important;
+  color: rgb(var(--foreground)) !important;
+  font-family: var(--font-family) !important;
+  font-weight: var(--font-weight-normal);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Override WordPress default styles */
+body.docy-theme,
+.docy-theme body {
+  background-color: rgb(var(--background)) !important;
+  color: rgb(var(--foreground)) !important;
+  font-family: var(--font-family) !important;
+}
+
+/* ==========================================================================
+   HEADER AND NAVIGATION
+   ========================================================================== */
+
+/* Main Header */
+.site-header,
+.main-header,
+.docy-header {
+  background-color: rgba(var(--background), var(--backdrop-opacity)) !important;
+  backdrop-filter: var(--backdrop-blur);
+  border-bottom: 1px solid rgba(var(--border), 0.4);
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Navigation Container */
+.navbar,
+.main-nav,
+.site-navigation {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+/* Navigation Items */
+.navbar-nav .nav-link,
+.main-nav a,
+.site-navigation a {
+  color: rgb(var(--muted-foreground)) !important;
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.navbar-nav .nav-link:hover,
+.main-nav a:hover,
+.site-navigation a:hover {
+  color: rgb(var(--foreground)) !important;
+  background-color: rgba(var(--muted), 0.5);
+}
+
+.navbar-nav .nav-link.active,
+.main-nav a.active,
+.site-navigation a.current-menu-item {
+  background-color: rgb(var(--primary)) !important;
+  color: rgb(var(--primary-foreground)) !important;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Navigation Container Styling */
+.navbar-collapse,
+.main-nav-container {
+  background-color: rgba(var(--background), 0.5);
+  backdrop-filter: var(--backdrop-blur);
+  border: 1px solid rgba(var(--border), 0.4);
+  border-radius: var(--radius-full);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Logo */
+.site-logo img,
+.navbar-brand img {
+  height: 48px;
+  width: auto;
+}
+
+/* ==========================================================================
+   CONTENT AREAS
+   ========================================================================== */
+
+/* Main Content */
+.main-content,
+.site-main,
+.content-area {
+  background-color: rgb(var(--background));
+  padding-top: var(--spacing-3xl);
+  min-height: 100vh;
+}
+
+/* Content Container */
+.container,
+.content-wrapper {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+/* ==========================================================================
+   CARDS AND COMPONENTS
+   ========================================================================== */
+
+/* Card Components */
+.card,
+.docy-card,
+.knowledge-card,
+.article-card {
+  background-color: rgb(var(--card));
+  border: 1px solid rgba(var(--border), 0.4);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover,
+.docy-card:hover,
+.knowledge-card:hover,
+.article-card:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Card Headers */
+.card-header,
+.card-title {
+  color: rgb(var(--foreground));
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Card Content */
+.card-body,
+.card-content {
+  color: rgb(var(--muted-foreground));
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+/* Primary Buttons */
+.btn-primary,
+.button-primary,
+.wp-block-button__link {
+  background-color: rgb(var(--primary)) !important;
+  color: rgb(var(--primary-foreground)) !important;
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 12px var(--spacing-lg);
+  font-weight: var(--font-weight-medium);
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.btn-primary:hover,
+.button-primary:hover,
+.wp-block-button__link:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+  background-color: rgb(var(--primary)) !important;
+}
+
+/* Secondary Buttons */
+.btn-secondary,
+.btn-outline,
+.button-secondary {
+  background-color: transparent;
+  color: rgb(var(--foreground));
+  border: 1px solid rgba(var(--border), 0.4);
+  border-radius: var(--radius-lg);
+  padding: 12px var(--spacing-lg);
+  font-weight: var(--font-weight-medium);
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-secondary:hover,
+.btn-outline:hover,
+.button-secondary:hover {
+  background-color: rgba(var(--muted), 0.5);
+  color: rgb(var(--foreground));
+  border-color: rgba(var(--border), 0.8);
+}
+
+/* ==========================================================================
+   TYPOGRAPHY
+   ========================================================================== */
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  color: rgb(var(--foreground)) !important;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+}
+
+h1,
+.h1 {
+  font-size: 2.5rem;
+}
+h2,
+.h2 {
+  font-size: 2rem;
+}
+h3,
+.h3 {
+  font-size: 1.5rem;
+}
+h4,
+.h4 {
+  font-size: 1.25rem;
+}
+h5,
+.h5 {
+  font-size: 1.125rem;
+}
+h6,
+.h6 {
+  font-size: 1rem;
+}
+
+/* Paragraphs */
+p {
+  color: rgb(var(--muted-foreground));
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Links */
+a {
+  color: rgb(var(--primary));
+  text-decoration: none;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+a:hover {
+  color: rgb(var(--foreground));
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   FORMS
+   ========================================================================== */
+
+/* Form Controls */
+.form-control,
+.wp-block-search__input,
+input[type="text"],
+input[type="email"],
+input[type="search"],
+textarea,
+select {
+  background-color: rgb(var(--input));
+  border: 1px solid rgba(var(--border), 0.4);
+  border-radius: var(--radius-md);
+  color: rgb(var(--foreground));
+  font-family: var(--font-family);
+  padding: 12px var(--spacing-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-control:focus,
+.wp-block-search__input:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: rgb(var(--primary));
+  box-shadow: 0 0 0 3px rgba(var(--ring), 0.1);
+  outline: none;
+}
+
+/* ==========================================================================
+   SIDEBAR AND WIDGETS
+   ========================================================================== */
+
+.sidebar,
+.widget-area {
+  background-color: rgba(var(--card), 0.5);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+}
+
+.widget {
+  background-color: rgb(var(--card));
+  border: 1px solid rgba(var(--border), 0.4);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.widget-title {
+  color: rgb(var(--foreground));
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-md);
+}
+
+/* ==========================================================================
+   SEARCH AND FILTERS
+   ========================================================================== */
+
+.search-form,
+.wp-block-search {
+  position: relative;
+}
+
+.search-input {
+  background-color: rgb(var(--input));
+  border: 1px solid rgba(var(--border), 0.4);
+  border-radius: var(--radius-lg);
+  color: rgb(var(--foreground));
+  font-size: 16px;
+  padding: 12px 16px 12px 48px;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgb(var(--muted-foreground));
+  width: 16px;
+  height: 16px;
+}
+
+/* ==========================================================================
+   BREADCRUMBS
+   ========================================================================== */
+
+.breadcrumb,
+.breadcrumbs {
+  background-color: transparent;
+  padding: var(--spacing-md) 0;
+  margin-bottom: var(--spacing-lg);
+}
+
+.breadcrumb-item,
+.breadcrumb a {
+  color: rgb(var(--muted-foreground));
+  font-size: 14px;
+}
+
+.breadcrumb-item.active,
+.breadcrumb .current {
+  color: rgb(var(--foreground));
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.site-footer,
+.footer {
+  background-color: rgb(var(--background));
+  border-top: 1px solid rgba(var(--border), 0.4);
+  color: rgb(var(--muted-foreground));
+  padding: var(--spacing-2xl) 0;
+  margin-top: var(--spacing-3xl);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .navbar-collapse {
+    background-color: rgba(var(--background), 0.95);
+    backdrop-filter: var(--backdrop-blur);
+    border: 1px solid rgba(var(--border), 0.4);
+    border-radius: var(--radius-lg);
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-md);
+  }
+
+  .container {
+    padding: 0 var(--spacing-md);
+  }
+
+  h1,
+  .h1 {
+    font-size: 2rem;
+  }
+  h2,
+  .h2 {
+    font-size: 1.75rem;
+  }
+}
+
+/* ==========================================================================
+   DOCY THEME SPECIFIC OVERRIDES
+   ========================================================================== */
+
+/* Override Docy theme defaults */
+.docy-theme .site-content,
+.docy-wrapper {
+  background-color: rgb(var(--background)) !important;
+}
+
+.docy-theme .navbar-light .navbar-nav .nav-link {
+  color: rgb(var(--muted-foreground)) !important;
+}
+
+.docy-theme .navbar-light .navbar-nav .nav-link:hover {
+  color: rgb(var(--foreground)) !important;
+}
+
+/* Docy Cards */
+.docy-theme .doc-item,
+.docy-theme .knowledge-item {
+  background-color: rgb(var(--card));
+  border: 1px solid rgba(var(--border), 0.4);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.docy-theme .doc-item:hover,
+.docy-theme .knowledge-item:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Docy Search */
+.docy-theme .search-box {
+  background-color: rgb(var(--input));
+  border: 1px solid rgba(var(--border), 0.4);
+  border-radius: var(--radius-lg);
+}
+
+/* Override any light theme remnants */
+.docy-theme *:not(svg):not(path) {
+  color: inherit !important;
+}
+
+/* ==========================================================================
+   UTILITY CLASSES
+   ========================================================================== */
+
+.text-muted {
+  color: rgb(var(--muted-foreground)) !important;
+}
+.text-primary {
+  color: rgb(var(--primary)) !important;
+}
+.bg-primary {
+  background-color: rgb(var(--primary)) !important;
+}
+.bg-card {
+  background-color: rgb(var(--card)) !important;
+}
+.border-radius {
+  border-radius: var(--radius-lg);
+}
+.backdrop-blur {
+  backdrop-filter: var(--backdrop-blur);
+}
+
+/* Animation utilities */
+.transition-all {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   DARK MODE ENFORCEMENT
+   ========================================================================== */
+
+/* Force dark mode for all elements */
+* {
+  color-scheme: dark !important;
+}
+
+/* Override any remaining light backgrounds */
+*:not(.wp-block-code):not(pre):not(code) {
+  background-color: inherit;
+}
+
+/* Ensure all text is visible */
+*:not(svg):not(path):not([class*="icon"]) {
+  color: rgb(var(--foreground));
+}
+
+/* ==========================================================================
+   WORDPRESS ADMIN BAR COMPATIBILITY
+   ========================================================================== */
+
+/* Adjust for WordPress admin bar when logged in */
+.admin-bar .site-header {
+  top: 32px;
+}
+
+@media (max-width: 782px) {
+  .admin-bar .site-header {
+    top: 46px;
+  }
+}
