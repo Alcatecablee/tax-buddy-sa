@@ -1,0 +1,56 @@
+he repo rate series also returns 404! This is a significant issue. The /WebIndicators/DataSeries/{code} endpoint is returning 404 for all series codes, which means either:
+
+The endpoint structure is incorrect
+The SARB API doesn't support this endpoint anymore
+The series codes are wrong
+But wait - the repo rate IS working via the CPD rates endpoint. So the SARB API is accessible, but the DataSeries endpoint specifically is the problem.
+
+This is a critical finding. The SARB Web API might not support the /WebIndicators/DataSeries/{code} endpoint, or it requires a different format.
+
+Let me search for SARB API documentation to understand the correct endpoint structure. Actually, let me try accessing the SARB API directly to see what happens.
+
+Actually, looking at my code in sarb-api.ts, the comment says "This endpoint structure needs verification - use getCPDRates() for reliable data". This suggests that the DataSeries endpoint was never fully verified.
+
+The CPD rates endpoint works (repo rate is successfully fetched), but the time series endpoint doesn't. This explains why:
+
+Repo rate: ✅ Works (via CPDRates endpoint)
+Prime rate: ✅ Works (calculated from repo rate)
+Inflation (CPI): ❌ Fails (requires DataSeries endpoint)
+Exchange rates: ❌ Fail (requires DataSeries endpoint)
+This is a major issue! The SARB API integration is only 40% complete (2 out of 5 indicators working).
+
+Let me do a web search to find the correct SARB API documentation and endpoint structure for time series data.
+
+I've discovered a critical issue: the SARB DataSeries endpoint is returning 404 for all series! This explains why CPI and FX data are using fallbacks. Let me search for the correct SARB API documentation:
+
+
+Searched the web for "SARB South African Reserve Bank Web API DataSeries endpoint documentation 2024"
+SARB South African Reserve Bank Web API DataSeries endpoint documentation 2024
+Web search results
+
+Show more
+SARB Web API - DataSeries Endpoint Documentation (2024)
+Based on the official SARB Web API documentation, here's a practical guide to the DataSeries/timeseries endpoints:
+
+Base URL
+https://custom.resbank.co.za/SarbWebApi/
+
+Official Documentation
+Main API Portal: https://custom.resbank.co.za/SarbWebApi/
+Help Page: https://custom.resbank.co.za/SarbWebApi/Help
+-- …
+
+20 sources
+
+Show more
+SARB Web API Help Page
+custom.resbank.co.za
+Welcome to the South African Reserve Bank Web API facility.
+custom.resbank.co.za
+GitHub - HanjoStudy/sarbR: Interface to South African Reserve Bank data
+github.com
+SupTech API Reference Guide
+resbank.co.za
+GitHub - Stellenbosch-Econometrics/sarbR: Interface to South African Reserve Bank data
+github.com
+Agent encountered an error while running, we are investigating the issue.
