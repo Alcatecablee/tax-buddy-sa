@@ -9,6 +9,7 @@
 
 import { z } from 'zod';
 import { sarbConfig } from '../config';
+import { sarbApiLogger as logger } from './logger';
 
 // ===== TYPES & SCHEMAS =====
 
@@ -211,7 +212,11 @@ export class SarbApiClient {
       }
       
       if (isLastAttempt) {
-        console.error(`[SARB API] ${context} failed after ${this.maxRetries} attempts`);
+        logger.error(`${context} failed after ${this.maxRetries} attempts`, {
+          endpoint: context,
+          attempts: this.maxRetries,
+          error: error instanceof Error ? error.message : String(error),
+        });
         throw error;
       }
       
@@ -220,7 +225,13 @@ export class SarbApiClient {
       const jitter = Math.random() * this.baseBackoffMs;
       const delay = exponentialDelay + jitter;
       
-      console.warn(`[SARB API] ${context} failed (attempt ${attempt + 1}/${this.maxRetries}), retrying in ${Math.round(delay)}ms...`);
+      logger.warn(`${context} failed, retrying`, {
+        endpoint: context,
+        attempt: attempt + 1,
+        maxAttempts: this.maxRetries,
+        retryDelayMs: Math.round(delay),
+        error: error instanceof Error ? error.message : String(error),
+      });
       
       await new Promise(resolve => setTimeout(resolve, delay));
       
@@ -262,9 +273,16 @@ export class SarbApiClient {
           // Validate response with Zod schema
           try {
             const validatedData = SarbCPDRatesResponseSchema.parse(rawData);
+            logger.info('CPD rates fetched successfully', {
+              endpoint: 'CPDRates',
+              recordCount: validatedData.length,
+            });
             return validatedData;
           } catch (validationError) {
-            console.error('[SARB API] CPD rates validation failed:', validationError);
+            logger.error('CPD rates validation failed', {
+              endpoint: 'CPDRates',
+              error: validationError instanceof Error ? validationError.message : String(validationError),
+            });
             throw new SarbApiError(
               'Invalid response format from SARB CPDRates endpoint',
               undefined
@@ -327,9 +345,16 @@ export class SarbApiClient {
           // Validate response with Zod schema
           try {
             const validatedData = SarbHomePageRatesResponseSchema.parse(rawData);
+            logger.info('HomePage rates fetched successfully', {
+              endpoint: 'HomePageRates',
+              recordCount: validatedData.length,
+            });
             return validatedData;
           } catch (validationError) {
-            console.error('[SARB API] HomePage rates validation failed:', validationError);
+            logger.error('HomePage rates validation failed', {
+              endpoint: 'HomePageRates',
+              error: validationError instanceof Error ? validationError.message : String(validationError),
+            });
             throw new SarbApiError(
               'Invalid response format from SARB HomePageRates endpoint',
               undefined
@@ -392,7 +417,11 @@ export class SarbApiClient {
           try {
             SarbRawTimeSeriesSchema.parse(rawData);
           } catch (validationError) {
-            console.error('[SARB API] Time series validation failed for', seriesCode, validationError);
+            logger.error('Time series validation failed', {
+              endpoint: 'DataSeries',
+              seriesCode,
+              error: validationError instanceof Error ? validationError.message : String(validationError),
+            });
             throw new SarbApiError(
               `Invalid response format from SARB for series ${seriesCode}`,
               undefined,

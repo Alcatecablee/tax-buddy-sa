@@ -4,6 +4,7 @@
 
 import { sarbApi, SARB_SERIES, type SarbTimeSeries, type SarbHomePageRate } from './sarb-api';
 import { cache } from './cache';
+import { economicDataLogger as logger } from './logger';
 
 /**
  * Historical rate cache to persist last 2 observations
@@ -55,7 +56,9 @@ export async function extractFromCPDRates(
       lastChanged: date || new Date().toISOString(),
     };
   } catch (error) {
-    console.warn('[EconomicDataHelpers] Failed to fetch historical data:', error);
+    logger.warn('Failed to fetch historical repo rate data', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     
     // Fallback: return current value with null previous (will trigger warning in service)
     return {
@@ -116,7 +119,11 @@ async function fetchHistoricalRepoRate(
     
     cache.set(cacheKey, newCache, 86400); // Cache for 24 hours
     
-    console.log(`[EconomicDataHelpers] Repo rate changed: ${cached.current}% → ${currentValue}%`);
+    logger.info('Repo rate changed', {
+      previousRate: cached.current,
+      currentRate: currentValue,
+      changeDate: currentDate,
+    });
     
     return {
       current: currentValue,
@@ -186,7 +193,10 @@ export function extractFromHomePageRates(
   const parsedValue = parseNumericValue(matchingEntry.Value);
   
   if (parsedValue === null) {
-    console.warn(`[HomePage Rates] Found indicator "${indicatorName}" but value is null or invalid:`, matchingEntry.Value);
+    logger.warn('Found indicator but value is null or invalid', {
+      indicator: indicatorName,
+      rawValue: matchingEntry.Value,
+    });
     return null;
   }
   

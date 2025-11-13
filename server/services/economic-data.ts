@@ -7,6 +7,7 @@
 
 import { sarbApi, SARB_SERIES, type EconomicIndicators, type SarbTimeSeries } from './sarb-api';
 import { extractFromCPDRates, extractFromHomePageRates } from './economic-data-helpers';
+import { economicDataLogger as logger } from './logger';
 
 export class EconomicDataService {
   /**
@@ -65,7 +66,10 @@ export class EconomicDataService {
       
       // CRITICAL: If BOTH endpoints failed, return full fallback
       if (!repoRateData && (!homePageData || homePageData.length === 0)) {
-        console.error('[EconomicDataService] Both CPD and HomePage Rates failed - using complete fallback');
+        logger.error('Both CPD and HomePage Rates failed - using complete fallback', {
+          cpdStatus: cpdRates.status,
+          homePageStatus: homePageRates.status,
+        });
         return {
           ...fallbackData,
           warnings: ['SARB API completely unavailable - using fallback data from September 2025'],
@@ -154,7 +158,9 @@ export class EconomicDataService {
       
     } catch (error) {
       // Graceful degradation: return fallback data when SARB API is unavailable
-      console.error('[EconomicDataService] SARB API unavailable, using fallback data:', error);
+      logger.error('SARB API unavailable, using fallback data', {
+        error: error instanceof Error ? error.message : String(error),
+      });
       return fallbackData;
     }
   }
