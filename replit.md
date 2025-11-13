@@ -1,5 +1,27 @@
 # SARS eFiling Assistant
 
+## Strategic Direction 🚀
+
+**November 13, 2025** - **Major Strategic Pivot: From Tax Calculator to Tax Intelligence Platform**
+
+Following the EskomSePush model of leveraging public APIs for profitable SaaS, we are transforming this basic tax calculator into South Africa's premier tax intelligence platform by integrating multiple free government and financial APIs.
+
+**See:** [API Integration Roadmap](API_INTEGRATION_ROADMAP.md) for comprehensive implementation plan.
+
+**Key API Integrations Planned:**
+1. **SARB Web API** (South African Reserve Bank) - Real-time economic data, inflation rates, interest rates, exchange rates
+2. **National Treasury Municipal Finance API** - Property tax calculations, municipal rates comparison
+3. **eTender Transparency Portal** - Government contract tax planning
+4. **Banking APIs** - Financial services locator, branch finder
+
+**Monetization Strategy:**
+- FREE tier: Basic tax calculator + current economic data
+- PREMIUM tier (R79/month): Historical data, advanced optimization, unlimited calculations
+- BUSINESS tier (R299/month): Multi-employee calculations, API access, bulk tools
+- ENTERPRISE tier (Custom): White-label, unlimited usage, dedicated support
+
+**Vision:** Build a R5M+ ARR business by combining free public APIs with intelligent tax planning tools, targeting 50,000+ users by end of 2025.
+
 ## Overview
 
 The SARS eFiling Assistant is a modern web application designed to simplify tax filing for South African taxpayers. It provides an intelligent, user-friendly alternative to the traditional SARS eFiling platform by offering pre-filled forms, real-time refund estimates, plain language explanations, and offline capabilities. The application addresses common pain points such as long wait times, confusing interfaces, technical errors, and security concerns.
