@@ -32,6 +32,10 @@
     --cursor-gray: 0 0% 45%;
     --cursor-dark: 0 0% 6%;
     --cursor-darker: 0 0% 4%;
+    
+    /* Hero gradient */
+    --hero-gradient-start: 0 0% 6%;
+    --hero-gradient-end: 0 0% 10%;
   }
 
   .dark {
@@ -205,6 +209,15 @@
 
   .cursor-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Hero overlay utility */
+  .bg-hero-overlay {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--hero-gradient-start)) 0%,
+      hsl(var(--hero-gradient-end)) 100%
+    );
   }
 }
 
