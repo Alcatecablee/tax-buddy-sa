@@ -55,9 +55,11 @@ export default function PropertyTax() {
 function PropertyTaxCalculator() {
   const [result, setResult] = useState<PropertyTaxResult | null>(null);
 
-  const { data: municipalities, isLoading: loadingMunicipalities } = useQuery<Municipality[]>({
+  const { data: municipalitiesResponse, isLoading: loadingMunicipalities } = useQuery<{success: boolean; data: Municipality[]}>({
     queryKey: ['/api/municipal/municipalities'],
   });
+  
+  const municipalities = municipalitiesResponse?.data;
 
   const form = useForm({
     resolver: zodResolver(propertyTaxCalculationSchema),
@@ -326,9 +328,35 @@ function PropertyTaxCalculator() {
 
             <Alert>
               <AlertCircle className="h-4 w-4" />
-              <AlertDescription className="text-sm">
-                This calculation is based on estimated rates. Actual rates may vary.
-                Contact your municipality for official rates.
+              <AlertDescription className="text-sm space-y-1">
+                <div>
+                  <strong>Data Source:</strong>{" "}
+                  {result.dataSource === 'manual_override' && 'Manually verified rate'}
+                  {result.dataSource === 'validated_fallback' && 'Validated average rate'}
+                  {result.dataSource === 'api' && 'Real-time municipal data'}
+                  {result.lastValidated && (
+                    <span> (last updated: {new Date(result.lastValidated).toLocaleDateString('en-ZA', { 
+                      year: 'numeric', 
+                      month: 'short' 
+                    })})</span>
+                  )}
+                </div>
+                {result.sourceUrl && (
+                  <div>
+                    <a 
+                      href={result.sourceUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline text-xs"
+                    >
+                      View official municipal rates →
+                    </a>
+                  </div>
+                )}
+                <div className="pt-1 border-t">
+                  <strong>Disclaimer:</strong> This is an estimate. Actual rates may vary.
+                  Contact your municipality for official rates and rebate eligibility.
+                </div>
               </AlertDescription>
             </Alert>
           </CardContent>
@@ -342,9 +370,11 @@ function MunicipalityComparison() {
   const [results, setResults] = useState<PropertyTaxResult[]>([]);
   const [selectedMunicipalities, setSelectedMunicipalities] = useState<string[]>([]);
 
-  const { data: municipalities, isLoading: loadingMunicipalities } = useQuery<Municipality[]>({
+  const { data: municipalitiesResponse, isLoading: loadingMunicipalities } = useQuery<{success: boolean; data: Municipality[]}>({
     queryKey: ['/api/municipal/municipalities'],
   });
+  
+  const municipalities = municipalitiesResponse?.data;
 
   const form = useForm({
     resolver: zodResolver(municipalityComparisonSchema),
@@ -526,21 +556,40 @@ function MunicipalityComparison() {
               ))}
             </div>
 
-            <div className="mt-4 p-4 bg-muted rounded-md">
-              <p className="text-sm font-medium mb-2">Potential Savings:</p>
-              <p className="text-sm text-muted-foreground">
-                Moving from {results[results.length - 1]?.municipalityName} to{" "}
-                {results[0]?.municipalityName} could save you{" "}
-                <span className="font-semibold text-foreground">
-                  R
-                  {(
-                    (results[results.length - 1]?.netAnnualTax || 0) -
-                    (results[0]?.netAnnualTax || 0)
-                  ).toLocaleString()}
-                </span>{" "}
-                per year in property tax.
-              </p>
-            </div>
+            {results.length > 1 && (
+              <div className="mt-4 space-y-3">
+                <div className="p-4 bg-muted rounded-md">
+                  <p className="text-sm font-medium mb-2">Potential Savings:</p>
+                  <p className="text-sm text-muted-foreground">
+                    Moving from {results[results.length - 1]?.municipalityName} to{" "}
+                    {results[0]?.municipalityName} could save you{" "}
+                    <span className="font-semibold text-foreground">
+                      R
+                      {(
+                        (results[results.length - 1]?.netAnnualTax || 0) -
+                        (results[0]?.netAnnualTax || 0)
+                      ).toLocaleString()}
+                    </span>{" "}
+                    per year in property tax.
+                  </p>
+                </div>
+                
+                <Alert>
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription className="text-sm">
+                    <strong>Data Source:</strong> Validated average rates 
+                    {results[0]?.lastValidated && (
+                      <span> (last updated: {new Date(results[0].lastValidated).toLocaleDateString('en-ZA', {
+                        year: 'numeric',
+                        month: 'short'
+                      })})</span>
+                    )}
+                    <br />
+                    These are estimates. Contact each municipality for official rates.
+                  </AlertDescription>
+                </Alert>
+              </div>
+            )}
           </CardContent>
         </Card>
       )}

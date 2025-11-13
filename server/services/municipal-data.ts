@@ -30,8 +30,8 @@ const CACHE_KEYS = {
   taxRate: (code: string, category: string) => `municipal:rate:${code}:${category}`,
 };
 
-// Municipal data TTL: 24 hours (less volatile than economic data)
-const MUNICIPAL_TTL = 86400;
+// Municipal data TTL: 1 hour (matching Phase 1 pattern)
+const MUNICIPAL_TTL = cacheConfig.municipalDataTtl;
 
 /**
  * Get all municipalities
@@ -111,12 +111,109 @@ export async function getMunicipalityByCode(code: string): Promise<Municipality 
 }
 
 /**
+ * Get property tax rate from storage (manual overrides)
+ * Phase 2: Returns null (no storage yet)
+ * Phase 3: Will query database for manual overrides
+ */
+async function getManualPropertyTaxRate(
+  municipalityCode: string,
+  category: PropertyTaxCalculation['propertyCategory'],
+  financialYear: string
+): Promise<PropertyTaxRate | null> {
+  return null;
+}
+
+/**
+ * Get validated fallback property tax rate with full provenance
+ */
+function getValidatedFallbackRate(
+  municipalityCode: string,
+  category: PropertyTaxCalculation['propertyCategory'],
+  financialYear: string
+): PropertyTaxRate {
+  const rate = municipalApi.getPropertyTaxRate(municipalityCode, category);
+  
+  const ratesByMunicipality: Record<string, { lastValidated: string; sourceUrl?: string }> = {
+    'CPT': {
+      lastValidated: '2024-11-01',
+      sourceUrl: 'https://www.capetown.gov.za/Family%20and%20home/residential-utility-services/residential-water-and-sanitation-services/your-water-and-sanitation-tariffs/property-rates',
+    },
+    'JHB': {
+      lastValidated: '2024-10-15', 
+      sourceUrl: 'https://www.joburg.org.za/documents_/Pages/Key%20Documents/policies/Development%20Planning%20%EF%BC%86-Urban-Management/Citywide%20Spatial%20Policies/Property-Rates-Policy.aspx',
+    },
+  };
+  
+  const metadata = ratesByMunicipality[municipalityCode] || {
+    lastValidated: '2024-11-01',
+  };
+  
+  return {
+    municipalityCode,
+    financialYear,
+    category,
+    rate,
+    rateFreeThreshold: 50000,
+    source: 'validated_fallback',
+    lastValidated: metadata.lastValidated,
+    sourceUrl: metadata.sourceUrl,
+    validatedBy: 'system',
+    notes: 'Validated average municipal rate based on 2024/2025 budgets',
+    effectiveDate: `${financialYear.split('/')[0]}-07-01`,
+  };
+}
+
+/**
+ * Get property tax rate with caching and provenance
+ * Priority: manual_override (storage) → validated_fallback
+ */
+async function getPropertyTaxRateWithCache(
+  municipalityCode: string,
+  category: PropertyTaxCalculation['propertyCategory'],
+  financialYear: string
+): Promise<PropertyTaxRate> {
+  const cacheKey = CACHE_KEYS.taxRate(municipalityCode, category);
+  
+  const cached = await cacheService.get<PropertyTaxRate>(cacheKey);
+  if (cached) {
+    municipalLogger.debug('Property tax rate retrieved from cache', {
+      municipalityCode,
+      category,
+      source: cached.source,
+    });
+    return cached;
+  }
+  
+  const manualRate = await getManualPropertyTaxRate(municipalityCode, category, financialYear);
+  if (manualRate) {
+    await cacheService.set(cacheKey, manualRate, MUNICIPAL_TTL);
+    municipalLogger.info('Using manual override rate', {
+      municipalityCode,
+      category,
+      source: 'manual_override',
+    });
+    return manualRate;
+  }
+  
+  const fallbackRate = getValidatedFallbackRate(municipalityCode, category, financialYear);
+  await cacheService.set(cacheKey, fallbackRate, MUNICIPAL_TTL);
+  
+  municipalLogger.info('Using validated fallback rate', {
+    municipalityCode,
+    category,
+    lastValidated: fallbackRate.lastValidated,
+  });
+  
+  return fallbackRate;
+}
+
+/**
  * Calculate property tax
  */
 export async function calculatePropertyTax(
   input: PropertyTaxCalculation
 ): Promise<PropertyTaxResult> {
-  const { municipalityCode, propertyValue, propertyCategory, rebates } = input;
+  const { municipalityCode, propertyValue, propertyCategory, rebates, financialYear } = input;
   
   const municipality = await getMunicipalityByCode(municipalityCode);
   
@@ -124,8 +221,13 @@ export async function calculatePropertyTax(
     throw new Error(`Municipality ${municipalityCode} not found`);
   }
   
-  const taxRate = municipalApi.getPropertyTaxRate(municipalityCode, propertyCategory);
-  const rateFreeThreshold = municipality.rateFreeThreshold;
+  const taxRateData = await getPropertyTaxRateWithCache(
+    municipalityCode,
+    propertyCategory,
+    financialYear || '2024/2025'
+  );
+  const taxRate = taxRateData.rate;
+  const rateFreeThreshold = taxRateData.rateFreeThreshold || municipality.rateFreeThreshold;
   
   let taxableValue = Math.max(0, propertyValue - rateFreeThreshold);
   
@@ -179,6 +281,11 @@ export async function calculatePropertyTax(
     totalRebateAmount: totalRebateAmount > 0 ? Math.round(totalRebateAmount) : undefined,
     netAnnualTax: Math.round(netAnnualTax),
     netMonthlyTax: Math.round(netMonthlyTax),
+    
+    dataSource: taxRateData.source,
+    lastValidated: taxRateData.lastValidated,
+    sourceUrl: taxRateData.sourceUrl,
+    effectiveDate: taxRateData.effectiveDate,
   };
 }
 

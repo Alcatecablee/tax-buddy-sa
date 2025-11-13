@@ -51,8 +51,11 @@ export const municipalitySchema = z.object({
 export type Municipality = z.infer<typeof municipalitySchema>;
 
 /**
- * Property Tax Rate Schema
+ * Property Tax Rate Schema (Enhanced with Provenance)
  * Tax rates for different property categories by municipality
+ * 
+ * Phase 2: Uses validated fallback data with documented sources
+ * Phase 3: Will support manual overrides via admin interface
  */
 export const propertyTaxRateSchema = z.object({
   municipalityCode: z.string(),
@@ -60,8 +63,14 @@ export const propertyTaxRateSchema = z.object({
   category: z.enum(['residential', 'commercial', 'industrial', 'agricultural', 'vacant_land']),
   rate: z.number(),
   rateFreeThreshold: z.number().default(50000),
-  description: z.string().optional(),
+  
+  source: z.enum(['manual_override', 'validated_fallback', 'api']).default('validated_fallback'),
+  sourceUrl: z.string().optional(),
+  lastValidated: z.string().optional(),
+  validatedBy: z.string().optional(),
+  notes: z.string().optional(),
   effectiveDate: z.string().optional(),
+  expiryDate: z.string().optional(),
 });
 
 export type PropertyTaxRate = z.infer<typeof propertyTaxRateSchema>;
@@ -84,7 +93,7 @@ export const propertyTaxCalculationSchema = z.object({
 export type PropertyTaxCalculation = z.infer<typeof propertyTaxCalculationSchema>;
 
 /**
- * Property Tax Result Schema
+ * Property Tax Result Schema (Enhanced with Full Provenance)
  */
 export const propertyTaxResultSchema = z.object({
   municipalityName: z.string(),
@@ -99,6 +108,11 @@ export const propertyTaxResultSchema = z.object({
   totalRebateAmount: z.number().optional(),
   netAnnualTax: z.number(),
   netMonthlyTax: z.number(),
+  
+  dataSource: z.string().optional(),
+  lastValidated: z.string().optional(),
+  sourceUrl: z.string().optional(),
+  effectiveDate: z.string().optional(),
 });
 
 export type PropertyTaxResult = z.infer<typeof propertyTaxResultSchema>;

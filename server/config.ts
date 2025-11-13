@@ -38,6 +38,9 @@ export const cacheConfig = {
   /** TTL for time series data in seconds (1 hour) */
   seriesTtl: parseInt(process.env.CACHE_SERIES_TTL || '3600'),
   
+  /** TTL for municipal/property tax data in seconds (1 hour) */
+  municipalDataTtl: parseInt(process.env.CACHE_MUNICIPAL_DATA_TTL || '3600'),
+  
   /** Cleanup interval in milliseconds (5 minutes) */
   cleanupInterval: parseInt(process.env.CACHE_CLEANUP_INTERVAL || '300000'),
 };
