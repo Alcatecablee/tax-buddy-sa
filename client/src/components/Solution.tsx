@@ -34,12 +34,12 @@ export const Solution = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-subtle">
+    <section className="py-20 bg-secondary/50">
       <div className="container px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-success-light border border-success/20 mb-4">
-            <Calculator className="w-4 h-4 text-success" />
-            <span className="text-sm text-success font-medium">Simple & Accurate</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
+            <Calculator className="w-4 h-4 text-primary" />
+            <span className="text-sm text-primary font-medium">Simple & Accurate</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Calculate Your Tax Refund With Confidence
@@ -55,7 +55,7 @@ export const Solution = () => {
               <img 
                 src={dashboardImage} 
                 alt="Modern tax filing dashboard showing simplified forms and real-time calculations"
-                className="rounded-2xl shadow-large border border-border"
+                className="rounded-2xl shadow-lg border border-border"
               />
             </div>
             
@@ -82,7 +82,7 @@ export const Solution = () => {
             {features.slice(3).map((feature, index) => (
               <div 
                 key={index}
-                className="p-6 rounded-lg bg-card border border-border hover:border-primary/30 transition-smooth hover:shadow-soft"
+                className="p-6 rounded-lg bg-card border border-border hover:border-primary/30 transition-all hover:shadow-sm"
               >
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                   <feature.icon className="w-6 h-6 text-primary" />
@@ -98,7 +98,7 @@ export const Solution = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Button size="lg" variant="accent" onClick={() => setLocation('/calculator')} data-testid="button-try-calculator">
+            <Button size="lg" variant="default" onClick={() => setLocation('/calculator')} data-testid="button-try-calculator">
               Try the Calculator Now
             </Button>
           </div>

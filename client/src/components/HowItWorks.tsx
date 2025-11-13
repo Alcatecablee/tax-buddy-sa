@@ -39,8 +39,8 @@ export const HowItWorks = () => {
             {steps.map((step, index) => (
               <div key={index} className="relative">
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-16 h-16 rounded-full bg-gradient-hero flex items-center justify-center mb-4 shadow-medium">
-                    <step.icon className="w-8 h-8 text-primary-foreground" />
+                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 shadow-md">
+                    <step.icon className="w-8 h-8 text-primary" />
                   </div>
                   
                   <div className="text-4xl font-bold text-primary/20 mb-2">

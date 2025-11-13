@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { LogIn, UserPlus, LayoutDashboard } from "lucide-react";
 import { useLocation } from "wouter";
 import { useAuth } from "@/contexts/AuthContext";
-import whiteLogo from "@assets/taxify-logo-white.png";
-import darkLogo from "@assets/taxify-logo-dark.png";
+import whiteLogo from "@assets/white-logo.png";
+import darkLogo from "@assets/dark-logo.png";
 
 export const Header = () => {
   const [, setLocation] = useLocation();
@@ -15,23 +15,19 @@ export const Header = () => {
         <div className="flex items-center justify-between flex-wrap gap-4">
           <button 
             onClick={() => setLocation('/')}
-            className="flex items-center gap-3 hover-elevate active-elevate-2 rounded-md px-2 py-1 -ml-2"
+            className="hover-elevate active-elevate-2 rounded-md p-2 -ml-2"
             data-testid="link-home"
           >
             <img 
               src={darkLogo} 
               alt="Taxify" 
-              className="w-8 h-8 dark:hidden"
+              className="h-10 dark:hidden"
             />
             <img 
               src={whiteLogo} 
               alt="Taxify" 
-              className="w-8 h-8 hidden dark:block"
+              className="h-10 hidden dark:block"
             />
-            <div className="flex flex-col">
-              <span className="text-xl font-bold text-foreground">Taxify</span>
-              <span className="text-xs text-muted-foreground">taxfy.co.za</span>
-            </div>
           </button>
           
           <div className="flex items-center gap-3 flex-wrap">
