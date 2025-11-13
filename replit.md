@@ -8,6 +8,19 @@ The system enables users to calculate their tax liability based on official SARS
 
 ## Recent Changes
 
+**November 13, 2025** - Backend Integration & Offline Mode Implementation
+- **CRITICAL FIX**: Registered API routes in server/index.ts (routes were defined but never connected to Express)
+- Initialized SupabaseStorage backend with proper error handling and fallback to MemStorage
+- Implemented comprehensive error handling in backend routes with detailed error messages
+- Added Zod validation error details in API responses for better debugging
+- Created offline storage system with localStorage fallback for when backend is unavailable
+- Implemented automatic sync when connection is restored
+- Added useCalculations hook for unified data access with offline support
+- All frontend data operations now go through Express API (consistent schema mapping)
+- Export to PDF and CSV functionality fully implemented and working
+- Improved backend initialization with clear logging of storage backend selection
+- Server now properly handles Supabase credentials and provides clear feedback on configuration issues
+
 **November 12, 2025** - Authentication & Dashboard Implementation
 - Implemented complete Supabase authentication system with email/password signup and login
 - Added AuthContext for managing user sessions across the application

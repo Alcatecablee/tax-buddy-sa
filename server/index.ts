@@ -1,5 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { setupVite, serveStatic, log } from "./vite";
+import { registerRoutes } from "./routes";
+import { SupabaseStorage, MemStorage } from "./storage";
 
 const app = express();
 app.use(express.json());
@@ -36,6 +38,29 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  let storage;
+  
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  
+  if (supabaseUrl && supabaseKey) {
+    try {
+      storage = new SupabaseStorage();
+      log("Using SupabaseStorage for data persistence");
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      log(`Failed to initialize SupabaseStorage: ${errorMessage}`);
+      log("Falling back to MemStorage - data will not persist between restarts");
+      storage = new MemStorage();
+    }
+  } else {
+    log("Supabase credentials not configured, using MemStorage");
+    log("Warning: Data will not persist between restarts");
+    storage = new MemStorage();
+  }
+
+  registerRoutes(app, storage);
+
   await setupVite(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
