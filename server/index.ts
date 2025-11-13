@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { setupVite, serveStatic, log } from "./vite";
 import { registerRoutes } from "./routes";
 import { SupabaseStorage, MemStorage } from "./storage";
+import economicRoutes from "./routes/economic";
 
 const app = express();
 app.use(express.json());
@@ -60,6 +61,9 @@ app.use((req, res, next) => {
   }
 
   registerRoutes(app, storage);
+  
+  // Register economic data routes
+  app.use('/api/economic', economicRoutes);
 
   await setupVite(app);
 

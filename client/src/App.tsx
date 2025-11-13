@@ -8,6 +8,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Calculator from "./pages/Calculator";
+import EconomicDashboard from "./pages/EconomicDashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/reset-password" component={ResetPassword} />
       <Route path="/calculator" component={Calculator} />
+      <Route path="/economic" component={EconomicDashboard} />
       <Route path="/dashboard">
         <ProtectedRoute>
           <Dashboard />

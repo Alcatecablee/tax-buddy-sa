@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { LogIn, UserPlus, LayoutDashboard } from "lucide-react";
+import { LogIn, UserPlus, LayoutDashboard, TrendingUp } from "lucide-react";
 import { useLocation } from "wouter";
 import { useAuth } from "@/contexts/AuthContext";
 import whiteLogo from "@assets/white-logo.png";
@@ -31,6 +31,15 @@ export const Header = () => {
           </button>
           
           <div className="flex items-center gap-3 flex-wrap">
+            <Button
+              variant="ghost"
+              onClick={() => setLocation('/economic')}
+              data-testid="button-economic"
+            >
+              <TrendingUp className="w-4 h-4 mr-2" />
+              Economic Data
+            </Button>
+            
             {user ? (
               <Button
                 variant="default"
