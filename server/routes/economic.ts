@@ -7,31 +7,50 @@
 import { Router, type Request, type Response } from 'express';
 import { economicDataService } from '../services/economic-data';
 import { sarbApi, SARB_SERIES } from '../services/sarb-api';
-import { cached } from '../services/cache';
+import { cached, cachedWithMetadata } from '../services/cache';
 
 const router = Router();
 
 /**
  * GET /api/economic/indicators
- * Get comprehensive economic indicators snapshot
+ * Get comprehensive economic indicators snapshot with data quality transparency
  * 
  * This is the main endpoint for the dashboard.
  * Results are cached for 1 hour to minimize API calls and improve performance.
+ * 
+ * Response includes transparency fields:
+ * - degraded: true if using fallback/stale data
+ * - source: 'live' | 'fallback' | 'stale-cache'
+ * - dataAge: ISO timestamp of last successful live fetch
+ * - nextRefreshEta: ISO timestamp of next planned refresh
  */
 router.get('/indicators', async (req: Request, res: Response) => {
   try {
-    const indicators = await cached(
+    const { data: indicators, metadata } = await cachedWithMetadata(
       'economic:indicators',
       () => economicDataService.getEconomicIndicators(),
       3600 // 1 hour cache
     );
     
-    // Surface warnings at response level for client visibility
+    // Determine if service is degraded
+    const isDegraded = indicators.isFallback || 
+                       (metadata?.source !== 'live' && metadata?.source !== undefined);
+    
+    // Calculate data age
+    const dataAge = metadata?.lastLiveFetch || 
+                    metadata?.lastFallbackAt || 
+                    new Date().toISOString();
+    
+    // Surface warnings and transparency info at response level
     res.json({
       success: true,
       data: indicators,
       ...(indicators.warnings && { warnings: indicators.warnings }),
       ...(indicators.isFallback && { isFallback: true }),
+      ...(isDegraded && { degraded: true }),
+      source: metadata?.source || (indicators.isFallback ? 'fallback' : 'live'),
+      dataAge,
+      ...(metadata?.nextRefreshEta && { nextRefreshEta: metadata.nextRefreshEta }),
     });
     
   } catch (error) {
@@ -94,7 +113,7 @@ router.get('/historical/:series', async (req: Request, res: Response) => {
     
     // Validate series code
     const validSeries = Object.values(SARB_SERIES);
-    if (!validSeries.includes(series)) {
+    if (!validSeries.includes(series as any)) {
       return res.status(400).json({
         success: false,
         error: 'Invalid series code',

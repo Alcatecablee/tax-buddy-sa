@@ -8,6 +8,14 @@
 interface CacheEntry<T> {
   data: T;
   expiresAt: number;
+  metadata?: CacheMetadata;
+}
+
+interface CacheMetadata {
+  lastLiveFetch?: string; // ISO timestamp of last successful live data fetch
+  lastFallbackAt?: string; // ISO timestamp when fallback data was last used
+  source?: 'live' | 'fallback' | 'stale-cache';
+  nextRefreshEta?: string; // ISO timestamp of next planned refresh
 }
 
 export class CacheService {
@@ -40,14 +48,38 @@ export class CacheService {
   }
   
   /**
+   * Get value with metadata from cache
+   * Returns null if key doesn't exist or has expired
+   */
+  getWithMetadata<T>(key: string): { data: T; metadata?: CacheMetadata } | null {
+    const entry = this.cache.get(key);
+    
+    if (!entry) {
+      return null;
+    }
+    
+    // Check if expired
+    if (Date.now() > entry.expiresAt) {
+      this.cache.delete(key);
+      return null;
+    }
+    
+    return {
+      data: entry.data as T,
+      metadata: entry.metadata,
+    };
+  }
+  
+  /**
    * Set value in cache with TTL (time-to-live) in seconds
    */
-  set<T>(key: string, data: T, ttlSeconds: number = 3600): void {
+  set<T>(key: string, data: T, ttlSeconds: number = 3600, metadata?: CacheMetadata): void {
     const expiresAt = Date.now() + (ttlSeconds * 1000);
     
     this.cache.set(key, {
       data,
       expiresAt,
+      metadata,
     });
   }
   
@@ -163,3 +195,45 @@ export function cached<T>(
     return result;
   }();
 }
+
+/**
+ * Cached function wrapper with metadata support
+ * Returns both cached data and metadata for transparency
+ */
+export function cachedWithMetadata<T>(
+  cacheKey: string,
+  fn: () => Promise<T>,
+  ttlSeconds: number = 3600
+): Promise<{ data: T; metadata?: CacheMetadata }> {
+  return async function() {
+    // Try to get from cache with metadata
+    const cached = cache.getWithMetadata<T>(cacheKey);
+    
+    if (cached !== null) {
+      console.log(`[Cache] HIT with metadata: ${cacheKey}`);
+      return cached;
+    }
+    
+    console.log(`[Cache] MISS: ${cacheKey}`);
+    
+    // Execute function and cache result
+    const result = await fn();
+    
+    // Add metadata for new live fetch
+    const now = new Date().toISOString();
+    const nextRefresh = new Date(Date.now() + ttlSeconds * 1000).toISOString();
+    
+    const metadata: CacheMetadata = {
+      lastLiveFetch: now,
+      source: 'live',
+      nextRefreshEta: nextRefresh,
+    };
+    
+    cache.set(cacheKey, result, ttlSeconds, metadata);
+    
+    return { data: result, metadata };
+  }();
+}
+
+// Export cache metadata type for use in other modules
+export type { CacheMetadata };

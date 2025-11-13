@@ -10,10 +10,6 @@ import { extractFromCPDRates } from './economic-data-helpers';
 
 export class EconomicDataService {
   /**
-   * Extract rate data from CPD rates array
-   */
-  private extractFromCPDRates = extractFromCPDRates;
-  /**
    * Get comprehensive economic indicators snapshot
    * This is the main method used by the frontend for dashboard display
    */
@@ -52,7 +48,8 @@ export class EconomicDataService {
       
       // Parse CPD rates to extract repo rate (current and previous)
       // "Interest charged" is the repo rate from SARB
-      const repoRateData = this.extractFromCPDRates(cpdRates, 'charged');
+      // Now fetches historical data from time series API for accurate previous values
+      const repoRateData = await extractFromCPDRates(cpdRates, 'charged');
       
       if (!repoRateData) {
         // SARB API returned but no repo rate data found

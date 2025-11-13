@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, TrendingDown, Minus, DollarSign, Percent, Building2 } from 'lucide-react';
+import { TrendingUp, TrendingDown, Minus, DollarSign, Percent, Building2, AlertTriangle } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface EconomicIndicators {
   inflation: {
@@ -27,8 +28,19 @@ interface EconomicIndicators {
   };
 }
 
+interface EconomicIndicatorsResponse {
+  success: boolean;
+  data: EconomicIndicators;
+  warnings?: string[];
+  isFallback?: boolean;
+  degraded?: boolean;
+  source?: 'live' | 'fallback' | 'stale-cache';
+  dataAge?: string;
+  nextRefreshEta?: string;
+}
+
 export function EconomicIndicators() {
-  const { data, isLoading, error } = useQuery<{ success: boolean; data: EconomicIndicators }>({
+  const { data, isLoading, error } = useQuery<EconomicIndicatorsResponse>({
     queryKey: ['/api/economic/indicators'],
     refetchInterval: 3600000, // Refetch every hour
     staleTime: 3600000,
@@ -103,6 +115,32 @@ export function EconomicIndicators() {
           Real-time indicators from the South African Reserve Bank to help with tax planning
         </p>
       </div>
+      
+      {/* Data Quality Warnings */}
+      {(data?.degraded || data?.isFallback || data?.warnings) && (
+        <Alert data-testid="alert-data-quality">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>
+            {data.source === 'fallback' ? 'Using Backup Data' : 'Limited Data Availability'}
+          </AlertTitle>
+          <AlertDescription className="space-y-1">
+            {data.warnings?.map((warning, index) => (
+              <p key={index} className="text-sm">{warning}</p>
+            ))}
+            {data.source === 'fallback' && (
+              <p className="text-sm">
+                The SARB API is currently unavailable. Displaying conservative fallback data from{' '}
+                {data.dataAge ? new Date(data.dataAge).toLocaleDateString('en-ZA', { year: 'numeric', month: 'long' }) : 'September 2025'}.
+              </p>
+            )}
+            {data.source === 'live' && data.warnings && (
+              <p className="text-sm text-muted-foreground mt-2">
+                Current data from SARB is being displayed, but some historical information may be limited.
+              </p>
+            )}
+          </AlertDescription>
+        </Alert>
+      )}
       
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {/* Inflation Card */}

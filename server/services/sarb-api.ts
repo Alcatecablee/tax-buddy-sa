@@ -136,7 +136,8 @@ export class SarbApiClient {
         );
       }
       
-      return await response.json();
+      const data = await response.json();
+      return Array.isArray(data) ? data : [];
       
     } catch (error) {
       if (error instanceof SarbApiError) {
