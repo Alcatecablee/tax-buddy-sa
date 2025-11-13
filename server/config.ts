@@ -60,6 +60,26 @@ export const serverConfig = {
 };
 
 /**
+ * Municipal Finance API Configuration
+ */
+export const municipalConfig = {
+  /** Base URL for Municipal Finance API */
+  baseUrl: process.env.MUNICIPAL_API_URL || 'https://municipaldata.treasury.gov.za/api',
+  
+  /** Request timeout in milliseconds */
+  timeout: parseInt(process.env.MUNICIPAL_TIMEOUT || '15000'),
+  
+  /** Maximum number of retry attempts for failed requests */
+  maxRetries: parseInt(process.env.MUNICIPAL_MAX_RETRIES || '3'),
+  
+  /** Base backoff delay in milliseconds for exponential backoff */
+  baseBackoffMs: parseInt(process.env.MUNICIPAL_BASE_BACKOFF_MS || '1000'),
+  
+  /** Default page size for paginated requests */
+  defaultPageSize: parseInt(process.env.MUNICIPAL_PAGE_SIZE || '100'),
+};
+
+/**
  * Feature Flags
  */
 export const features = {
@@ -71,6 +91,9 @@ export const features = {
   
   /** Enable historical data access (premium) */
   enableHistoricalData: process.env.ENABLE_HISTORICAL_DATA !== 'false',
+  
+  /** Enable municipal/property tax features (Phase 2) */
+  enableMunicipalFeatures: process.env.ENABLE_MUNICIPAL_FEATURES !== 'false',
 };
 
 /**
@@ -78,6 +101,7 @@ export const features = {
  */
 export default {
   sarb: sarbConfig,
+  municipal: municipalConfig,
   cache: cacheConfig,
   server: serverConfig,
   features,

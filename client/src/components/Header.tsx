@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { LogIn, UserPlus, LayoutDashboard, TrendingUp } from "lucide-react";
+import { LogIn, UserPlus, LayoutDashboard, TrendingUp, Building2 } from "lucide-react";
 import { useLocation } from "wouter";
 import { useAuth } from "@/contexts/AuthContext";
 import whiteLogo from "@assets/white-logo.png";
@@ -38,6 +38,15 @@ export const Header = () => {
             >
               <TrendingUp className="w-4 h-4 mr-2" />
               Economic Data
+            </Button>
+            
+            <Button
+              variant="ghost"
+              onClick={() => setLocation('/property-tax')}
+              data-testid="button-property-tax"
+            >
+              <Building2 className="w-4 h-4 mr-2" />
+              Property Tax
             </Button>
             
             {user ? (

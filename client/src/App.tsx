@@ -9,6 +9,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Calculator from "./pages/Calculator";
 import EconomicDashboard from "./pages/EconomicDashboard";
+import PropertyTax from "./pages/PropertyTax";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
@@ -27,6 +28,7 @@ function Router() {
       <Route path="/reset-password" component={ResetPassword} />
       <Route path="/calculator" component={Calculator} />
       <Route path="/economic" component={EconomicDashboard} />
+      <Route path="/property-tax" component={PropertyTax} />
       <Route path="/dashboard">
         <ProtectedRoute>
           <Dashboard />

@@ -64,6 +64,10 @@ app.use((req, res, next) => {
   
   // Register economic data routes
   app.use('/api/economic', economicRoutes);
+  
+  // Register municipal/property tax routes (Phase 2)
+  const municipalRoutes = await import('./routes/municipal');
+  app.use('/api/municipal', municipalRoutes.default);
 
   await setupVite(app);
 

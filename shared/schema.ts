@@ -33,3 +33,84 @@ export const insertTaxCalculationSchema = taxCalculationSchema.omit({
 });
 
 export type InsertTaxCalculation = z.infer<typeof insertTaxCalculationSchema>;
+
+/**
+ * Municipality Schema
+ * Reference data for South African municipalities
+ */
+export const municipalitySchema = z.object({
+  code: z.string(),
+  name: z.string(),
+  province: z.string(),
+  category: z.enum(['metro', 'district', 'local']),
+  population: z.number().optional(),
+  rateFreeThreshold: z.number().default(50000),
+  lastUpdated: z.string().optional(),
+});
+
+export type Municipality = z.infer<typeof municipalitySchema>;
+
+/**
+ * Property Tax Rate Schema
+ * Tax rates for different property categories by municipality
+ */
+export const propertyTaxRateSchema = z.object({
+  municipalityCode: z.string(),
+  financialYear: z.string(),
+  category: z.enum(['residential', 'commercial', 'industrial', 'agricultural', 'vacant_land']),
+  rate: z.number(),
+  rateFreeThreshold: z.number().default(50000),
+  description: z.string().optional(),
+  effectiveDate: z.string().optional(),
+});
+
+export type PropertyTaxRate = z.infer<typeof propertyTaxRateSchema>;
+
+/**
+ * Property Tax Calculation Input Schema
+ */
+export const propertyTaxCalculationSchema = z.object({
+  municipalityCode: z.string().min(1, "Municipality is required"),
+  propertyValue: z.number().min(0, "Property value must be positive"),
+  propertyCategory: z.enum(['residential', 'commercial', 'industrial', 'agricultural', 'vacant_land']),
+  financialYear: z.string().default("2024/2025"),
+  rebates: z.object({
+    pensioner: z.boolean().default(false),
+    disabled: z.boolean().default(false),
+    lowIncome: z.boolean().default(false),
+  }).optional(),
+});
+
+export type PropertyTaxCalculation = z.infer<typeof propertyTaxCalculationSchema>;
+
+/**
+ * Property Tax Result Schema
+ */
+export const propertyTaxResultSchema = z.object({
+  municipalityName: z.string(),
+  propertyValue: z.number(),
+  propertyCategory: z.string(),
+  taxRate: z.number(),
+  rateFreeThreshold: z.number(),
+  taxableValue: z.number(),
+  annualTax: z.number(),
+  monthlyTax: z.number(),
+  appliedRebates: z.array(z.string()).optional(),
+  totalRebateAmount: z.number().optional(),
+  netAnnualTax: z.number(),
+  netMonthlyTax: z.number(),
+});
+
+export type PropertyTaxResult = z.infer<typeof propertyTaxResultSchema>;
+
+/**
+ * Municipality Comparison Input Schema
+ */
+export const municipalityComparisonSchema = z.object({
+  municipalityCodes: z.array(z.string()).min(2, "Select at least 2 municipalities").max(5, "Maximum 5 municipalities"),
+  propertyValue: z.number().min(0, "Property value must be positive"),
+  propertyCategory: z.enum(['residential', 'commercial', 'industrial', 'agricultural', 'vacant_land']),
+  financialYear: z.string().default("2024/2025"),
+});
+
+export type MunicipalityComparison = z.infer<typeof municipalityComparisonSchema>;
