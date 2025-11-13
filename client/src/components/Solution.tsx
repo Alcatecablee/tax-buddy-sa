@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Sparkles, Brain, Calculator, Wifi, Building2 } from "lucide-react";
+import { Calculator, Brain, Sparkles, Wifi, Building2 } from "lucide-react";
 import { useLocation } from "wouter";
 import dashboardImage from "@/assets/dashboard-preview.jpg";
 
@@ -7,29 +7,29 @@ export const Solution = () => {
   const [, setLocation] = useLocation();
   const features = [
     {
-      icon: Brain,
-      title: "Intelligent Pre-filling",
-      description: "Our AI assistant automatically fills forms using your previous returns and tax data."
+      icon: Calculator,
+      title: "SARS 2024/2025 Tax Tables",
+      description: "Accurate calculations using the 2024/2025 tax brackets, thresholds, and rebates published by SARS."
     },
     {
       icon: Sparkles,
-      title: "Plain Language Explanations",
-      description: "Complex tax terms are explained in simple, easy-to-understand language."
+      title: "Multiple Income Sources",
+      description: "Calculate tax on salary, freelance, rental, and investment income all in one place."
     },
     {
-      icon: Calculator,
-      title: "Real-time Refund Estimates",
-      description: "See exactly how much you'll get back as you fill out your return."
+      icon: Brain,
+      title: "Instant Refund Calculation",
+      description: "See your estimated refund or tax owing immediately based on your PAYE and provisional payments."
     },
     {
       icon: Wifi,
-      title: "Offline Mode",
-      description: "Work on your return offline and sync automatically when you're back online."
+      title: "Works Offline",
+      description: "Calculator works without internet connection. Sign in to save and sync your calculations across devices."
     },
     {
       icon: Building2,
-      title: "Bank Statement Integration",
-      description: "Connect your bank via open banking for automatic income and deduction tracking."
+      title: "Export Your Results",
+      description: "Download your tax calculations as PDF or CSV files for your records and tax planning."
     }
   ];
 
@@ -38,14 +38,14 @@ export const Solution = () => {
       <div className="container px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-success-light border border-success/20 mb-4">
-            <Sparkles className="w-4 h-4 text-success" />
-            <span className="text-sm text-success font-medium">The Modern Solution</span>
+            <Calculator className="w-4 h-4 text-success" />
+            <span className="text-sm text-success font-medium">Simple & Accurate</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            File Taxes The Smart Way
+            Calculate Your Tax Refund With Confidence
           </h2>
           <p className="text-lg text-muted-foreground">
-            Our intelligent assistant transforms the tax filing experience with modern technology
+            Our free calculator uses official SARS tax tables for the 2024/2025 tax year
           </p>
         </div>
 

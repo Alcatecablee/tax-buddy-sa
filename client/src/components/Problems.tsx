@@ -4,23 +4,23 @@ export const Problems = () => {
   const problems = [
     {
       icon: Clock,
-      title: "Hours-Long Wait Times",
-      description: "During filing season, traditional eFiling can take hours just to log in and submit."
+      title: "Time-Consuming Math",
+      description: "Manually calculating tax across multiple income sources and deductions takes hours and is prone to mistakes."
     },
     {
       icon: Bug,
-      title: "Technical Errors & Crashes",
-      description: "Frequent system failures and outdated technology make filing frustrating and unreliable."
+      title: "Easy to Make Errors",
+      description: "Forgetting to apply age-based rebates or miscalculating tax brackets can cost you money."
     },
     {
       icon: AlertTriangle,
-      title: "Complex, Confusing Interface",
-      description: "Difficult navigation and unclear tax terms leave taxpayers confused and prone to errors."
+      title: "Complex Tax Rules",
+      description: "Understanding SARS regulations, deduction limits, and tax thresholds requires extensive research."
     },
     {
       icon: ShieldAlert,
-      title: "Security Concerns",
-      description: "Profile hijacking and security vulnerabilities have affected thousands of taxpayers."
+      title: "Uncertainty About Refunds",
+      description: "Without proper calculation, you won't know if you're owed a refund or how much you should pay."
     }
   ];
 
@@ -29,10 +29,10 @@ export const Problems = () => {
       <div className="container px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            SARS eFiling Shouldn't Be This Hard
+            Manual Tax Calculations Are Complex and Error-Prone
           </h2>
           <p className="text-lg text-muted-foreground">
-            Over 7 million South African taxpayers face these challenges every filing season
+            Understanding South African tax brackets, deductions, and rebates can be challenging
           </p>
         </div>
         

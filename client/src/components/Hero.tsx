@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { FileCheck, Clock, Shield, TrendingUp, LogIn, UserPlus } from "lucide-react";
+import { FileCheck, Calculator, Shield, TrendingUp, LogIn, UserPlus } from "lucide-react";
 import { useLocation } from "wouter";
 import { useAuth } from "@/contexts/AuthContext";
 import heroImage from "@/assets/hero-banner.jpg";
@@ -23,15 +23,15 @@ export const Hero = () => {
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-light/20 border border-primary-light mb-6 backdrop-blur-sm">
             <Shield className="w-4 h-4 text-primary-foreground" />
-            <span className="text-sm text-primary-foreground font-medium">Trusted by South African taxpayers</span>
+            <span className="text-sm text-primary-foreground font-medium">Free South African Tax Calculator</span>
           </div>
           
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 leading-tight">
-            File Your Taxes in Minutes, Not Hours
+            Calculate Your South African Tax Refund Accurately
           </h1>
           
           <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8 leading-relaxed">
-            Say goodbye to long wait times and confusing forms. Our modern tax filing assistant makes SARS eFiling simple, fast, and stress-free.
+            Free tax calculator for the 2024/2025 tax year. Enter your income and deductions to calculate your SARS tax liability and estimated refund in minutes.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -76,10 +76,10 @@ export const Hero = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { icon: Clock, label: "5x Faster Filing" },
-              { icon: FileCheck, label: "Pre-filled Forms" },
-              { icon: TrendingUp, label: "Real-time Estimates" },
-              { icon: Shield, label: "Bank-level Security" }
+              { icon: Calculator, label: "SARS 2024/2025 Brackets" },
+              { icon: FileCheck, label: "Export to PDF/CSV" },
+              { icon: TrendingUp, label: "Instant Calculation" },
+              { icon: Shield, label: "100% Free" }
             ].map((feature, index) => (
               <div key={index} className="flex items-center gap-2 text-primary-foreground/80">
                 <feature.icon className="w-5 h-5" />

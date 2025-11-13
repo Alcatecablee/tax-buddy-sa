@@ -5,20 +5,20 @@ export const HowItWorks = () => {
     {
       icon: UserPlus,
       number: "01",
-      title: "Create Your Profile",
-      description: "Quick setup with your basic information. We'll securely connect to your tax records."
+      title: "Enter Your Information",
+      description: "Start with your age category, then add all income sources (salary, freelance, rental, investments)."
     },
     {
       icon: FileText,
       number: "02",
-      title: "Smart Form Filling",
-      description: "Our AI pre-fills your forms using previous returns. You just review and add any changes."
+      title: "Add Deductions & Tax Paid",
+      description: "Include retirement contributions, medical aid, donations, and the tax you've already paid (PAYE, provisional)."
     },
     {
       icon: CheckCircle,
       number: "03",
-      title: "Submit & Track",
-      description: "Submit directly to SARS and track your refund in real-time. Get notified when it's processed."
+      title: "Get Your Results",
+      description: "See your tax liability and estimated refund instantly. Save to your account or export to PDF/CSV."
     }
   ];
 
@@ -27,10 +27,10 @@ export const HowItWorks = () => {
       <div className="container px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Three Simple Steps to File Your Taxes
+            Three Simple Steps to Calculate Your Tax
           </h2>
           <p className="text-lg text-muted-foreground">
-            From setup to submission in minutes, not hours
+            Get your refund estimate in minutes with our free calculator
           </p>
         </div>
 
