@@ -2,7 +2,7 @@
  * Helper functions for processing SARB API responses
  */
 
-import { sarbApi, SARB_SERIES, type SarbTimeSeries } from './sarb-api';
+import { sarbApi, SARB_SERIES, type SarbTimeSeries, type SarbHomePageRate } from './sarb-api';
 import { cache } from './cache';
 
 /**
@@ -67,122 +67,153 @@ export async function extractFromCPDRates(
 }
 
 /**
- * Fetch historical repo rate data from SARB time series API
- * Uses cache to minimize API calls and persist last 2 observations
+ * Fetch historical repo rate data with cache-based previous value tracking
  * 
- * CRITICAL: Aligns with CPD observation date to ensure consistency between CPD and time series
- * Finds the previous DISTINCT value from SARB time series to enable proper trend calculation
+ * PRODUCTION-READY: Does NOT use broken getTimeSeries endpoint
+ * Strategy: Track last 2 repo rate observations in cache
+ * - When current value changes: previous becomes old current, current becomes new value
+ * - When current value unchanged: return cached previous
+ * 
+ * @param currentValue - Current repo rate from CPD Rates
+ * @param currentDate - Current observation date from CPD Rates
+ * @returns Object with current and previous repo rate values
  */
 async function fetchHistoricalRepoRate(
   currentValue: number,
   currentDate: string
 ): Promise<{ current: number; previous: number }> {
-  const cacheKey = `economic:historical:repo_rate:${currentDate}`;
+  const cacheKey = 'economic:historical:repo_rate:latest';
+  const threshold = 0.001; // Tolerance for comparing repo rates (0.001%)
   
-  // Check cache first - keyed by date to ensure CPD/SARB alignment
+  // Check cache for last known observation
   const cached = cache.get<HistoricalRateCache>(cacheKey);
   
-  if (cached && Math.abs(cached.current - currentValue) < 0.001) {
-    return {
-      current: cached.current,
-      previous: cached.previous || cached.current,
-    };
-  }
-  
-  // Fetch from SARB time series API
-  try {
-    const timeSeries = await sarbApi.getTimeSeries(SARB_SERIES.REPO_RATE);
-    
-    // SARB DataSeries returns data in ascending order (oldest first)
-    // Filter non-null values
-    const validData = timeSeries.data
-      .filter(point => point.value !== null && point.value !== undefined);
-    
-    if (validData.length === 0) {
-      throw new Error('No valid historical data found');
-    }
-    
-    // Parse CPD date to find matching or most recent observation on or before CPD date
-    const cpdDate = new Date(currentDate);
-    const threshold = 0.001; // Consider values within 0.001% as same (rounding tolerance)
-    
-    // Find the observation at or before CPD date that matches current value
-    let currentIndex = -1;
-    for (let i = validData.length - 1; i >= 0; i--) {
-      const pointDate = new Date(validData[i].date);
-      if (pointDate <= cpdDate) {
-        // Found an observation on or before CPD date
-        if (Math.abs(validData[i].value! - currentValue) < threshold) {
-          currentIndex = i;
-          break;
-        }
-      }
-    }
-    
-    // If no exact match found, use the most recent observation before CPD date
-    if (currentIndex === -1) {
-      for (let i = validData.length - 1; i >= 0; i--) {
-        const pointDate = new Date(validData[i].date);
-        if (pointDate <= cpdDate) {
-          currentIndex = i;
-          break;
-        }
-      }
-    }
-    
-    // If still no match, use latest (CPD might be ahead of time series)
-    if (currentIndex === -1) {
-      currentIndex = validData.length - 1;
-    }
-    
-    const currentObservation = validData[currentIndex];
-    
-    // Find previous DISTINCT value by iterating backwards from current observation
-    let previousValue: number | null = null;
-    
-    for (let i = currentIndex - 1; i >= 0; i--) {
-      const point = validData[i];
-      if (point.value !== null && Math.abs(point.value - currentObservation.value!) > threshold) {
-        previousValue = point.value;
-        break;
-      }
-    }
-    
-    // If no distinct previous value found, use current
-    if (previousValue === null) {
-      previousValue = currentObservation.value!;
-    }
-    
-    // Cache the result with date-specific key
-    const historicalCache: HistoricalRateCache = {
-      current: currentObservation.value!,
-      previous: previousValue,
+  // CASE 1: First time fetching - no cache available
+  if (!cached) {
+    const newCache: HistoricalRateCache = {
+      current: currentValue,
+      previous: currentValue, // No previous available yet
       lastChanged: currentDate,
       fetchedAt: new Date().toISOString(),
     };
     
-    cache.set(cacheKey, historicalCache, 7200); // Cache for 2 hours
+    cache.set(cacheKey, newCache, 86400); // Cache for 24 hours
     
-    return {
-      current: currentObservation.value!,
-      previous: previousValue,
-    };
-    
-  } catch (error) {
-    console.error('[EconomicDataHelpers] Failed to fetch time series:', error);
-    
-    // Use cached value if available, otherwise return current
-    if (cached) {
-      return {
-        current: currentValue,
-        previous: cached.previous || currentValue,
-      };
-    }
-    
-    // Return current value as both current and previous (no trend available)
     return {
       current: currentValue,
       previous: currentValue,
     };
   }
+  
+  // CASE 2: Repo rate has changed - update cache with new observation
+  if (Math.abs(cached.current - currentValue) > threshold) {
+    const newCache: HistoricalRateCache = {
+      current: currentValue,
+      previous: cached.current, // Old current becomes new previous
+      lastChanged: currentDate,
+      fetchedAt: new Date().toISOString(),
+    };
+    
+    cache.set(cacheKey, newCache, 86400); // Cache for 24 hours
+    
+    console.log(`[EconomicDataHelpers] Repo rate changed: ${cached.current}% → ${currentValue}%`);
+    
+    return {
+      current: currentValue,
+      previous: cached.current,
+    };
+  }
+  
+  // CASE 3: Repo rate unchanged - return cached values
+  return {
+    current: currentValue,
+    previous: cached.previous || currentValue,
+  };
+}
+
+/**
+ * Extract a specific indicator from HomePage Rates response
+ * 
+ * PRODUCTION-READY: Implements fuzzy matching pipeline to handle SARB API changes
+ * Pipeline: exact match → normalized substring → keyword fallback
+ * Handles: "CPI (Headline)", "CPI", whitespace variations, case differences
+ * 
+ * @param homePageRates - Array of rate entries from SARB HomePage Rates
+ * @param indicatorName - Indicator to search for (e.g., "CPI", "Rand per US Dollar")
+ * @returns Parsed numeric value and date, or null if not found
+ */
+export function extractFromHomePageRates(
+  homePageRates: SarbHomePageRate[],
+  indicatorName: string
+): { value: number; date: string } | null {
+  if (!homePageRates || !Array.isArray(homePageRates) || homePageRates.length === 0) {
+    return null;
+  }
+  
+  const normalizedSearchTerm = indicatorName.trim().toLowerCase();
+  
+  // STAGE 1: Try exact match (case-insensitive, trimmed)
+  let matchingEntry = homePageRates.find(
+    entry => entry.Name.trim().toLowerCase() === normalizedSearchTerm
+  );
+  
+  // STAGE 2: Try substring match if exact fails
+  // Handles cases like "CPI (Headline)" when searching for "CPI"
+  if (!matchingEntry) {
+    matchingEntry = homePageRates.find(
+      entry => entry.Name.trim().toLowerCase().includes(normalizedSearchTerm)
+    );
+  }
+  
+  // STAGE 3: Try keyword-based search as last resort
+  // Extract main keywords and look for entries containing them
+  if (!matchingEntry) {
+    const keywords = normalizedSearchTerm.split(/\s+/).filter(k => k.length > 2);
+    
+    if (keywords.length > 0) {
+      matchingEntry = homePageRates.find(entry => {
+        const entryName = entry.Name.trim().toLowerCase();
+        return keywords.every(keyword => entryName.includes(keyword));
+      });
+    }
+  }
+  
+  if (!matchingEntry) {
+    return null;
+  }
+  
+  // PRODUCTION-READY: Parse Value safely (handles string, number, or null)
+  const parsedValue = parseNumericValue(matchingEntry.Value);
+  
+  if (parsedValue === null) {
+    console.warn(`[HomePage Rates] Found indicator "${indicatorName}" but value is null or invalid:`, matchingEntry.Value);
+    return null;
+  }
+  
+  return {
+    value: parsedValue,
+    date: matchingEntry.Date,
+  };
+}
+
+/**
+ * Parse numeric value safely from SARB API response
+ * Handles string numbers ("5.5"), numbers (5.5), and null values
+ * 
+ * @param value - Raw value from SARB API (string | number | null)
+ * @returns Parsed number or null
+ */
+function parseNumericValue(value: string | number | null | undefined): number | null {
+  if (value === null || value === undefined || value === '') {
+    return null;
+  }
+  
+  // Already a number
+  if (typeof value === 'number') {
+    return isNaN(value) ? null : value;
+  }
+  
+  // Parse string to number
+  const parsed = parseFloat(value);
+  return isNaN(parsed) ? null : parsed;
 }

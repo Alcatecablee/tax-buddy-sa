@@ -41,6 +41,35 @@ export type SarbCPDRate = z.infer<typeof SarbCPDRateSchema>;
 export const SarbCPDRatesResponseSchema = z.array(SarbCPDRateSchema);
 
 /**
+ * SARB HomePage Rate entry schema
+ * Validates individual entries from HomePageRates endpoint
+ * 
+ * PRODUCTION-READY: Schema is flexible to handle SARB API changes
+ * - Value can be string or number (handles "5.5" or 5.5)
+ * - Formatting fields are optional (SARB may add/remove them)
+ * - Allows null values for graceful degradation
+ */
+export const SarbHomePageRateSchema = z.object({
+  Name: z.string(),
+  SectionId: z.string().optional(), // Optional: SARB may restructure sections
+  SectionName: z.string().optional(), // Optional: SARB may restructure sections
+  TimeseriesCode: z.string().optional(), // Optional: May not always be present
+  Date: z.string(),
+  Value: z.union([z.string(), z.number()]).nullable(), // Flexible: handles "5.5" or 5.5 or null
+  UpDown: z.number().optional(), // Optional: Not critical for our use case
+  FormatNumber: z.string().optional(), // Optional: Display formatting may change
+  FormatDate: z.string().optional(), // Optional: Display formatting may change
+});
+
+export type SarbHomePageRate = z.infer<typeof SarbHomePageRateSchema>;
+
+/**
+ * SARB HomePageRates response schema
+ * Validates the complete HomePageRates endpoint response
+ */
+export const SarbHomePageRatesResponseSchema = z.array(SarbHomePageRateSchema);
+
+/**
  * SARB time series raw data point schema
  * Handles various SARB API response formats before normalization
  */
@@ -259,6 +288,71 @@ export class SarbApiClient {
         }
       },
       'CPD Rates fetch'
+    );
+  }
+  
+  /**
+   * Get HomePage Rates which includes CPI, PPI, repo rate, prime rate, and exchange rates
+   * This is a verified working endpoint with comprehensive economic indicators
+   * 
+   * RECOMMENDED: Use this endpoint for CPI and exchange rates instead of getTimeSeries()
+   */
+  async getHomePageRates(): Promise<SarbHomePageRate[]> {
+    return this.retryWithBackoff(
+      async () => {
+        const url = `${this.baseUrl}/WebIndicators/HomePageRates`;
+        
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+        
+        try {
+          const response = await fetch(url, {
+            signal: controller.signal,
+            headers: {
+              'Accept': 'application/json',
+            },
+          });
+          
+          clearTimeout(timeoutId);
+          
+          if (!response.ok) {
+            throw new SarbApiError(
+              `SARB API returned status ${response.status}`,
+              response.status
+            );
+          }
+          
+          const rawData = await response.json();
+          
+          // Validate response with Zod schema
+          try {
+            const validatedData = SarbHomePageRatesResponseSchema.parse(rawData);
+            return validatedData;
+          } catch (validationError) {
+            console.error('[SARB API] HomePage rates validation failed:', validationError);
+            throw new SarbApiError(
+              'Invalid response format from SARB HomePageRates endpoint',
+              undefined
+            );
+          }
+        } catch (error) {
+          clearTimeout(timeoutId);
+          
+          if (error instanceof SarbApiError) {
+            throw error;
+          }
+          
+          if (error instanceof Error) {
+            if (error.name === 'AbortError') {
+              throw new SarbApiError('Request timeout fetching HomePage rates');
+            }
+            throw new SarbApiError(`Failed to fetch HomePage rates: ${error.message}`);
+          }
+          
+          throw new SarbApiError('Unknown error fetching HomePage rates');
+        }
+      },
+      'HomePage Rates fetch'
     );
   }
   
