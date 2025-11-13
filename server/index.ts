@@ -62,11 +62,16 @@ app.use((req, res, next) => {
 
   registerRoutes(app, storage);
   
+  // Initialize municipal storage for property tax rate management
+  const { initializeMunicipalStorage } = await import('./services/municipal-data');
+  initializeMunicipalStorage(storage);
+  
   // Register economic data routes
   app.use('/api/economic', economicRoutes);
   
   // Register municipal/property tax routes (Phase 2)
   const municipalRoutes = await import('./routes/municipal');
+  municipalRoutes.setMunicipalStorage(storage);
   app.use('/api/municipal', municipalRoutes.default);
 
   await setupVite(app);

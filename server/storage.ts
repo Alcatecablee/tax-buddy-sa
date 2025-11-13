@@ -1,4 +1,4 @@
-import type { TaxCalculation, InsertTaxCalculation } from "@shared/schema";
+import type { TaxCalculation, InsertTaxCalculation, PropertyTaxRate } from "@shared/schema";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.SUPABASE_URL || "";
@@ -10,10 +10,81 @@ export interface IStorage {
   createTaxCalculation(data: InsertTaxCalculation): Promise<TaxCalculation>;
   updateTaxCalculation(id: string, data: Partial<InsertTaxCalculation>): Promise<TaxCalculation>;
   deleteTaxCalculation(id: string): Promise<void>;
+  
+  getPropertyTaxRate(
+    municipalityCode: string,
+    category: PropertyTaxRate['category'],
+    financialYear: string
+  ): Promise<PropertyTaxRate | null>;
+  createPropertyTaxRate(data: PropertyTaxRate): Promise<PropertyTaxRate>;
+  updatePropertyTaxRate(
+    municipalityCode: string,
+    category: PropertyTaxRate['category'],
+    financialYear: string,
+    data: Partial<PropertyTaxRate>
+  ): Promise<PropertyTaxRate>;
+  deletePropertyTaxRate(
+    municipalityCode: string,
+    category: PropertyTaxRate['category'],
+    financialYear: string
+  ): Promise<void>;
+  getAllPropertyTaxRates(): Promise<PropertyTaxRate[]>;
 }
 
 export class MemStorage implements IStorage {
   private calculations: Map<string, TaxCalculation> = new Map();
+  private propertyTaxRates: Map<string, PropertyTaxRate> = new Map();
+
+  private getRateKey(municipalityCode: string, category: PropertyTaxRate['category'], financialYear: string): string {
+    return `${municipalityCode}:${category}:${financialYear}`;
+  }
+
+  async getPropertyTaxRate(
+    municipalityCode: string,
+    category: PropertyTaxRate['category'],
+    financialYear: string
+  ): Promise<PropertyTaxRate | null> {
+    const key = this.getRateKey(municipalityCode, category, financialYear);
+    return this.propertyTaxRates.get(key) || null;
+  }
+
+  async createPropertyTaxRate(data: PropertyTaxRate): Promise<PropertyTaxRate> {
+    const key = this.getRateKey(data.municipalityCode, data.category, data.financialYear);
+    this.propertyTaxRates.set(key, data);
+    return data;
+  }
+
+  async updatePropertyTaxRate(
+    municipalityCode: string,
+    category: PropertyTaxRate['category'],
+    financialYear: string,
+    data: Partial<PropertyTaxRate>
+  ): Promise<PropertyTaxRate> {
+    const key = this.getRateKey(municipalityCode, category, financialYear);
+    const existing = this.propertyTaxRates.get(key);
+    if (!existing) {
+      throw new Error(`Property tax rate not found for ${municipalityCode} ${category} ${financialYear}`);
+    }
+    const updated: PropertyTaxRate = {
+      ...existing,
+      ...data,
+    };
+    this.propertyTaxRates.set(key, updated);
+    return updated;
+  }
+
+  async deletePropertyTaxRate(
+    municipalityCode: string,
+    category: PropertyTaxRate['category'],
+    financialYear: string
+  ): Promise<void> {
+    const key = this.getRateKey(municipalityCode, category, financialYear);
+    this.propertyTaxRates.delete(key);
+  }
+
+  async getAllPropertyTaxRates(): Promise<PropertyTaxRate[]> {
+    return Array.from(this.propertyTaxRates.values());
+  }
 
   async getTaxCalculations(userId?: string): Promise<TaxCalculation[]> {
     const all = Array.from(this.calculations.values());
@@ -144,6 +215,39 @@ export class SupabaseStorage implements IStorage {
     if (error) {
       throw new Error(`Failed to delete calculation: ${error.message}`);
     }
+  }
+
+  async getPropertyTaxRate(
+    municipalityCode: string,
+    category: PropertyTaxRate['category'],
+    financialYear: string
+  ): Promise<PropertyTaxRate | null> {
+    throw new Error('Property tax rate storage not yet implemented in Supabase (Phase 3)');
+  }
+
+  async createPropertyTaxRate(data: PropertyTaxRate): Promise<PropertyTaxRate> {
+    throw new Error('Property tax rate storage not yet implemented in Supabase (Phase 3)');
+  }
+
+  async updatePropertyTaxRate(
+    municipalityCode: string,
+    category: PropertyTaxRate['category'],
+    financialYear: string,
+    data: Partial<PropertyTaxRate>
+  ): Promise<PropertyTaxRate> {
+    throw new Error('Property tax rate storage not yet implemented in Supabase (Phase 3)');
+  }
+
+  async deletePropertyTaxRate(
+    municipalityCode: string,
+    category: PropertyTaxRate['category'],
+    financialYear: string
+  ): Promise<void> {
+    throw new Error('Property tax rate storage not yet implemented in Supabase (Phase 3)');
+  }
+
+  async getAllPropertyTaxRates(): Promise<PropertyTaxRate[]> {
+    throw new Error('Property tax rate storage not yet implemented in Supabase (Phase 3)');
   }
 
   private mapFromDb(dbRow: any): TaxCalculation {

@@ -328,32 +328,75 @@ function PropertyTaxCalculator() {
 
             <Alert>
               <AlertCircle className="h-4 w-4" />
-              <AlertDescription className="text-sm space-y-1">
+              <AlertDescription className="text-sm space-y-2">
                 <div>
                   <strong>Data Source:</strong>{" "}
                   {result.dataSource === 'manual_override' && 'Manually verified rate'}
                   {result.dataSource === 'validated_fallback' && 'Validated average rate'}
                   {result.dataSource === 'api' && 'Real-time municipal data'}
-                  {result.lastValidated && (
-                    <span> (last updated: {new Date(result.lastValidated).toLocaleDateString('en-ZA', { 
-                      year: 'numeric', 
-                      month: 'short' 
-                    })})</span>
-                  )}
+                  {!result.dataSource && 'Municipal data'}
                 </div>
+                
+                {result.validatedBy && (
+                  <div className="text-xs text-muted-foreground" data-testid="text-validated-by">
+                    <strong>Validated by:</strong> {result.validatedBy}
+                  </div>
+                )}
+                
+                {result.lastValidated && (
+                  <div data-testid="text-last-validated">
+                    <strong>Last Validated:</strong>{" "}
+                    {new Date(result.lastValidated).toLocaleDateString('en-ZA', { 
+                      year: 'numeric', 
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </div>
+                )}
+                
+                {(result.effectiveDate || result.expiryDate) && (
+                  <div className="text-xs text-muted-foreground" data-testid="text-validity-period">
+                    {result.effectiveDate && (
+                      <span>
+                        Valid from: {new Date(result.effectiveDate).toLocaleDateString('en-ZA', { 
+                          year: 'numeric', 
+                          month: 'short' 
+                        })}
+                      </span>
+                    )}
+                    {result.effectiveDate && result.expiryDate && ' • '}
+                    {result.expiryDate && (
+                      <span>
+                        Expires: {new Date(result.expiryDate).toLocaleDateString('en-ZA', { 
+                          year: 'numeric', 
+                          month: 'short' 
+                        })}
+                      </span>
+                    )}
+                  </div>
+                )}
+                
                 {result.sourceUrl && (
-                  <div>
+                  <div className="text-xs">
                     <a 
                       href={result.sourceUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-primary hover:underline text-xs"
+                      className="text-primary hover:underline"
+                      data-testid="link-source-url"
                     >
                       View official municipal rates →
                     </a>
                   </div>
                 )}
-                <div className="pt-1 border-t">
+                
+                {result.notes && (
+                  <div className="text-xs text-muted-foreground italic" data-testid="text-notes">
+                    {result.notes}
+                  </div>
+                )}
+                
+                <div className="pt-1 border-t text-xs">
                   <strong>Disclaimer:</strong> This is an estimate. Actual rates may vary.
                   Contact your municipality for official rates and rebate eligibility.
                 </div>
@@ -576,16 +619,34 @@ function MunicipalityComparison() {
                 
                 <Alert>
                   <AlertCircle className="h-4 w-4" />
-                  <AlertDescription className="text-sm">
-                    <strong>Data Source:</strong> Validated average rates 
-                    {results[0]?.lastValidated && (
-                      <span> (last updated: {new Date(results[0].lastValidated).toLocaleDateString('en-ZA', {
-                        year: 'numeric',
-                        month: 'short'
-                      })})</span>
+                  <AlertDescription className="text-sm space-y-2">
+                    <div>
+                      <strong>Data Source:</strong>{" "}
+                      {results[0]?.dataSource === 'manual_override' && 'Manually verified rates'}
+                      {results[0]?.dataSource === 'validated_fallback' && 'Validated average rates'}
+                      {results[0]?.dataSource === 'api' && 'Real-time municipal data'}
+                      {!results[0]?.dataSource && 'Municipal data'}
+                    </div>
+                    
+                    {results[0]?.validatedBy && (
+                      <div className="text-xs text-muted-foreground" data-testid="text-validated-by-comparison">
+                        <strong>Validated by:</strong> {results[0].validatedBy}
+                      </div>
                     )}
-                    <br />
-                    These are estimates. Contact each municipality for official rates.
+                    
+                    {results[0]?.lastValidated && (
+                      <div className="text-xs text-muted-foreground" data-testid="text-last-validated-comparison">
+                        Last validated: {new Date(results[0].lastValidated).toLocaleDateString('en-ZA', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </div>
+                    )}
+                    
+                    <div className="pt-1 border-t text-xs">
+                      These are estimates. Contact each municipality for official rates.
+                    </div>
                   </AlertDescription>
                 </Alert>
               </div>

@@ -94,6 +94,7 @@ export type PropertyTaxCalculation = z.infer<typeof propertyTaxCalculationSchema
 
 /**
  * Property Tax Result Schema (Enhanced with Full Provenance)
+ * CRITICAL: Must include ALL provenance fields for Phase 2/3 admin transparency
  */
 export const propertyTaxResultSchema = z.object({
   municipalityName: z.string(),
@@ -113,6 +114,9 @@ export const propertyTaxResultSchema = z.object({
   lastValidated: z.string().optional(),
   sourceUrl: z.string().optional(),
   effectiveDate: z.string().optional(),
+  expiryDate: z.string().optional(),
+  validatedBy: z.string().optional(),
+  notes: z.string().optional(),
 });
 
 export type PropertyTaxResult = z.infer<typeof propertyTaxResultSchema>;

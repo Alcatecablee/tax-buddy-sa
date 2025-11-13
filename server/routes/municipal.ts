@@ -20,9 +20,17 @@ import {
 import {
   propertyTaxCalculationSchema,
   municipalityComparisonSchema,
+  propertyTaxRateSchema,
 } from '../../shared/schema';
+import type { IStorage } from '../storage';
 
 const router = Router();
+
+let storageInstance: IStorage | null = null;
+
+export function setMunicipalStorage(storage: IStorage) {
+  storageInstance = storage;
+}
 
 /**
  * GET /api/municipal/municipalities
@@ -134,6 +142,126 @@ router.post('/compare', async (req, res) => {
     res.status(500).json({
       success: false,
       error: 'Failed to compare municipalities',
+    });
+  }
+});
+
+/**
+ * POST /api/municipal/rates
+ * Create or update manual override property tax rate (Phase 3 - Admin only)
+ * 
+ * SECURITY: This endpoint is DISABLED by default to prevent unauthorized rate manipulation.
+ * Enable only in development via ENABLE_ADMIN_ENDPOINTS=true environment variable.
+ * 
+ * TODO Phase 3: Replace feature flag with proper authentication middleware (OAuth, JWT, etc.)
+ * TODO Phase 3: Add role-based access control to restrict to admin users only
+ */
+router.post('/rates', async (req, res) => {
+  const ADMIN_ENDPOINTS_ENABLED = process.env.ENABLE_ADMIN_ENDPOINTS === 'true';
+  
+  if (!ADMIN_ENDPOINTS_ENABLED) {
+    return res.status(403).json({
+      success: false,
+      error: 'Admin endpoints disabled in production. Set ENABLE_ADMIN_ENDPOINTS=true to enable (development only).',
+    });
+  }
+  try {
+    if (!storageInstance) {
+      return res.status(503).json({
+        success: false,
+        error: 'Storage not initialized',
+      });
+    }
+    
+    const validation = propertyTaxRateSchema.safeParse(req.body);
+    
+    if (!validation.success) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid property tax rate data',
+        details: validation.error.errors,
+      });
+    }
+    
+    const rateData = validation.data;
+    
+    const existingRate = await storageInstance.getPropertyTaxRate(
+      rateData.municipalityCode,
+      rateData.category,
+      rateData.financialYear
+    );
+    
+    let result;
+    if (existingRate) {
+      result = await storageInstance.updatePropertyTaxRate(
+        rateData.municipalityCode,
+        rateData.category,
+        rateData.financialYear,
+        rateData
+      );
+      
+      res.json({
+        success: true,
+        data: result,
+        message: 'Property tax rate updated successfully',
+      });
+    } else {
+      result = await storageInstance.createPropertyTaxRate(rateData);
+      
+      res.status(201).json({
+        success: true,
+        data: result,
+        message: 'Property tax rate created successfully',
+      });
+    }
+  } catch (error) {
+    console.error('Error creating/updating property tax rate:', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to save property tax rate',
+    });
+  }
+});
+
+/**
+ * GET /api/municipal/rates
+ * Get all manual override property tax rates (Phase 3 - Admin only)
+ * 
+ * SECURITY: This endpoint is DISABLED by default to prevent information disclosure.
+ * Enable only in development via ENABLE_ADMIN_ENDPOINTS=true environment variable.
+ * 
+ * TODO Phase 3: Replace feature flag with proper authentication middleware (OAuth, JWT, etc.)
+ * TODO Phase 3: Add role-based access control to restrict to admin users only
+ */
+router.get('/rates', async (req, res) => {
+  const ADMIN_ENDPOINTS_ENABLED = process.env.ENABLE_ADMIN_ENDPOINTS === 'true';
+  
+  if (!ADMIN_ENDPOINTS_ENABLED) {
+    return res.status(403).json({
+      success: false,
+      error: 'Admin endpoints disabled in production. Set ENABLE_ADMIN_ENDPOINTS=true to enable (development only).',
+    });
+  }
+  try {
+    if (!storageInstance) {
+      return res.status(503).json({
+        success: false,
+        error: 'Storage not initialized',
+      });
+    }
+    
+    const rates = await storageInstance.getAllPropertyTaxRates();
+    
+    res.json({
+      success: true,
+      data: rates,
+      count: rates.length,
+    });
+  } catch (error) {
+    console.error('Error fetching property tax rates:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch property tax rates',
     });
   }
 });
