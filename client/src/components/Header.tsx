@@ -1,13 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { LogIn, UserPlus, LayoutDashboard, TrendingUp, Building2 } from "lucide-react";
+import { Calculator } from "lucide-react";
 import { useLocation } from "wouter";
-import { useAuth } from "@/contexts/AuthContext";
 import whiteLogo from "@assets/white-logo.png";
 import darkLogo from "@assets/dark-logo.png";
 
 export const Header = () => {
   const [, setLocation] = useLocation();
-  const { user } = useAuth();
   
   return (
     <header className="bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-50">
@@ -32,52 +30,13 @@ export const Header = () => {
           
           <div className="flex items-center gap-3 flex-wrap">
             <Button
-              variant="ghost"
-              onClick={() => setLocation('/economic')}
-              data-testid="button-economic"
+              variant="default"
+              onClick={() => setLocation('/calculator')}
+              data-testid="button-calculator"
             >
-              <TrendingUp className="w-4 h-4 mr-2" />
-              Economic Data
+              <Calculator className="w-4 h-4 mr-2" />
+              Calculate Refund
             </Button>
-            
-            <Button
-              variant="ghost"
-              onClick={() => setLocation('/property-tax')}
-              data-testid="button-property-tax"
-            >
-              <Building2 className="w-4 h-4 mr-2" />
-              Property Tax
-            </Button>
-            
-            {user ? (
-              <Button
-                variant="default"
-                onClick={() => setLocation('/dashboard')}
-                data-testid="button-dashboard"
-              >
-                <LayoutDashboard className="w-4 h-4 mr-2" />
-                Dashboard
-              </Button>
-            ) : (
-              <>
-                <Button
-                  variant="ghost"
-                  onClick={() => setLocation('/login')}
-                  data-testid="button-login"
-                >
-                  <LogIn className="w-4 h-4 mr-2" />
-                  Sign In
-                </Button>
-                <Button
-                  variant="default"
-                  onClick={() => setLocation('/signup')}
-                  data-testid="button-signup"
-                >
-                  <UserPlus className="w-4 h-4 mr-2" />
-                  Sign Up
-                </Button>
-              </>
-            )}
           </div>
         </div>
       </div>

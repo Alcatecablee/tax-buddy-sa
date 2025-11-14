@@ -1,11 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { FileCheck, Calculator, Shield, TrendingUp, LogIn, UserPlus } from "lucide-react";
+import { FileCheck, Calculator, Shield, TrendingUp } from "lucide-react";
 import { useLocation } from "wouter";
-import { useAuth } from "@/contexts/AuthContext";
 
 export const Hero = () => {
   const [, setLocation] = useLocation();
-  const { user } = useAuth();
   
   return (
     <section className="relative min-h-[90vh] flex items-center bg-background overflow-hidden">
@@ -20,56 +18,26 @@ export const Hero = () => {
           </div>
           
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight cursor-animate-in">
-            Calculate Your South African Tax Refund Accurately
+            Calculate Your Tax Refund in 2 Minutes
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
-            Free tax calculator for the 2024/2025 tax year. Enter your income and deductions to calculate your SARS tax liability and estimated refund in minutes.
+            Free SARS tax calculator for 2024/2025. Know exactly what you'll get back or owe. No signup required.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <Button size="lg" variant="default" className="text-lg" onClick={() => setLocation('/calculator')} data-testid="button-calculate-refund">
-              Calculate My Refund
+              <Calculator className="w-5 h-5 mr-2" />
+              Calculate My Refund Now
             </Button>
-            {user ? (
-              <Button 
-                size="lg" 
-                variant="outline"
-                onClick={() => setLocation('/dashboard')}
-                data-testid="button-dashboard"
-              >
-                View Dashboard
-              </Button>
-            ) : (
-              <>
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  onClick={() => setLocation('/login')}
-                  data-testid="button-login"
-                >
-                  <LogIn className="w-4 h-4 mr-2" />
-                  Sign In
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  onClick={() => setLocation('/signup')}
-                  data-testid="button-signup"
-                >
-                  <UserPlus className="w-4 h-4 mr-2" />
-                  Sign Up
-                </Button>
-              </>
-            )}
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { icon: Calculator, label: "SARS 2024/2025 Brackets" },
-              { icon: FileCheck, label: "Export to PDF/CSV" },
-              { icon: TrendingUp, label: "Instant Calculation" },
-              { icon: Shield, label: "100% Free" }
+              { icon: Shield, label: "100% Free" },
+              { icon: Calculator, label: "SARS 2024/2025" },
+              { icon: TrendingUp, label: "Instant Results" },
+              { icon: FileCheck, label: "Export PDF" }
             ].map((feature, index) => (
               <div key={index} className="flex items-center gap-2 text-muted-foreground">
                 <feature.icon className="w-5 h-5" />
