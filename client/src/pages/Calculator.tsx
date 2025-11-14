@@ -372,7 +372,7 @@ const Calculator = () => {
               
               {currentStep < steps.length - 1 && (
                 <Button
-                  variant="accent"
+                  variant="default"
                   size="lg"
                   onClick={handleNext}
                 >

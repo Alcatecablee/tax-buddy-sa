@@ -1,7 +1,11 @@
-# SARS eFiling Assistant
+# South African Tax Calculator
 
 ## Overview
-The SARS eFiling Assistant is a web application aiming to become South Africa's leading tax intelligence platform. It simplifies tax filing for South African taxpayers by offering pre-filled forms, real-time refund estimates, plain language explanations, and offline capabilities. The project plans to integrate multiple free government and financial APIs to provide comprehensive tax planning tools. The vision is to build a R5M+ ARR business by targeting 50,000+ users by the end of 2025 through a tiered monetization strategy (FREE, PREMIUM, BUSINESS, ENTERPRISE).
+**EMERGENCY SIMPLIFICATION (Nov 2025)**: After 7+ months live with zero users, the project has been stripped down to its core: a single, focused tax refund calculator. No features. No dashboards. No integrations. Just the calculator.
+
+**Current Goal**: Validate if anyone wants a tax calculator before building anything else. Get 50-100 real users to test it in the next 2 weeks.
+
+**The Lesson**: Building solutions looking for problems doesn't work. Ship the simplest thing, validate with real users, then iterate based on feedback.
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
