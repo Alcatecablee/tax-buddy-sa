@@ -9,7 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.SUPABASE_URL || '';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || '';
 
 interface AuthenticatedRequest extends Request {
   user?: {
@@ -37,7 +37,12 @@ export async function requireAuth(
     
     const token = authHeader.substring(7);
     
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
     
     const { data: { user }, error } = await supabase.auth.getUser(token);
     

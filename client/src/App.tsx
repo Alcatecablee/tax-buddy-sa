@@ -16,6 +16,8 @@ import Dashboard from "./pages/Dashboard";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Profile from "./pages/Profile";
+import Admin from "./pages/Admin";
+import AdminLogin from "./pages/AdminLogin";
 import NotFound from "./pages/NotFound";
 
 function Router() {
@@ -29,6 +31,8 @@ function Router() {
       <Route path="/calculator" component={Calculator} />
       <Route path="/economic" component={EconomicDashboard} />
       <Route path="/property-tax" component={PropertyTax} />
+      <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin" component={Admin} />
       <Route path="/dashboard">
         <ProtectedRoute>
           <Dashboard />

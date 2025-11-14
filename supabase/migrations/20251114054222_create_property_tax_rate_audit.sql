@@ -35,12 +35,13 @@ USING (
   )
 );
 
--- System can insert audit logs (via triggers or service)
+-- Only the trigger/system can insert audit logs (no manual inserts by users)
+-- This policy is intentionally restrictive - inserts happen only via trigger
 CREATE POLICY "System can insert audit logs"
 ON public.property_tax_rate_audit
 FOR INSERT
 TO authenticated
-WITH CHECK (true);
+WITH CHECK (false);
 
 -- Create indexes
 CREATE INDEX idx_audit_rate_id ON public.property_tax_rate_audit(rate_id);
