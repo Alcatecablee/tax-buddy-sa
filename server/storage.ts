@@ -222,11 +222,38 @@ export class SupabaseStorage implements IStorage {
     category: PropertyTaxRate['category'],
     financialYear: string
   ): Promise<PropertyTaxRate | null> {
-    throw new Error('Property tax rate storage not yet implemented in Supabase (Phase 3)');
+    const { data, error } = await this.supabase
+      .from('property_tax_rates')
+      .select('*')
+      .eq('municipality_code', municipalityCode)
+      .eq('category', category)
+      .eq('financial_year', financialYear)
+      .single();
+    
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return null;
+      }
+      throw new Error(`Failed to fetch property tax rate: ${error.message}`);
+    }
+    
+    return data ? this.mapPropertyTaxRateFromDb(data) : null;
   }
 
   async createPropertyTaxRate(data: PropertyTaxRate): Promise<PropertyTaxRate> {
-    throw new Error('Property tax rate storage not yet implemented in Supabase (Phase 3)');
+    const dbData = this.mapPropertyTaxRateToDb(data);
+    
+    const { data: result, error } = await this.supabase
+      .from('property_tax_rates')
+      .insert(dbData)
+      .select()
+      .single();
+    
+    if (error) {
+      throw new Error(`Failed to create property tax rate: ${error.message}`);
+    }
+    
+    return this.mapPropertyTaxRateFromDb(result);
   }
 
   async updatePropertyTaxRate(
@@ -235,7 +262,22 @@ export class SupabaseStorage implements IStorage {
     financialYear: string,
     data: Partial<PropertyTaxRate>
   ): Promise<PropertyTaxRate> {
-    throw new Error('Property tax rate storage not yet implemented in Supabase (Phase 3)');
+    const dbData = this.mapPropertyTaxRateToDb(data as PropertyTaxRate);
+    
+    const { data: result, error } = await this.supabase
+      .from('property_tax_rates')
+      .update(dbData)
+      .eq('municipality_code', municipalityCode)
+      .eq('category', category)
+      .eq('financial_year', financialYear)
+      .select()
+      .single();
+    
+    if (error) {
+      throw new Error(`Failed to update property tax rate: ${error.message}`);
+    }
+    
+    return this.mapPropertyTaxRateFromDb(result);
   }
 
   async deletePropertyTaxRate(
@@ -243,11 +285,29 @@ export class SupabaseStorage implements IStorage {
     category: PropertyTaxRate['category'],
     financialYear: string
   ): Promise<void> {
-    throw new Error('Property tax rate storage not yet implemented in Supabase (Phase 3)');
+    const { error } = await this.supabase
+      .from('property_tax_rates')
+      .delete()
+      .eq('municipality_code', municipalityCode)
+      .eq('category', category)
+      .eq('financial_year', financialYear);
+    
+    if (error) {
+      throw new Error(`Failed to delete property tax rate: ${error.message}`);
+    }
   }
 
   async getAllPropertyTaxRates(): Promise<PropertyTaxRate[]> {
-    throw new Error('Property tax rate storage not yet implemented in Supabase (Phase 3)');
+    const { data, error } = await this.supabase
+      .from('property_tax_rates')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      throw new Error(`Failed to fetch all property tax rates: ${error.message}`);
+    }
+    
+    return (data || []).map(row => this.mapPropertyTaxRateFromDb(row));
   }
 
   private mapFromDb(dbRow: any): TaxCalculation {
@@ -297,5 +357,41 @@ export class SupabaseStorage implements IStorage {
       total_tax_paid: data.totalTaxPaid,
       refund_amount: data.refundAmount,
     };
+  }
+
+  private mapPropertyTaxRateFromDb(dbRow: any): PropertyTaxRate {
+    return {
+      municipalityCode: dbRow.municipality_code,
+      financialYear: dbRow.financial_year,
+      category: dbRow.category,
+      rate: parseFloat(dbRow.rate),
+      rateFreeThreshold: dbRow.rate_free_threshold || 50000,
+      source: dbRow.source || 'manual_override',
+      sourceUrl: dbRow.source_url,
+      lastValidated: dbRow.last_validated,
+      validatedBy: dbRow.validated_by,
+      notes: dbRow.notes,
+      effectiveDate: dbRow.effective_date,
+      expiryDate: dbRow.expiry_date,
+    };
+  }
+
+  private mapPropertyTaxRateToDb(data: Partial<PropertyTaxRate>): any {
+    const dbData: any = {};
+    
+    if (data.municipalityCode !== undefined) dbData.municipality_code = data.municipalityCode;
+    if (data.financialYear !== undefined) dbData.financial_year = data.financialYear;
+    if (data.category !== undefined) dbData.category = data.category;
+    if (data.rate !== undefined) dbData.rate = data.rate;
+    if (data.rateFreeThreshold !== undefined) dbData.rate_free_threshold = data.rateFreeThreshold;
+    if (data.source !== undefined) dbData.source = data.source;
+    if (data.sourceUrl !== undefined) dbData.source_url = data.sourceUrl;
+    if (data.lastValidated !== undefined) dbData.last_validated = data.lastValidated;
+    if (data.validatedBy !== undefined) dbData.validated_by = data.validatedBy;
+    if (data.notes !== undefined) dbData.notes = data.notes;
+    if (data.effectiveDate !== undefined) dbData.effective_date = data.effectiveDate;
+    if (data.expiryDate !== undefined) dbData.expiry_date = data.expiryDate;
+    
+    return dbData;
   }
 }

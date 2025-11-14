@@ -23,6 +23,7 @@ import {
   propertyTaxRateSchema,
 } from '../../shared/schema';
 import type { IStorage } from '../storage';
+import { requireAdmin } from '../middleware/auth';
 
 const router = Router();
 
@@ -148,23 +149,12 @@ router.post('/compare', async (req, res) => {
 
 /**
  * POST /api/municipal/rates
- * Create or update manual override property tax rate (Phase 3 - Admin only)
+ * Create or update manual override property tax rate (Phase 2/3 - Admin only)
  * 
- * SECURITY: This endpoint is DISABLED by default to prevent unauthorized rate manipulation.
- * Enable only in development via ENABLE_ADMIN_ENDPOINTS=true environment variable.
- * 
- * TODO Phase 3: Replace feature flag with proper authentication middleware (OAuth, JWT, etc.)
- * TODO Phase 3: Add role-based access control to restrict to admin users only
+ * SECURITY: Protected by Supabase Auth middleware with admin role requirement
+ * Only authenticated users with role='admin' can access this endpoint
  */
-router.post('/rates', async (req, res) => {
-  const ADMIN_ENDPOINTS_ENABLED = process.env.ENABLE_ADMIN_ENDPOINTS === 'true';
-  
-  if (!ADMIN_ENDPOINTS_ENABLED) {
-    return res.status(403).json({
-      success: false,
-      error: 'Admin endpoints disabled in production. Set ENABLE_ADMIN_ENDPOINTS=true to enable (development only).',
-    });
-  }
+router.post('/rates', requireAdmin, async (req, res) => {
   try {
     if (!storageInstance) {
       return res.status(503).json({
@@ -225,23 +215,12 @@ router.post('/rates', async (req, res) => {
 
 /**
  * GET /api/municipal/rates
- * Get all manual override property tax rates (Phase 3 - Admin only)
+ * Get all manual override property tax rates (Phase 2/3 - Admin only)
  * 
- * SECURITY: This endpoint is DISABLED by default to prevent information disclosure.
- * Enable only in development via ENABLE_ADMIN_ENDPOINTS=true environment variable.
- * 
- * TODO Phase 3: Replace feature flag with proper authentication middleware (OAuth, JWT, etc.)
- * TODO Phase 3: Add role-based access control to restrict to admin users only
+ * SECURITY: Protected by Supabase Auth middleware with admin role requirement
+ * Only authenticated users with role='admin' can access this endpoint
  */
-router.get('/rates', async (req, res) => {
-  const ADMIN_ENDPOINTS_ENABLED = process.env.ENABLE_ADMIN_ENDPOINTS === 'true';
-  
-  if (!ADMIN_ENDPOINTS_ENABLED) {
-    return res.status(403).json({
-      success: false,
-      error: 'Admin endpoints disabled in production. Set ENABLE_ADMIN_ENDPOINTS=true to enable (development only).',
-    });
-  }
+router.get('/rates', requireAdmin, async (req, res) => {
   try {
     if (!storageInstance) {
       return res.status(503).json({
