@@ -245,4 +245,36 @@ router.get('/rates', requireAdmin, async (req, res) => {
   }
 });
 
+/**
+ * GET /api/municipal/audit
+ * Get audit log for property tax rate changes (Phase 3 - Admin only)
+ * 
+ * SECURITY: Protected by Supabase Auth middleware with admin role requirement
+ * Only authenticated users with role='admin' can access this endpoint
+ */
+router.get('/audit', requireAdmin, async (req, res) => {
+  try {
+    if (!storageInstance) {
+      return res.status(503).json({
+        success: false,
+        error: 'Storage not initialized',
+      });
+    }
+    
+    const auditLogs = await storageInstance.getPropertyTaxAuditLogs();
+    
+    res.json({
+      success: true,
+      data: auditLogs,
+      count: auditLogs.length,
+    });
+  } catch (error) {
+    console.error('Error fetching audit logs:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch audit logs',
+    });
+  }
+});
+
 export default router;

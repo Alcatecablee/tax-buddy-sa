@@ -14,15 +14,18 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
-import { LogOut, Plus, Shield, FileText } from 'lucide-react';
+import { LogOut, Plus, Shield, FileText, Pencil } from 'lucide-react';
 import { useState } from 'react';
 import type { PropertyTaxRate } from '@shared/schema';
+import { PropertyTaxRateDialog } from '@/components/PropertyTaxRateDialog';
 
 export default function Admin() {
   const { user, isAdmin, signOut, getAccessToken } = useAuth();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [showAuditLog, setShowAuditLog] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedRate, setSelectedRate] = useState<PropertyTaxRate | null>(null);
 
   if (!isAdmin) {
     setLocation('/admin/login');
@@ -116,7 +119,13 @@ export default function Admin() {
                   Manage manual overrides for municipal property tax rates
                 </p>
               </div>
-              <Button data-testid="button-add-rate">
+              <Button
+                onClick={() => {
+                  setSelectedRate(null);
+                  setDialogOpen(true);
+                }}
+                data-testid="button-add-rate"
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Rate
               </Button>
@@ -180,8 +189,13 @@ export default function Admin() {
                             <Button
                               variant="ghost"
                               size="sm"
+                              onClick={() => {
+                                setSelectedRate(rate);
+                                setDialogOpen(true);
+                              }}
                               data-testid={`button-edit-rate-${index}`}
                             >
+                              <Pencil className="h-4 w-4 mr-2" />
                               Edit
                             </Button>
                           </TableCell>
@@ -195,23 +209,100 @@ export default function Admin() {
           </>
         )}
       </main>
+
+      <PropertyTaxRateDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        rate={selectedRate}
+      />
     </div>
   );
 }
 
 function AuditLogViewer() {
+  const { getAccessToken } = useAuth();
+
+  const { data: auditData, isLoading } = useQuery<{ success: boolean; data: any[]; count: number }>({
+    queryKey: ['/api/municipal/audit'],
+    queryFn: async () => {
+      const token = await getAccessToken();
+      if (!token) throw new Error('Not authenticated');
+      
+      const response = await fetch('/api/municipal/audit', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      
+      if (!response.ok) {
+        return { success: true, data: [], count: 0 };
+      }
+      
+      return response.json();
+    },
+  });
+
+  const auditLogs = auditData?.data || [];
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Audit Log</CardTitle>
         <CardDescription>
-          Track all changes to property tax rates
+          Track all changes to property tax rates ({auditLogs.length} entries)
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="text-center py-8 text-muted-foreground">
-          Audit log viewer coming soon
-        </div>
+        {isLoading ? (
+          <div className="space-y-2">
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+          </div>
+        ) : auditLogs.length === 0 ? (
+          <div className="text-center py-8 text-muted-foreground">
+            No audit log entries yet
+          </div>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Date/Time</TableHead>
+                <TableHead>Action</TableHead>
+                <TableHead>Rate ID</TableHead>
+                <TableHead>Changed By</TableHead>
+                <TableHead>Details</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {auditLogs.map((log, index) => (
+                <TableRow key={index} data-testid={`row-audit-${index}`}>
+                  <TableCell className="text-sm">
+                    {new Date(log.changed_at).toLocaleString()}
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={
+                      log.action === 'INSERT' ? 'default' :
+                      log.action === 'UPDATE' ? 'secondary' :
+                      'destructive'
+                    }>
+                      {log.action}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="font-mono text-xs">
+                    {log.rate_id?.slice(0, 8)}...
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {log.changed_by?.slice(0, 8) || 'System'}...
+                  </TableCell>
+                  <TableCell className="text-sm text-muted-foreground max-w-xs truncate">
+                    {log.notes || JSON.stringify(log.new_values)?.slice(0, 50)}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </CardContent>
     </Card>
   );

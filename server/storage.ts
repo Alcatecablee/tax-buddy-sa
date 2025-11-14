@@ -29,6 +29,7 @@ export interface IStorage {
     financialYear: string
   ): Promise<void>;
   getAllPropertyTaxRates(): Promise<PropertyTaxRate[]>;
+  getPropertyTaxAuditLogs(): Promise<any[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -84,6 +85,10 @@ export class MemStorage implements IStorage {
 
   async getAllPropertyTaxRates(): Promise<PropertyTaxRate[]> {
     return Array.from(this.propertyTaxRates.values());
+  }
+
+  async getPropertyTaxAuditLogs(): Promise<any[]> {
+    return [];
   }
 
   async getTaxCalculations(userId?: string): Promise<TaxCalculation[]> {
@@ -308,6 +313,20 @@ export class SupabaseStorage implements IStorage {
     }
     
     return (data || []).map(row => this.mapPropertyTaxRateFromDb(row));
+  }
+
+  async getPropertyTaxAuditLogs(): Promise<any[]> {
+    const { data, error } = await this.supabase
+      .from('property_tax_rate_audit')
+      .select('*')
+      .order('changed_at', { ascending: false })
+      .limit(100);
+    
+    if (error) {
+      throw new Error(`Failed to fetch audit logs: ${error.message}`);
+    }
+    
+    return data || [];
   }
 
   private mapFromDb(dbRow: any): TaxCalculation {
