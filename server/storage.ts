@@ -267,7 +267,18 @@ export class SupabaseStorage implements IStorage {
     financialYear: string,
     data: Partial<PropertyTaxRate>
   ): Promise<PropertyTaxRate> {
-    const dbData = this.mapPropertyTaxRateToDb(data as PropertyTaxRate);
+    const existing = await this.getPropertyTaxRate(municipalityCode, category, financialYear);
+    
+    if (!existing) {
+      throw new Error(`Property tax rate not found for ${municipalityCode} ${category} ${financialYear}`);
+    }
+    
+    const merged: PropertyTaxRate = {
+      ...existing,
+      ...data,
+    };
+    
+    const dbData = this.mapPropertyTaxRateToDb(merged, true);
     
     const { data: result, error } = await this.supabase
       .from('property_tax_rates')
@@ -395,12 +406,12 @@ export class SupabaseStorage implements IStorage {
     };
   }
 
-  private mapPropertyTaxRateToDb(data: Partial<PropertyTaxRate>): any {
+  private mapPropertyTaxRateToDb(data: Partial<PropertyTaxRate>, isUpdate: boolean = false): any {
     const dbData: any = {};
     
-    if (data.municipalityCode !== undefined) dbData.municipality_code = data.municipalityCode;
-    if (data.financialYear !== undefined) dbData.financial_year = data.financialYear;
-    if (data.category !== undefined) dbData.category = data.category;
+    if (!isUpdate && data.municipalityCode !== undefined) dbData.municipality_code = data.municipalityCode;
+    if (!isUpdate && data.financialYear !== undefined) dbData.financial_year = data.financialYear;
+    if (!isUpdate && data.category !== undefined) dbData.category = data.category;
     if (data.rate !== undefined) dbData.rate = data.rate;
     if (data.rateFreeThreshold !== undefined) dbData.rate_free_threshold = data.rateFreeThreshold;
     if (data.source !== undefined) dbData.source = data.source;

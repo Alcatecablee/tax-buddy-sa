@@ -74,8 +74,14 @@ export function PropertyTaxRateDialog({
       const token = await getAccessToken();
       if (!token) throw new Error('Not authenticated');
 
-      const response = await fetch('/api/municipal/rates', {
-        method: 'POST',
+      const url = isEditing
+        ? `/api/municipal/rates/${encodeURIComponent(data.municipalityCode)}/${encodeURIComponent(data.category)}/${encodeURIComponent(data.financialYear)}`
+        : '/api/municipal/rates';
+      
+      const method = isEditing ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,

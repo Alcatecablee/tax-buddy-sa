@@ -214,6 +214,55 @@ router.post('/rates', requireAdmin, async (req, res) => {
 });
 
 /**
+ * PUT /api/municipal/rates/:municipalityCode/:category/:financialYear
+ * Update existing property tax rate (Phase 3 - Admin only)
+ * 
+ * SECURITY: Protected by Supabase Auth middleware with admin role requirement
+ * Only authenticated users with role='admin' can access this endpoint
+ */
+router.put('/rates/:municipalityCode/:category/:financialYear', requireAdmin, async (req, res) => {
+  try {
+    if (!storageInstance) {
+      return res.status(503).json({
+        success: false,
+        error: 'Storage not initialized',
+      });
+    }
+    
+    const { municipalityCode, category, financialYear } = req.params;
+    
+    const validation = propertyTaxRateSchema.partial().safeParse(req.body);
+    
+    if (!validation.success) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid property tax rate data',
+        details: validation.error.errors,
+      });
+    }
+    
+    const result = await storageInstance.updatePropertyTaxRate(
+      municipalityCode,
+      category as PropertyTaxRate['category'],
+      financialYear,
+      validation.data
+    );
+    
+    res.json({
+      success: true,
+      data: result,
+      message: 'Property tax rate updated successfully',
+    });
+  } catch (error) {
+    console.error('Error updating property tax rate:', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to update property tax rate',
+    });
+  }
+});
+
+/**
  * GET /api/municipal/rates
  * Get all manual override property tax rates (Phase 2/3 - Admin only)
  * 
