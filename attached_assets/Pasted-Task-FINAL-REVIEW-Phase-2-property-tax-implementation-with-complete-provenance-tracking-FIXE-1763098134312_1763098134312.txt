@@ -1,0 +1,38 @@
+Task
+
+FINAL REVIEW: Phase 2 property tax implementation with complete provenance tracking.
+
+FIXES IMPLEMENTED based on previous feedback:
+
+✓ Extended PropertyTaxResult schema to include validatedBy, expiryDate, notes
+✓ Updated calculatePropertyTax() to return all provenance fields from taxRateData
+✓ Enhanced UI to display validatedBy, effectiveDate, expiryDate, notes with proper test IDs
+✓ Added null guards for all optional provenance fields in UI
+TESTING VERIFIED:
+✓ Manual override flow: POST /api/municipal/rates → GET calculation returns dataSource:"manual_override" with ALL provenance (validatedBy:"Municipal Tax Team", expiryDate:"2025-06-30", notes:"Manual override for JHB...")
+✓ Validated fallback flow: CPT calculation returns dataSource:"validated_fallback" with ALL provenance (validatedBy:"SARS eFiling Team", expiryDate:"2025-06-30", notes:"Rate validated against City of Cape Town...")
+✓ Cache includes financialYear to prevent cross-year contamination
+✓ Storage interface working correctly in MemStorage
+✓ Phase 3 admin API endpoints ready (POST /GET /api/municipal/rates)
+
+ARCHITECTURE ALIGNMENT:
+✓ Hybrid: manual_override → validated_fallback → api (with graceful fallback)
+✓ Full provenance: source, lastValidated, validatedBy, sourceUrl, effectiveDate, expiryDate, notes
+✓ Financial year isolation in cache keys
+✓ IStorage interface ready for Supabase (Phase 3)
+
+Please verify this is production-ready for Phase 2.
+
+Thought for 59 seconds
+Result
+Fail: POST /api/municipal/rates is exposed without authentication, so any client can override property tax rates and corrupt calculator results.
+Critical findings:
+
+Verified provenance contract now flows end-to-end: shared schema includes validatedBy/expiryDate/notes, municipal-data.ts forwards them, and PropertyTax.tsx renders them with null-guards and test IDs.
+Manual override retrieval uses storageInstance and the cache key now includes financialYear, so previously raised functional defects are resolved.
+However, server/routes/municipal.ts registers the Phase 3 admin POST/GET /api/municipal/rates endpoints without any auth/feature gating; in production this is a trivial avenue for malicious tampering, undermining data integrity.
+Security: High-severity – unauthenticated admin override endpoint allows arbitrary manipulation of property tax rates.
+Next actions:
+Block public access to POST/GET /api/municipal/rates (e.g., remove routes for Phase 2 or require authenticated admin role before deployment).
+Once secured, add integration tests covering provenance fields for both validated_fallback and manual_override flows to guard against regressions.
+Re-run full regression after locking down the admin endpoints to confirm tax calculations still function as expected.
